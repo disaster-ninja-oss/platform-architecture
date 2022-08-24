@@ -280,7 +280,74 @@ digraph Information_architecture {
  Layers -> Layers_Style 
  User_Profile_Service -> Layers_Style 
  
+   subgraph cluster_Flows {
+
+     Explore_Specific_Disaster [color = orange] [penwidth = 3];
+     Explore_Area_of_Interest [color = green] [penwidth = 3];
+     label = User_Flows
+}
+
+ Explore_Specific_Disaster -> Disaster_Ninja -> Public -> Map_Viewer ->
+ Disaster [color = orange] [penwidth = 3]
  
+ Map_Viewer -> Disaster_Feed -> Disaster [color = orange] [penwidth = 3]
+ 
+ Disaster -> Selector -> Select_Disaster_Area -> Map -> Simple_Analytics_Panel -> 
+ Layers -> Public_Layers [color = orange] [penwidth = 3]
+ Disaster -> Timeline -> Episode_Viewer -> Episode -> Geometry [color = orange] [penwidth = 3]
+ Disaster -> Episode [color = orange] [penwidth = 3]
+ Disaster -> Layers [color = orange] [penwidth = 3]
+ 
+ Public_Layers -> Analytical_Layers [color = orange] [penwidth = 3]
+ 
+ Analytical_Layers -> Third_Party_Layers [color = orange] [penwidth = 3]
+ Analytical_Layers -> Kontur_Layers [color = orange] [penwidth = 3]
+ 
+ Third_Party_Layers -> Overlays [color = orange] [penwidth = 3]
+ Third_Party_Layers -> Basemaps [color = orange] [penwidth = 3]
+ 
+ Kontur_Layers -> Overlays [color = orange] [penwidth = 3]
+ Kontur_Layers -> Basemaps [color = orange] [penwidth = 3]
+
+ Overlays -> Global_Layers [color = orange] [penwidth = 3]
+ Overlays -> Local_Layers [color = orange] [penwidth = 3]
+ 
+ Basemaps -> Global_Layers [color = orange] [penwidth = 3]
+ Basemaps -> Local_Layers [color = orange] [penwidth = 3]
+ 
+
+
+ 
+ Explore_Area_of_Interest -> Disaster_Ninja -> Public -> Map_Viewer [color = green] [penwidth = 3]
+ 
+ Map_Viewer -> Search -> Select_Admin_Boundary [color = green] [penwidth = 3]
+ Map_Viewer -> Zoom [color = green] [penwidth = 3]
+ Map_Viewer -> Locate_Me -> Map -> Select_Admin_Boundary [color = green] [penwidth = 3]
+ Map_Viewer -> Map -> Select_Freehand_Geometry -> Edit_Selection [color = green] [penwidth = 3]
+ 
+ Select_Admin_Boundary -> Simple_Analytics_Panel ->
+ Advanced_Analytics_Panel [color = green] [penwidth = 3]
+ Select_Admin_Boundary -> Edit_Selection -> Simple_Analytics_Panel [color = green] [penwidth = 3]
+ 
+ Simple_Analytics_Panel -> Layers [color = green] [penwidth = 3]
+ Advanced_Analytics_Panel -> Layers [color = green] [penwidth = 3] 
+ 
+ Layers -> Public_Layers -> Analytical_Layers [color = green] [penwidth = 3]
+ 
+ Analytical_Layers -> Third_Party_Layers [color = green] [penwidth = 3]
+ Analytical_Layers -> Kontur_Layers [color = green] [penwidth = 3]
+ 
+ Third_Party_Layers -> Overlays [color = green] [penwidth = 3]
+ Third_Party_Layers -> Basemaps [color = green] [penwidth = 3]
+ 
+ Kontur_Layers -> Overlays [color = green] [penwidth = 3]
+ Kontur_Layers -> Basemaps [color = green] [penwidth = 3]
+
+ Overlays -> Global_Layers [color = green] [penwidth = 3]
+ Overlays -> Local_Layers [color = green] [penwidth = 3]
+ 
+ Basemaps -> Global_Layers [color = green] [penwidth = 3]
+ Basemaps -> Local_Layers [color = green] [penwidth = 3]
  
 
   
