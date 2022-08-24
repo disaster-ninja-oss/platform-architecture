@@ -6,7 +6,7 @@ digraph Information_architecture {
   Login [shape=rectangle, color=red, pin = true];
   User_ID [shape=rectangle, color=red];
   Public [shape=rectangle, pin = true];
-  User_Profile_Service [shape=square]
+  User_Profile_Service [label="User Profile",shape=square]
   
   
   
@@ -221,45 +221,92 @@ digraph Information_architecture {
      color = blue;
      node [shape = rectangle]
      
-     User_Layers, Public_Layers -> Analytical_Layers, Source_Layers ->
-     Third_Party_Layers, Kontur_Layers -> Overlayes, Basemaps -> 
-     Global_Layers, Local_Layers -> Dynamic_Layers, Temporal_Layers [color = blue]
      
+     
+     Layers_by_data_type
+     Layers -> Layers_by_data_type
+     Layers_by_data_type -> Raster
+     Layers_by_data_type -> Vector
+     Layers_by_data_type -> H3_Grid
+     
+     
+     Layers -> Layers_Access
+     Layers_Access -> User_Layers
+     Layers_Access -> Public_Layers
+     
+     
+     Layers -> Layers_Source
+     Layers_Source -> Kontur_Layers
+     Kontur_Layers -> Event_Shape
+     Layers_Source -> Third_Party_Layers
+     Layers_Source -> Dynamic_Layers
+     
+     Layers -> Layers_Stackability
+     Layers_Stackability -> Overlays
+     Layers_Stackability -> Basemaps
+     Layers_Stackability -> Coloring_Overlays
+     Coloring_Overlays // coloring overlays are the overlays from which only one can be enabled
+     
+     Layers -> Layers_Coverage
+     Layers_Coverage -> Global_Layers
+     Layers_Coverage -> Local_Layers
+     
+     Coloring_Overlays -> Isochrone
+     Coloring_Overlays -> Bivariate_Layers
+     
+     
+     // Analytical_Layers are the layers that have the control     
+     
+     Layers -> Layers_controlled_by_user
+     Layers_controlled_by_user -> Analytical_Layers
+     Layers_controlled_by_user -> Non_analytical_layers
+     
+     Analytical_Layers
      Analytical_Layers -> Isochrone
-  
-    
-     Selected_Area;
-     Event_Shape;
+     Analytical_Layers -> Bivariate_Layers
+     Analytical_Layers -> Temporal_Layers
      
-     User_Layers -> upload_imagery;
-     User_Layers -> edit_layer;
-     upload_imagery -> edit_layer;
+     Non_analytical_layers
+     
+    
+     Selected_Area
+     Event_Shape
+     
+   //User_Layers -> upload_imagery
+     User_Layers -> edit_layer
+     upload_imagery -> edit_layer
      
     
 
-     Dynamic_Layers -> Selected_Area;
-     Dynamic_Layers -> Event_Shape;
-     Dynamic_Layers -> Scratch_Layer;
-     Dynamic_Layers -> Ruler;
-     Dynamic_Layers -> Isochrone;
-     Layers -> Dynamic_Layers
+     Dynamic_Layers -> Selected_Area     
+     Dynamic_Layers -> Scratch_Layer
+     Dynamic_Layers -> Ruler
+    
+     
      Temporal_Layers 
      
-     Layers 
-     Layers -> Public_Layers, User_Layers
+     Layers      
      Layers -> edit_layer
      
-     edit_layer -> Scratch_Layer
+     Scratch_Layer -> edit_layer
+     
      
   
      
  }
  
+ Scratch_Layer -> Scratch_Layer_Draw_Tool
+ 
+ Bivariate_Layers -> Bivariate_Manager
+ 
+ 
+ 
+ 
  edit_layer -> Layers_Style 
  edit_layer -> Layers_Metadata_UI;
  edit_layer -> Scratch_Layer_Draw_Tool;
  Layer_Management -> edit_layers;
- Scratch_Layer -> add_geometry [lhead = cluster_Scratch_Layer];
+ //Scratch_Layer -> add_geometry [lhead = cluster_Scratch_Layer];
  Geometry -> User_Layers [lhead = cluster_layers]; 
  User_Layers -> Layer_Feature [ltail = cluster_layers]
  Layer_Feature -> edit_feature [lhead = cluster_Property]
@@ -279,6 +326,7 @@ digraph Information_architecture {
  
  Layers -> Layers_Style 
  User_Profile_Service -> Layers_Style 
+ 
  
    subgraph cluster_Flows {
 
@@ -349,8 +397,6 @@ digraph Information_architecture {
  Basemaps -> Global_Layers [color = green] [penwidth = 3]
  Basemaps -> Local_Layers [color = green] [penwidth = 3]
  
+ 
 
-  
 }
-
-
