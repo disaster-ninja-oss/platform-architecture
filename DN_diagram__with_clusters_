@@ -27,7 +27,7 @@ digraph Information_architecture {
   
   
   
-  subgraph cluster_Views {
+  subgraph _cluster_Views {
       color = blue;
       pin = true
       
@@ -57,7 +57,7 @@ digraph Information_architecture {
   
   Map_Viewer -> Map;
 
-  subgraph cluster_Navigation {
+  subgraph _cluster_Navigation {
      
       color = blue;
       Navigation -> Scale, Search, Zoom, Locate_Me, Edit_in_OSM 
@@ -69,41 +69,46 @@ digraph Information_architecture {
  Language -> Layers_Style 
  Language -> Analytics
  Language -> Administrative
- Language -> Selector 
+ 
  Language -> Disaster 
  Language -> Disaster_Ninja
-  
  
- Map -> Zoom [lhead = cluster_Navigation]; 
- subgraph cluster_Selector {
+ 
+ Language -> Select_Admin_Boundary
+ Language -> Select_Disaster_Area
+ 
+ 
+ 
+ 
+ Map -> Navigation; 
+ subgraph _cluster_Focused_Geometry_Selector {
      color = blue
 
-     Selector -> 
+     Focused_Geometry_Selector -> 
      Select_Disaster_Area,
      Select_Freeheand_Geometry,
      Select_Admin_Boundary,
      Upload_Geometry,
      Search,
      Locate_Me,
-     Show_World_Data [color = green]
+     Show_World_Data
      
  }
  
- Disaster_Ninja -> Selector
- Select_Admin_Boundary -> Geometry [ltail = cluster_Selector] 
+ Disaster_Ninja -> Focused_Geometry_Selector
+ Select_Admin_Boundary -> Focused_Geometry
  
  Select_Disaster_Area -> Map
  Select_Admin_Boundary -> Map
  Select_Freeheand_Geometry -> Map 
- Locate_Me -> Map
- Map_Viewer -> Selector
+ Map_Viewer -> Focused_Geometry_Selector
  Select_Freeheand_Geometry -> Scratch_Layer
  
  
  Disaster [shape=rectangle];
  Episode [shape=rectangle];
  Disaster_Feed [shape=rectangle];
- Geometry [shape=rectangle];
+ 
  Layer_Feature [shape = rectangle];
  Legend [shape = rectangle];
  Social_Feed [shape = rectangle];
@@ -124,8 +129,10 @@ digraph Information_architecture {
  
  
  
- subgraph cluster_Analytics {
+ subgraph _cluster_Analytics {
      color = blue;
+     
+     
      
      Simple_Analytics_Panel;
      Advanced_Analytics_Panel [color = red];
@@ -133,23 +140,22 @@ digraph Information_architecture {
      Analytics -> Simple_Analytics_Panel, Advanced_Analytics_Panel, Bivariate_Manager;
  }
  
- Disaster -> Geometry; 
+ Focused_Geometry [shape=rectangle];
+ Disaster -> Focused_Geometry; 
  Disaster -> Episode;
  Disaster -> Event_Admin; 
- Episode_Viewer -> Episode -> Geometry; 
+ Episode_Viewer -> Episode -> Focused_Geometry -> Analytics 
  Social_Feed -> Timeline
  Disaster_Feed -> Disaster;
  Disaster_Feed -> show_all_events;
  Disaster_Feed -> customizable_event_list_filters; 
  Select_Disaster_Area -> Disaster_Feed
- Geometry -> Bivariate_Manager;
- Geometry -> Simple_Analytics_Panel;
- Geometry -> Advanced_Analytics_Panel;
+ 
  Bivariate_Manager -> BM_Admin;
  
  
  
- subgraph cluster_Administrative {
+ subgraph _cluster_Administrative {
     
      color = blue;
      
@@ -182,16 +188,16 @@ digraph Information_architecture {
 
      
  }
-    BM_Legend_Management -> User_Layers [lhead = cluster_layers];
+    BM_Legend_Management -> User_Layers [lhead = _cluster_layers];
     Sentiment_Management -> Legend;
-    Layer_Management -> User_Layers [lhead = cluster_layers];
+    Layer_Management -> User_Layers [lhead = _cluster_layers];
     
      Map_Viewer -> Event_Admin
      Map_Viewer -> Embedded_Maps 
      
-     Embedded_Maps -> User_Layers [lhead = cluster_layers];
+     Embedded_Maps -> User_Layers [lhead = _cluster_layers];
  
- subgraph cluster_Property {
+ subgraph _cluster_Property {
      
      color = red; 
      
@@ -202,7 +208,7 @@ digraph Information_architecture {
      Property -> edit_feature, delete_feature, add_feature;
     
  }
- subgraph cluster_Scratch_Layer {
+ subgraph _cluster_Scratch_Layer {
 
      color = blue;
      
@@ -216,7 +222,7 @@ digraph Information_architecture {
      
  }
  
- subgraph cluster_layers {
+ subgraph _cluster_layers {
      
      color = blue;
      node [shape = rectangle]
@@ -272,7 +278,8 @@ digraph Information_architecture {
      Selected_Area
      Event_Shape
      
-   //User_Layers -> upload_imagery
+     User_Layers -> upload_imagery
+     Raster -> upload_imagery
      User_Layers -> edit_layer
      upload_imagery -> edit_layer
      
@@ -295,6 +302,12 @@ digraph Information_architecture {
      
  }
  
+ Disaster_Ninja -> Views
+ edit_layer -> Property
+ 
+ Event_Viewer -> Episode_Viewer
+ 
+ 
  Scratch_Layer -> Scratch_Layer_Draw_Tool
  
  Bivariate_Layers -> Bivariate_Manager
@@ -306,11 +319,13 @@ digraph Information_architecture {
  edit_layer -> Layers_Metadata_UI;
  edit_layer -> Scratch_Layer_Draw_Tool;
  Layer_Management -> edit_layers;
- //Scratch_Layer -> add_geometry [lhead = cluster_Scratch_Layer];
- Geometry -> User_Layers [lhead = cluster_layers]; 
- User_Layers -> Layer_Feature [ltail = cluster_layers]
- Layer_Feature -> edit_feature [lhead = cluster_Property]
- User_Layers -> Legend [ltail = cluster_layers]
+ //Scratch_Layer -> add_geometry [lhead = _cluster_Scratch_Layer];
+ //Geometry -> User_Layers [lhead = _cluster_layers]; 
+ Focused_Geometry -> Local_Layers
+ 
+ User_Layers -> Layer_Feature [ltail = _cluster_layers]
+ Layer_Feature -> edit_feature [lhead = _cluster_Property]
+ User_Layers -> Legend [ltail = _cluster_layers]
  Temporal_Layers -> Timeline;
  Isochrone -> Timeline;
  Routing -> Isochrone;
@@ -326,9 +341,9 @@ digraph Information_architecture {
  
  Layers -> Layers_Style 
  User_Profile_Service -> Layers_Style 
+ /*
  
- 
-   subgraph cluster_Flows {
+   subgraph _cluster_Flows {
 
      Explore_Specific_Disaster [color = orange] [penwidth = 3];
      Explore_Area_of_Interest [color = green] [penwidth = 3];
@@ -340,9 +355,9 @@ digraph Information_architecture {
  
  Map_Viewer -> Disaster_Feed -> Disaster [color = orange] [penwidth = 3]
  
- Disaster -> Selector -> Select_Disaster_Area -> Map -> Simple_Analytics_Panel -> 
+ Disaster -> Focused_Geometry_Selector -> Select_Disaster_Area -> Map -> Simple_Analytics_Panel -> 
  Layers -> Public_Layers [color = orange] [penwidth = 3]
- Disaster -> Timeline -> Episode_Viewer -> Episode -> Geometry [color = orange] [penwidth = 3]
+ Disaster -> Timeline -> Episode_Viewer -> Episode -> Focused_Geometry [color = orange] [penwidth = 3]
  Disaster -> Episode [color = orange] [penwidth = 3]
  Disaster -> Layers [color = orange] [penwidth = 3]
  
@@ -397,6 +412,6 @@ digraph Information_architecture {
  Basemaps -> Global_Layers [color = green] [penwidth = 3]
  Basemaps -> Local_Layers [color = green] [penwidth = 3]
  
- 
+ */
 
 }
