@@ -1,417 +1,382 @@
 digraph Information_architecture {
-    compound = True
-   
-  
-  Disaster_Ninja [shape=square, pin = true];
-  Login [shape=rectangle, color=red, pin = true];
-  User_ID [shape=rectangle, color=red];
-  Public [shape=rectangle, pin = true];
-  User_Profile_Service [label="User Profile",shape=square]
-  
-  
-  
-  User_Profile_Service -> Disaster_Ninja; 
-  Feature_flags -> Map_Viewer;
-  User_Profile_Service -> Feature_flags;
-  Disaster_Ninja -> Notifications;
-  User_Profile_Service -> Notifications;
-  User_Profile_Service -> User_ID
-  
-  
-  Map [shape=rectangle];
-  Intercom [shape=rectangle];
-  
-  Disaster_Ninja -> User_ID;
-  Disaster_Ninja -> Public;
-  Disaster_Ninja -> Intercom;
-  
-  
-  
-  subgraph _cluster_Views {
-      color = blue;
-      pin = true
-      
-      Map_Viewer [shape=rectangle];
-      Reports [shape=rectangle];
-      Views -> Map_Viewer;
-      Views -> Reports
-      
-      
-  }
-  User_ID -> Login;
-  User_ID -> Map_Viewer;
-  User_ID -> Reports;
-  User_ID -> Bivariate_Manager;
-  User_ID -> Advanced_Analytics_Panel
-  User_ID -> Event_Admin;
-  User_ID -> Routing;
-  User_ID -> User_Layers;
-  User_ID -> BM_Admin 
-  User_ID -> Layer_Management; 
-  User_ID -> Embedded_Maps;
+    сompound = True
 
-  
-  
-  Public -> Map_Viewer
-  Public -> Reports
-  
-  Map_Viewer -> Map;
+    {
+        // things that exist
+        node[fillcolor=green,style=filled]
 
-  subgraph _cluster_Navigation {
-     
-      color = blue;
-      Navigation -> Scale, Search, Zoom, Locate_Me, Edit_in_OSM 
-    
+        Disaster_Ninja [shape=square]
+        Login [shape=rectangle,color=red]
+        User_ID [shape=rectangle,color=red]
+        Public [shape=rectangle]
+        User_Profile_Service [label="User Profile",shape=square]
+        Map [shape=rectangle]
+        Intercom [shape=rectangle]
+        Map_Viewer [shape=rectangle]
+        Reports [shape=rectangle]
+        Disaster [shape=rectangle]
+        Episode [shape=rectangle]
+        Disaster_Feed [shape=rectangle]
+        Legend [shape=rectangle]
+        Bivariate_Manager [shape = rectangle]
+        Focused_Geometry [shape=rectangle]
+        Layers
+        Views
+        Feature_flags
+        Event_Viewer [shape=rectangle,color=red]
+        Select_Freehand_Geometry
+        Upload_Geometry
+        Focused_Geometry_Selector
+        Simple_Analytics_Panel
+        Advanced_Analytics_Panel [color = red]
+        Navigation
+        Scale
+        Edit_in_OSM
+        Select_Disaster_Area
+        Analytics
+        Non_analytical_layers
+        Selected_Area
+        Event_Shape
+        Select_Admin_Boundary
+        Edit_Selection
+        Scratch_Layer_Draw_Tool
+        Third_Party_Layers
+        Local_Layers
+        Vector
+        Global_Layers
+        Local_Layers
+        Basemaps
+        Overlays
+        Coloring_Overlays
+        Bivariate_Layers
+        Layers_Source
+        Layers_Stackability
+        Layers_Coverage
+        Kontur_Layers
+        H3_Grid
+        Ruler
+        Public_Layers
+        Analytical_Layers
+        Scratch_Layer
+        download_geometry_layer
+        edit_geometry
+        delete_geometry
+        add_geometry
+        customizable_event_list_filters
+        show_all_events
 
-  }
-  
- User_Profile_Service -> Language 
- Language -> Layers_Style 
- Language -> Analytics
- Language -> Administrative
- 
- Language -> Disaster 
- Language -> Disaster_Ninja
- 
- 
- Language -> Select_Admin_Boundary
- Language -> Select_Disaster_Area
- 
- 
- 
- 
- Map -> Navigation; 
- subgraph _cluster_Focused_Geometry_Selector {
-     color = blue
+        User_Profile_Service -> Disaster_Ninja
+        Feature_flags -> Map_Viewer
+        User_Profile_Service -> Feature_flags
+    }
 
-     Focused_Geometry_Selector -> 
-     Select_Disaster_Area,
-     Select_Freeheand_Geometry,
-     Select_Admin_Boundary,
-     Upload_Geometry,
-     Search,
-     Locate_Me,
-     Show_World_Data
-     
- }
- 
- Disaster_Ninja -> Focused_Geometry_Selector
- Select_Admin_Boundary -> Focused_Geometry
- 
- Select_Disaster_Area -> Map
- Select_Admin_Boundary -> Map
- Select_Freeheand_Geometry -> Map 
- Map_Viewer -> Focused_Geometry_Selector
- Select_Freeheand_Geometry -> Scratch_Layer
- 
- 
- Disaster [shape=rectangle];
- Episode [shape=rectangle];
- Disaster_Feed [shape=rectangle];
- 
- Layer_Feature [shape = rectangle];
- Legend [shape = rectangle];
- Social_Feed [shape = rectangle];
- Episode_Viewer [shape = ectangle]; 
- Timeline [shape = ectangle]; 
- Routing [shape = rectangle, color = red];
- 
- Routing -> Layer_Feature;
- Routing -> User_Layers; 
- Upload_Geometry -> Routing;
- Select_Freeheand_Geometry -> Routing;
- Embedded_Maps -> Routing
- Routing -> Routing_UI
- Routing -> Scratch_Layer
- 
- Episode_Viewer -> Event_Shape; 
- Timeline -> Episode_Viewer;
- 
- 
- 
- subgraph _cluster_Analytics {
-     color = blue;
-     
-     
-     
-     Simple_Analytics_Panel;
-     Advanced_Analytics_Panel [color = red];
-     Bivariate_Manager [shape = rectangle, color=red];
-     Analytics -> Simple_Analytics_Panel, Advanced_Analytics_Panel, Bivariate_Manager;
- }
- 
- Focused_Geometry [shape=rectangle];
- Disaster -> Focused_Geometry; 
- Disaster -> Episode;
- Disaster -> Event_Admin; 
- Episode_Viewer -> Episode -> Focused_Geometry -> Analytics 
- Social_Feed -> Timeline
- Disaster_Feed -> Disaster;
- Disaster_Feed -> show_all_events;
- Disaster_Feed -> customizable_event_list_filters; 
- Select_Disaster_Area -> Disaster_Feed
- 
- Bivariate_Manager -> BM_Admin;
- 
- 
- 
- subgraph _cluster_Administrative {
-    
-     color = blue;
-     
-     Event_Admin [shape=rectangle, color = red];
-     Event_Viewer [shape=rectangle, color = red];
-     Event_Editor [shape=rectangle,color = red];
-     Cross_provider_Merger [shape=rectangle, color = red];
-     
-     
-     
-     Event_Admin -> Event_Viewer;
-     Event_Admin -> Event_Editor;
-     Event_Admin -> Cross_provider_Merger;
-     
-     
-     
-     Embedded_Maps [shape=rectangle, color = red];
-     
-     BM_Admin [shape=rectangle, color = red];
-     Sentiment_Management [shape=rectangle, color = red];
-     BM_Legend_Management [shape=rectangle, color = red];
-     
-     
-     BM_Admin -> Sentiment_Management;
-     BM_Admin -> BM_Legend_Management;
-     
-     Layer_Management [shape=rectangle, color = red];
-     
-     Administrative -> Event_Admin, Embedded_Maps, BM_Admin, Layer_Management;
+    {
+        // things that we work on now
+        node[fillcolor=yellow,style=filled]
 
-     
- }
-    BM_Legend_Management -> User_Layers [lhead = _cluster_layers];
-    Sentiment_Management -> Legend;
-    Layer_Management -> User_Layers [lhead = _cluster_layers];
-    
-     Map_Viewer -> Event_Admin
-     Map_Viewer -> Embedded_Maps 
-     
-     Embedded_Maps -> User_Layers [lhead = _cluster_layers];
- 
- subgraph _cluster_Property {
-     
-     color = red; 
-     
-     edit_feature ->
-     delete_feature ->
-     add_feature [style = invis]
-     
-     Property -> edit_feature, delete_feature, add_feature;
-    
- }
- subgraph _cluster_Scratch_Layer {
+        Timeline [shape=rectangle]
+        Episode_Viewer [shape=rectangle]
+        Language [shape=rectangle]
+        Event_Preview_Image_Generator [shape=square]
+        Locate_Me
+        Sentiment_Management [shape=rectangle,color=red]
+        Zoom
+        Raster
+        Layers_Access
+        Layers_controlled_by_user
+        Layers_by_data_type
+        Dynamic_Layers
+        Layers_Metadata_UI
+        STAC_Collection
+        upload_imagery
 
-     color = blue;
-     
-     add_geometry ->
-     edit_geometry ->
-     delete_geometry ->
-     download_geometry_layer ->
-     upload_layer_geometry  [style = invis]
-     
-     Scratch_Layer_Draw_Tool -> add_geometry, edit_geometry,  delete_geometry, download_geometry_layer, upload_layer_geometry;
-     
- }
- 
+
+    }
+
+    {
+        // things that are our future
+        node[fillcolor=pink,style=filled]
+
+        Layer_Feature [shape=rectangle]
+        Social_Feed [shape=rectangle]
+        Routing [shape=rectangle,color=red]
+        Routing_UI
+        Embedded_Maps [shape=rectangle,color=red]
+        Notifications [shape=square]
+        Search
+        Layer_Management [shape=rectangle,color=red]
+        Event_Admin [shape=rectangle,color=red]
+        Event_Editor [shape=rectangle,color=red]
+        Cross_provider_Merger [shape=rectangle,color=red]
+        Show_World_Data
+        BM_Admin [shape=rectangle,color=red]
+        BM_Legend_Management [shape=rectangle,color=red]
+        Administrative
+        Isochrone
+        edit_layers
+        edit_layer
+        User_Layers
+        upload_layer_geometry
+        Temporal_Layers
+        Layers_Style
+        Property
+        add_feature
+        delete_feature
+        edit_feature
+
+    }
+
+
+    Disaster_Ninja -> Notifications
+    User_Profile_Service -> Notifications
+    User_Profile_Service -> User_ID
+    Embedded_Maps -> Map
+    Upload_Geometry -> upload_layer_geometry
+    Disaster_Ninja -> User_ID
+    Disaster_Ninja -> Public
+    Disaster_Ninja -> Intercom
+    Views -> Map_Viewer
+    Views -> Reports
+    User_ID -> Login
+    User_ID -> Map_Viewer
+    User_ID -> Reports
+    User_ID -> Bivariate_Manager
+    User_ID -> Advanced_Analytics_Panel
+    User_ID -> Event_Admin
+    User_ID -> Routing
+    User_ID -> User_Layers
+    User_ID -> BM_Admin
+    User_ID -> Layer_Management
+    User_ID -> Embedded_Maps
+    Public -> Map_Viewer
+    Public -> Reports
+    Map_Viewer -> Map
+    Navigation -> Scale, Search, Zoom, Locate_Me, Edit_in_OSM
+    User_Profile_Service -> Language
+    Language -> Layers_Style
+    Language -> Analytics
+    Language -> Administrative
+    Language -> Disaster
+    Language -> Disaster_Ninja
+    Language -> Select_Admin_Boundary
+    Language -> Select_Disaster_Area
+
+    Map -> Navigation
+    subgraph _cluster_Focused_Geometry_Selector {
+        color = blue
+        Focused_Geometry_Selector ->
+        Select_Disaster_Area,
+        Select_Freehand_Geometry,
+        Select_Admin_Boundary,
+        Upload_Geometry,
+        Search,
+        Show_World_Data
+
+    }
+    Disaster_Ninja -> Focused_Geometry_Selector
+    Select_Admin_Boundary -> Focused_Geometry
+    Select_Disaster_Area -> Map
+    Select_Admin_Boundary -> Map
+    Select_Freehand_Geometry -> Map
+    Map_Viewer -> Focused_Geometry_Selector
+    Select_Freehand_Geometry -> Scratch_Layer
+    Routing -> Layer_Feature
+    Routing -> User_Layers
+    Embedded_Maps -> Routing
+    Routing -> Routing_UI
+    Routing -> Scratch_Layer
+    Episode_Viewer -> Event_Shape
+    Episode_Viewer -> Timeline
+
+    Analytics -> Simple_Analytics_Panel, Advanced_Analytics_Panel, Bivariate_Manager
+
+    Disaster -> Focused_Geometry
+    Disaster -> Episode
+    Event_Editor -> Event_Viewer
+    Cross_provider_Merger -> Disaster_Feed
+
+    Episode_Viewer -> Episode -> Focused_Geometry -> Analytics
+    Social_Feed -> Timeline
+    Disaster_Feed -> Disaster
+    Disaster_Feed -> show_all_events
+    Disaster_Feed -> customizable_event_list_filters
+    Select_Disaster_Area -> Disaster_Feed
+
+    Bivariate_Manager -> BM_Admin
+
+    Event_Admin -> Event_Viewer
+    Event_Admin -> Event_Editor
+    Event_Admin -> Cross_provider_Merger
+    BM_Admin -> Sentiment_Management
+    BM_Admin -> BM_Legend_Management
+    Administrative -> Event_Admin, Embedded_Maps, BM_Admin, Layer_Management
+
+    Bivariate_Layers -> BM_Legend_Management
+    BM_Legend_Management -> Legend
+    Sentiment_Management -> Legend
+    Layer_Management -> Layers
+
+    Map_Viewer -> Event_Admin
+    Map_Viewer -> Embedded_Maps
+
+    Embedded_Maps -> User_Layers
+    Embedded_Maps -> Layers
+
+    Property -> edit_feature, delete_feature, add_feature
+
+    Scratch_Layer_Draw_Tool -> add_geometry, edit_geometry,  delete_geometry, download_geometry_layer, upload_layer_geometry
+
  subgraph _cluster_layers {
-     
+
      color = blue;
      node [shape = rectangle]
-     
-     
-     
+
      Layers_by_data_type
      Layers -> Layers_by_data_type
      Layers_by_data_type -> Raster
      Layers_by_data_type -> Vector
      Layers_by_data_type -> H3_Grid
-     
-     
+
      Layers -> Layers_Access
      Layers_Access -> User_Layers
      Layers_Access -> Public_Layers
-     
-     
+
+
      Layers -> Layers_Source
      Layers_Source -> Kontur_Layers
      Kontur_Layers -> Event_Shape
      Layers_Source -> Third_Party_Layers
      Layers_Source -> Dynamic_Layers
-     
+
      Layers -> Layers_Stackability
      Layers_Stackability -> Overlays
      Layers_Stackability -> Basemaps
      Layers_Stackability -> Coloring_Overlays
      Coloring_Overlays // coloring overlays are the overlays from which only one can be enabled
-     
+
      Layers -> Layers_Coverage
      Layers_Coverage -> Global_Layers
      Layers_Coverage -> Local_Layers
-     
+
      Coloring_Overlays -> Isochrone
      Coloring_Overlays -> Bivariate_Layers
-     
-     
-     // Analytical_Layers are the layers that have the control     
-     
+
+
+     // Analytical_Layers are the layers that have the control
+
      Layers -> Layers_controlled_by_user
      Layers_controlled_by_user -> Analytical_Layers
      Layers_controlled_by_user -> Non_analytical_layers
-     
+
      Analytical_Layers
      Analytical_Layers -> Isochrone
      Analytical_Layers -> Bivariate_Layers
      Analytical_Layers -> Temporal_Layers
-     
-     Non_analytical_layers
-     
-    
-     Selected_Area
-     Event_Shape
-     
+
+
+
      User_Layers -> upload_imagery
      Raster -> upload_imagery
      User_Layers -> edit_layer
      upload_imagery -> edit_layer
-     
-    
 
-     Dynamic_Layers -> Selected_Area     
+
+
+     Dynamic_Layers -> Selected_Area
      Dynamic_Layers -> Scratch_Layer
      Dynamic_Layers -> Ruler
-    
-     
-     Temporal_Layers 
-     
-     Layers      
+
+     Temporal_Layers
+
+
      Layers -> edit_layer
-     
+
      Scratch_Layer -> edit_layer
-     
-     
-  
-     
+
+     Raster -> STAC_Collection
+
+
+
  }
- 
+
+ upload_imagery -> STAC_Collection
+ Select_Freehand_Geometry -> Scratch_Layer
+ STAC_Collection -> Timeline
  Disaster_Ninja -> Views
  edit_layer -> Property
- 
  Event_Viewer -> Episode_Viewer
- 
- 
  Scratch_Layer -> Scratch_Layer_Draw_Tool
- 
  Bivariate_Layers -> Bivariate_Manager
- 
- 
- 
- 
- edit_layer -> Layers_Style 
- edit_layer -> Layers_Metadata_UI;
- edit_layer -> Scratch_Layer_Draw_Tool;
- Layer_Management -> edit_layers;
- //Scratch_Layer -> add_geometry [lhead = _cluster_Scratch_Layer];
- //Geometry -> User_Layers [lhead = _cluster_layers]; 
+ Bivariate_Layers -> H3_Grid
+ edit_layer -> Layers_Style
+ edit_layer -> Layers_Metadata_UI
+ edit_layer -> Scratch_Layer_Draw_Tool
+ Layer_Management -> edit_layers
  Focused_Geometry -> Local_Layers
- 
- User_Layers -> Layer_Feature [ltail = _cluster_layers]
- Layer_Feature -> edit_feature [lhead = _cluster_Property]
- User_Layers -> Legend [ltail = _cluster_layers]
- Temporal_Layers -> Timeline;
- Isochrone -> Timeline;
- Routing -> Isochrone;
- Layers -> Layers_Metadata_UI 
- 
- Notifications [shape=square]
- 
- Event_Preview_Image_Generator 
- User_Profile_Service -> Event_Preview_Image_Generator
- Event_Preview_Image_Generator -> Layers
- Event_Preview_Image_Generator -> Disaster
- Event_Preview_Image_Generator ->  Simple_Analytics_Panel
- 
- Layers -> Layers_Style 
- User_Profile_Service -> Layers_Style 
- /*
- 
-   subgraph _cluster_Flows {
+ Layers -> Layer_Feature
+ Layer_Feature -> edit_feature
+ Layers -> Legend
+ Temporal_Layers -> Timeline
+ Isochrone -> Timeline
+ Routing -> Isochrone
+ Layers -> Layers_Metadata_UI
 
-     Explore_Specific_Disaster [color = orange] [penwidth = 3];
-     Explore_Area_of_Interest [color = green] [penwidth = 3];
-     label = User_Flows
+ Event_Preview_Image_Generator -> Disaster_Ninja
+ Event_Preview_Image_Generator -> Legend
+ Event_Preview_Image_Generator -> Simple_Analytics_Panel
+ Event_Preview_Image_Generator -> Embedded_Maps
+
+
+ Layers -> Layers_Style
+ User_Profile_Service -> Layers_Style
+
+
+
+
+{
+    edge [penwidth=3,weight=10]
+    subgraph cluster_Flows {
+        Explore_Specific_Disaster [color=orange,penwidth=3]
+        Explore_Area_of_Interest [color=green,penwidth=3]
+        label = User_Flows
+    }
+
+
+    {
+        edge [color=orange]
+
+        Explore_Specific_Disaster
+        -> Disaster_Ninja
+        -> Public
+        -> Map_Viewer
+        -> customizable_event_list_filters
+        -> Disaster
+        -> Timeline
+        -> Episode_Viewer
+        -> Episode
+        -> Focused_Geometry
+        -> Select_Disaster_Area
+        -> Map
+        -> Simple_Analytics_Panel
+        -> Layers
+        -> Local_Layers
+    }
+
+    {
+        edge [color=green]
+
+        Explore_Area_of_Interest
+        -> Disaster_Ninja
+        -> Public
+        -> Map_Viewer
+        -> Search, Locate_Me
+        -> Select_Admin_Boundary
+        -> Select_Freehand_Geometry
+        -> Edit_Selection
+        -> Simple_Analytics_Panel, Advanced_Analytics_Panel, Layers
+    }
+
 }
 
- Explore_Specific_Disaster -> Disaster_Ninja -> Public -> Map_Viewer ->
- Disaster [color = orange] [penwidth = 3]
- 
- Map_Viewer -> Disaster_Feed -> Disaster [color = orange] [penwidth = 3]
- 
- Disaster -> Focused_Geometry_Selector -> Select_Disaster_Area -> Map -> Simple_Analytics_Panel -> 
- Layers -> Public_Layers [color = orange] [penwidth = 3]
- Disaster -> Timeline -> Episode_Viewer -> Episode -> Focused_Geometry [color = orange] [penwidth = 3]
- Disaster -> Episode [color = orange] [penwidth = 3]
- Disaster -> Layers [color = orange] [penwidth = 3]
- 
- Public_Layers -> Analytical_Layers [color = orange] [penwidth = 3]
- 
- Analytical_Layers -> Third_Party_Layers [color = orange] [penwidth = 3]
- Analytical_Layers -> Kontur_Layers [color = orange] [penwidth = 3]
- 
- Third_Party_Layers -> Overlays [color = orange] [penwidth = 3]
- Third_Party_Layers -> Basemaps [color = orange] [penwidth = 3]
- 
- Kontur_Layers -> Overlays [color = orange] [penwidth = 3]
- Kontur_Layers -> Basemaps [color = orange] [penwidth = 3]
-
- Overlays -> Global_Layers [color = orange] [penwidth = 3]
- Overlays -> Local_Layers [color = orange] [penwidth = 3]
- 
- Basemaps -> Global_Layers [color = orange] [penwidth = 3]
- Basemaps -> Local_Layers [color = orange] [penwidth = 3]
- 
-
-
- 
- Explore_Area_of_Interest -> Disaster_Ninja -> Public -> Map_Viewer [color = green] [penwidth = 3]
- 
- Map_Viewer -> Search -> Select_Admin_Boundary [color = green] [penwidth = 3]
- Map_Viewer -> Zoom [color = green] [penwidth = 3]
- Map_Viewer -> Locate_Me -> Map -> Select_Admin_Boundary [color = green] [penwidth = 3]
- Map_Viewer -> Map -> Select_Freehand_Geometry -> Edit_Selection [color = green] [penwidth = 3]
- 
- Select_Admin_Boundary -> Simple_Analytics_Panel ->
- Advanced_Analytics_Panel [color = green] [penwidth = 3]
- Select_Admin_Boundary -> Edit_Selection -> Simple_Analytics_Panel [color = green] [penwidth = 3]
- 
- Simple_Analytics_Panel -> Layers [color = green] [penwidth = 3]
- Advanced_Analytics_Panel -> Layers [color = green] [penwidth = 3] 
- 
- Layers -> Public_Layers -> Analytical_Layers [color = green] [penwidth = 3]
- 
- Analytical_Layers -> Third_Party_Layers [color = green] [penwidth = 3]
- Analytical_Layers -> Kontur_Layers [color = green] [penwidth = 3]
- 
- Third_Party_Layers -> Overlays [color = green] [penwidth = 3]
- Third_Party_Layers -> Basemaps [color = green] [penwidth = 3]
- 
- Kontur_Layers -> Overlays [color = green] [penwidth = 3]
- Kontur_Layers -> Basemaps [color = green] [penwidth = 3]
-
- Overlays -> Global_Layers [color = green] [penwidth = 3]
- Overlays -> Local_Layers [color = green] [penwidth = 3]
- 
- Basemaps -> Global_Layers [color = green] [penwidth = 3]
- Basemaps -> Local_Layers [color = green] [penwidth = 3]
- 
- */
 
 }
