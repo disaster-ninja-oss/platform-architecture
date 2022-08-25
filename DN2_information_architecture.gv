@@ -5,9 +5,9 @@ digraph Information_architecture {
         // things that exist
         node[fillcolor=green,style=filled]
 
-        Advanced_Analytics_Panel [color = red]
+        Advanced_Analytics_Panel [color=red]
         Analytical_Layers
-        Analytics
+        Analytics [shape=rectangle]
         Basemaps
         Bivariate_Layers
         Bivariate_Manager [shape = rectangle]
@@ -27,7 +27,7 @@ digraph Information_architecture {
         H3_Grid
         Intercom [shape=rectangle]
         Kontur_Layers
-        Layers
+        Layers [shape=rectangle]
         Layers_Coverage
         Layers_Source
         Layers_Stackability
