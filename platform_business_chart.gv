@@ -1,0 +1,397 @@
+digraph G {
+    rankdir=LR;
+    //newrank=true;
+    
+    subgraph cluster_legend {
+        label="Legend"
+        
+        
+        "Platform requirement" [color=red]
+        
+        Customer [shape=octagon]
+        "Customer project" 
+        Customer -> "Customer project"
+        "Platform requirement" -> "Customer project"
+        "Customer project" -> "Existing platform component"
+        "Existing platform component" [color=orange]
+        "Existing platform component" -> "Responsible Team"
+        "Customer project" -> "Future platform component" [color=pink]
+        "Future platform component" [color=pink]
+        "Future platform component"  -> "Responsible Team"
+        "Open Source component" [color=green]
+        "Existing platform component" -> "Open Source component"
+        "Open Source component" -> "Responsible Team"
+        "Responsible Team"
+        
+        
+    }
+
+    subgraph _cluster_platform {
+        node[color=red]
+        "Platform"
+        "Platform" -> "Search"
+            "Search" -> "Geocoding"
+            "Search" -> "Layer Index Search"
+        "Platform" -> "Data Catalog"
+            "Data Catalog" -> "3rd Party Catalogs"
+                "3rd Party Catalogs" -> "HDX integration"
+                "3rd Party Catalogs" -> "PDC Command Post integration"
+                "3rd Party Catalogs" -> "PDC GHIN integration"
+            "Data Catalog" -> "Internal layers"
+                "Internal layers" -> "Kontur Provided layers"
+                "Internal layers" -> "OSM-derived layers"
+            "Data Catalog" -> "Customer-provied layers"
+                "Customer-provied layers" -> "Customer's Raster layers"
+                "Customer-provied layers" -> "Customer's Vector layers"
+        "Platform" -> "Analytic tool"
+            "Analytic tool" -> "Insights Engine"
+            "Analytic tool" -> "Common format ready for calculations"
+            "Analytic tool" -> "Convert point layers into polygons"
+                "Convert point layers into polygons" -> "Isochrones"
+        "Platform" -> "Admin Panel"
+        "Platform" -> "Front facing products" 
+        "Front facing products" -> "Map viewer"
+        "Front facing products" -> "Report"
+        "Platform" -> "Alerting"
+            "Alerting" -> "Alerting for analysts"
+            "Alerting for analysts" [label="Alerting for analysts\n(how does this impact company?)"]
+            "Alerting" -> "Alerting for general populaiton"
+            "Alerting for general populaiton" [label="Alerting for general populaiton\n(where do I run?)"]
+        "Platform" -> "Internationalization"
+            "Internationalization" -> "Russian translation"
+            "Internationalization" -> "English translation"
+        "Platform" -> "Actionable Intelligence"
+            "Actionable Intelligence" -> "NICS"
+                "NICS" -> "Realtime collaboration"
+    }
+    
+    subgraph _cluster_teams {
+        rank=same;
+        "Logistics Team"
+        "Layers Team"
+        "Map Viewer Team"
+        "Operations Team"
+        "Insights Team"
+        "Disasters Team"
+    //    "Administration Team"
+    //    "Sales Team"
+        
+    }
+    
+    
+    subgraph _cluster_activities {
+        subgraph _cluster_3party {
+            node[color=green];
+            rank=same;
+            "PostGIS"
+            "OSRM"
+            "pgRouting"
+            "h3 library"
+            "Keycloak"
+            "OpenStreetMap Data"
+            "Kubernetes"
+            "Grafana"
+            "Kibana"
+        }
+        
+        {
+            node[color=orange];
+            "Isochrone API"
+                "Isochrone API" -> "pgRouting"
+                "Isochrone API" -> "OSRM"
+                "Isochrone API" -> "PostGIS"
+                "Isochrone API" -> "OpenStreetMap Data"
+            "Insights API"
+                "Insights API" -> "h3 library"
+                "Insights API" -> "Geocint"
+            "Layers DB"
+            "Layers API" -> "Layers DB"
+            "Layers DB" -> "PostGIS"
+            
+            subgraph _cluster_dn {
+                "Disaster Ninja FE" [label="Disaster Ninja FE\n+ branded builds"]
+                    "Disaster Ninja FE" -> "Disaster Ninja BE"
+                "Disaster Ninja BE"
+                {
+                    rank=same;
+                    "DN2 Analysis mode"
+                    "DN2 Adjustable branding" [label="DN2 Adjustable branding and logon"]    
+                    "DN2 Layer viewer mode"
+                    "DN2 Layer management mode"
+                    "DN2 Event management mode"
+                    "DN2 Report mode" [color=pink]
+                    "DN2 Embedded mode"
+                    "DN2 Slack integration"
+                }
+                
+                "Disaster Ninja FE" -> "DN2 Adjustable branding"
+                    "DN2 Adjustable branding" -> "DN2 as Kontur Disaster Ninja"
+                    "DN2 Adjustable branding" -> "DN2 as PDC Event Brief" [color=pink]
+                        "DN2 as PDC Event Brief" [color=pink]
+                    "DN2 Adjustable branding" -> "DN2 as Swiss Re DRP" [color=pink]
+                        "DN2 as Swiss Re DRP" [color=pink]
+                    "DN2 Adjustable branding" -> "DN2 as DHS NICS" [color=pink]
+                        "DN2 as DHS NICS" [color=pink]
+                    "DN2 Adjustable branding" -> "DN2 as HOT OpenAerialMap" [color=pink]
+                        "DN2 as HOT OpenAerialMap" [color=pink]
+                    "DN2 Adjustable branding" -> "DN2 as HOT Website" [color=pink]
+                        "DN2 as HOT Website" [color=pink]
+                    "DN2 Adjustable branding" -> "DN2 as Beacon" [color=pink]
+                        "DN2 as Beacon" [color=pink]
+                "Disaster Ninja FE" -> "DN2 Analysis mode"
+                "DN2 Analysis mode" -> "DN2 Focus Area providers"
+                    "DN2 Focus Area providers" -> "DN2 Draw tools"
+                    "DN2 Focus Area providers" -> "DN2 Disaster selector"
+                    "DN2 Focus Area providers" -> "DN2 Disaster episode selector"
+                    "DN2 Disaster episode selector" [color=pink]
+                    "DN2 Focus Area providers" -> "DN2 Boundary selector"
+                    "DN2 Focus Area providers" -> "DN2 GeoJSON selector"
+                "DN2 Analysis mode" -> "DN2 Area analytics providers"
+                    "DN2 Area analytics providers" -> "DN2 Layers in Selected Area"
+                    "DN2 Area analytics providers" -> "DN2 Analytics panel"
+                    "DN2 Area analytics providers" -> "DN2 Advanced analytics panel"
+                    "DN2 Area analytics providers" -> "DN2 Bivariate correlations panel"
+                "Disaster Ninja FE" -> "DN2 Layer viewer mode"
+                    "DN2 Layer viewer mode" -> "DN2 Bivariate layer viewer"
+                    "DN2 Layer viewer mode" -> "DN2 MVT layer viewer"
+                    "DN2 Layer viewer mode" -> "DN2 Raster tile layer viewer"
+                    "DN2 COG layer viewer" [color=pink]
+                    "DN2 Layer viewer mode" -> "DN2 COG layer viewer" [color=pink]
+                    "DN2 Layer viewer mode" -> "DN2 Event layer viewer"
+                    "DN2 Layer viewer mode" -> "DN2 Route-to-Point viewer" [color=pink]
+                    "DN2 Route-to-Point viewer" [color=pink]
+                "Disaster Ninja FE" -> "DN2 Layer management mode"
+                    "DN2 Layer management mode" -> "DN2 vector layer management"
+                    "DN2 raster layer management" [color=pink]
+                    "DN2 Layer management mode" -> "DN2 raster layer management" [color=pink]
+                    
+                "Disaster Ninja FE" -> "DN2 Event management mode"
+                "Disaster Ninja FE" -> "DN2 Embedded mode"
+                "Disaster Ninja FE" -> "DN2 Report mode"
+                "Disaster Ninja BE" -> "DN2 Slack integration"
+            }
+            
+            "DN2 Slack integration" -> "Event API"
+            "DN2 Slack integration" -> "Insights API"
+            "DN2 MVT layer viewer" -> "Basemap"
+            "DN2 Bivariate layer viewer" -> "Insights API"
+            "DN2 Raster tile layer viewer" -> "Layers API"
+            "DN2 COG layer viewer" -> "Layers API" [color=pink]
+            "DN2 Route-to-Point viewer" -> "Isochrone API" [color=pink]
+            
+            "DN2 vector layer management" -> "Layers API"
+            "DN2 raster layer management" -> "Layers API" [color=pink]
+            
+            "DN2 as Kontur Disaster Ninja" -> "Keycloak"
+            
+            "DN2 Event layer viewer" -> "Event API"
+            
+            "Disaster Ninja BE" -> "Insights API"
+            "Disaster Ninja BE" -> "Layers API"
+            "Disaster Ninja BE" -> "User Profile API"
+            
+            "Insights API" -> "Isochrone API"
+            
+            "Basemap"
+            "User Profile API"
+                "User Profile API" -> "Keycloak"
+                
+            "Geocint"
+            "Layers DB" -> "Geocint"
+            
+            "Kontur Population"
+                "Kontur Population" -> "Geocint"
+            "Kontur Boundaries"
+                "Kontur Boundaries" -> "Geocint"
+                
+            "Layers DB" -> "Kontur Boundaries"
+            "Insights API" -> "Kontur Population"
+            
+            "Event API"
+            "Event API" -> "Insights API"
+            "Disaster Ninja BE" -> "Event API"
+            
+            
+            "DN2 Disaster selector" -> "Event API"
+            "DN2 Disaster episode selector" -> "Event API"
+            "DN2 Boundary selector" -> "Layers API"
+            "DN2 Boundary selector" -> "Kontur Boundaries"
+            "DN2 Layers in Selected Area" -> "Layers API"
+            "DN2 Analytics panel" -> "Insights API"
+            "DN2 Advanced analytics panel" -> "Insights API"
+            "DN2 Bivariate correlations panel" -> "Insights API"
+            
+            "Basemap" -> "Kubernetes"
+            "Layers DB" -> "Kubernetes" [color=pink]
+            "Layers API" -> "Kubernetes" [color=pink]
+            "Isochrone API" -> "Kubernetes" [color=pink]
+            "Insights API" -> "Kubernetes" [color=pink]
+            "User Profile API" -> "Kubernetes" [color=pink]
+            "Geocoder API" -> "Kubernetes" [color=pink]
+            "Disaster Ninja BE" -> "Kubernetes" [color=pink]
+            "Keycloak" -> "Kubernetes" [color=pink]
+            
+        }
+
+        
+        "Geocoder API" [color=pink]
+        "Geocoder API" -> "Layers DB" [color=pink]
+        "Disaster Ninja BE" -> "Geocoder API" [color=pink]
+        "Layers DB" -> "Basemap"  [color=pink]
+
+    }
+    
+    subgraph _cluster_users {
+        {
+            rank=same;
+            node[shape=octagon]
+            "HOT"    
+            "PDC"
+            "Swiss Re"
+            "Foursquare"
+            "Beacon"
+        }   
+    
+    
+        "HOT" -> "HOT Disaster Activation"
+        "HOT" -> "HOT Activations Landing Page"
+        "HOT" -> "HOT OpenAerialMap v2"
+    
+        "PDC" -> "PDC Event Brief v2"
+        "PDC" -> "PDC - Kontur basemaps"
+    
+        "Swiss Re" -> "SR Rapid Damage Assesment"
+    
+        "Foursquare" -> "Unfolded - Kontur basemaps"
+    
+        "Beacon" -> "Beacon DHS NICS replacement"
+        "Beacon" -> "Beacon Thailand pilot"
+    }
+    
+    "Alerting for analysts" -> "SR Rapid Damage Assesment"
+    "SR Rapid Damage Assesment" -> "Event API"
+    "SR Rapid Damage Assesment" -> "DN2 Analysis mode" [color=pink]
+    "SR Rapid Damage Assesment" -> "DN2 as Swiss Re DRP" [color=pink]
+    
+    
+    "Map viewer" -> "HOT OpenAerialMap v2"
+    "Customer's Raster layers" -> "HOT OpenAerialMap v2"
+    "3rd Party Catalogs" -> "HOT OpenAerialMap v2"
+    "HOT OpenAerialMap v2" -> "DN2 COG layer viewer" [color=pink]
+    "HOT OpenAerialMap v2" -> "DN2 Layer management mode" [color=pink]
+    "HOT OpenAerialMap v2" -> "DN2 raster layer management"  [color=pink]
+    "HOT OpenAerialMap v2" -> "DN2 as HOT OpenAerialMap"  [color=pink]
+    
+    "Report" -> "PDC Event Brief v2"
+    
+    "PDC Event Brief v2" -> "DN2 Report mode" [color=pink]
+    "PDC Event Brief v2" -> "DN2 as PDC Event Brief" [color=pink]
+    "PDC Command Post integration" -> "PDC Event Brief v2"
+    "Admin Panel" -> "PDC Event Brief v2"
+    
+    
+    "PDC Event Brief v2" -> "PDC - Kontur basemaps" [color=pink]
+    "PDC - Kontur basemaps" -> "Basemap"
+    "Unfolded - Kontur basemaps" -> "Basemap"
+    
+    
+    "Map viewer" -> "HOT Activations Landing Page"
+    "HOT Activations Landing Page" -> "DN2 as HOT Website" [color=pink]
+    "HOT Activations Landing Page" -> "DN2 Embedded mode" [color=pink]
+    
+    "HOT Disaster Activation" -> "DN2 Analysis mode"
+    "Alerting for analysts" -> "HOT Disaster Activation"
+    
+    
+    "Alerting for general populaiton" -> "Beacon Thailand pilot"
+    "Beacon Thailand pilot" -> "DN2 Embedded mode" [color=pink]
+    
+    
+    "Realtime collaboration" -> "Beacon DHS NICS replacement"
+    
+    
+    "Platform" -> "Disaster Ninja FE" [weight=10000]
+    
+    //"Alerting for general populaiton" -> "Event API"
+    "Alerting for general populaiton" -> "Isochrone API"
+    //"Alerting for analysts" -> "Event API"
+    "Alerting for analysts" -> "Insights API"
+    "Common format ready for calculations" -> "h3 library"
+    "Isochrones" -> "Isochrone API"
+    "Insights Engine" -> "Insights API"
+    "Realtime collaboration" -> "DN2 Layer management mode" [color=pink]
+    "Layer Index Search" -> "Layers DB" [color=pink]
+    "OSM-derived layers" -> "Layers DB" [color=pink]
+    "Map viewer" -> "DN2 Layer viewer mode"
+    "Report" -> "DN2 Report mode" [color=pink]
+    "Geocoding" -> "Geocoder API"
+    "Kontur Provided layers" -> "Basemap"
+    "Kontur Provided layers" -> "Kontur Population"
+    "Kontur Provided layers" -> "Kontur Boundaries"
+    "Admin Panel" -> "Keycloak"
+    "Russian translation" -> "DN2 Adjustable branding" [color=pink]
+    "English translation" -> "DN2 Adjustable branding"
+    "NICS" -> "DN2 as DHS NICS" [color=pink]
+    "HDX integration" -> "DN2 Layer management mode"
+    "PDC GHIN integration" -> "DN2 Layer management mode"
+    "Beacon DHS NICS replacement" -> "DN2 as DHS NICS" [color=pink]
+    
+    
+    
+    "Geocint" -> "OpenStreetMap Data" 
+    "Alerting" -> "Event API"
+    "Admin Panel" -> "DN2 Layer management mode" [color=pink]
+    "Admin Panel" -> "DN2 Event management mode" [color=pink]
+    
+    "Customer's Vector layers" -> "Layers API"
+    "Customer's Raster layers" -> "Layers API" [color=pink]
+    
+
+    "h3 library" -> "Layers Team"
+    "Layers API" -> "Map Viewer Team"
+    "DN2 Analysis mode" -> "Map Viewer Team"
+    "Disaster Ninja FE" -> "Map Viewer Team"
+    "Disaster Ninja BE" -> "Map Viewer Team"
+    "DN2 as Beacon" -> "Map Viewer Team"
+    "DN2 as HOT Website" -> "Map Viewer Team"
+    "DN2 as PDC Event Brief" -> "Map Viewer Team"
+    "DN2 as Swiss Re DRP" -> "Map Viewer Team"
+    "DN2 as HOT OpenAerialMap" -> "Map Viewer Team"
+    "DN2 as DHS NICS" -> "Map Viewer Team"
+    "Layers DB" -> "Layers Team"
+    "PostGIS" -> "Layers Team"
+    "Geocint" -> "Layers Team"
+    "OpenStreetMap Data" -> "Layers Team"
+    "Basemap" -> "Layers Team"
+    "Event API" -> "Disasters Team"
+    "Insights API" -> "Insights Team"
+    "DN2 Adjustable branding" -> "Map Viewer Team"
+    "DN2 Event management mode" -> "Disasters Team"
+    "DN2 Bivariate layer viewer" -> "Insights Team"
+    "DN2 Embedded mode" -> "Map Viewer Team"
+    "Kubernetes" -> "Operations Team"
+    "Grafana" -> "Operations Team"
+    "Kibana" -> "Operations Team"
+    "Keycloak" -> "Operations Team"
+    "DN2 Report mode" -> "Map Viewer Team"
+    "Isochrone API" -> "Logistics Team"
+    "OSRM" -> "Logistics Team"
+    "pgRouting" -> "Logistics Team"
+    "DN2 raster layer management" -> "Insights Team"
+    "DN2 COG layer viewer" -> "Insights Team"
+    "Geocoder API" -> "Layers Team"
+    "DN2 Route-to-Point viewer" -> "Logistics Team"
+    "DN2 Slack integration" -> "Map Viewer Team"
+    "DN2 Focus Area providers" -> "Map Viewer Team"
+    "DN2 Draw tools" -> "Map Viewer Team"
+    "DN2 Disaster selector" -> "Map Viewer Team"
+    "DN2 Disaster selector" -> "Disasters Team"
+    "DN2 Disaster episode selector" -> "Disasters Team"
+    "DN2 Boundary selector" -> "Map Viewer Team"
+    "DN2 GeoJSON selector" -> "Map Viewer Team"
+    "DN2 Area analytics providers" -> "Map Viewer Team"
+    "DN2 Layers in Selected Area" -> "Map Viewer Team"
+    "DN2 Analytics panel" -> "Map Viewer Team"
+    "DN2 Advanced analytics panel" -> "Insights Team"
+    "DN2 Bivariate correlations panel" -> "Insights Team"
+}
