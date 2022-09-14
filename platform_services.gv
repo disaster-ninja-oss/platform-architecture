@@ -406,6 +406,7 @@ digraph {
     wordpress -> mailchimp
 
     "prometheus02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
+    "grafana02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />main monitoring solution in K8S<BR />K8S</FONT>>]
     "prometheus02" -> grafana02
 
     "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />collects all logs in K8S<BR />K8S</FONT>>]
