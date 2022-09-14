@@ -90,7 +90,17 @@ digraph {
     livedashboard -> kcapi [color=pink]
     livedashboard -> taskingmanagerapi//new
 
-    keycloak [label=<keycloak<BR /><FONT POINT-SIZE="10">ask: Andrei Kucharau</FONT>>]
+
+    "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />K8S</FONT>>]
+    "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />New PG (Paris)</FONT>>]
+    "user-profile-api" -> "user-profile-api-database"
+
+    "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />Deployed with keycloak (AWS)</FONT>>]
+    "user-profile-spi-plugin" -> "user-profile-api-database"
+
+    keycloak -> "user-profile-spi-plugin"
+
+    keycloak [label=<keycloak<BR /><FONT POINT-SIZE="10">ask: Andrei Kucharau<BR />AWS</FONT>>]
     eventapi -> keycloak
     mailchimp -> keycloak  [color=orange]
 
@@ -103,14 +113,14 @@ digraph {
 
 
 
-    "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
-    "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubin</FONT>>]
+    "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S<BR />Open Source</FONT>>]
+    "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin<BR />K8S<BR />Open Source</FONT>>]
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"
     "disaster-ninja-fe" -> kontur_boundaries [color=orange] //updated 2021-10-08
     "disaster-ninja-fe" -> OSM_quality_report [color=orange] //updated 2021-10-08
 
-
+    "disaster-ninja-be" -> "user-profile-api"
     "disaster-ninja-be" -> insightsapi [color=orange]//Accrding to Katya L
     "disaster-ninja-fe" -> insightsapi //according to Sasha Dubinin
     "disaster-ninja-be" -> kcapi [color=orange]
@@ -186,14 +196,16 @@ digraph {
     CSTAPP -> citysplit
     isochroneapi [label=<platform/isochrone-api<BR /><FONT POINT-SIZE="10">ask: Ilya Semichastnov</FONT>>]
     citysplit -> isochroneapi
-    insightsapi //new
+    insightsapi [label=<platform/insightsapi<BR />K8S>] //new
+    insightsapi -> "insightsapi-database"
+    "insightsapi-database" [label=<insightsapi-database<FONT POINT-SIZE="10"><BR />New PG (Paris)</FONT>>]
     /*populationapi [label="platform/population-api"]
     isochroneapi -> populationapi
     populationapi -> konturpopulation*/
     //insightsapi -> konturpopulation //new
     konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi //new
-    insightsapi -> geocint //new
+
     //insightsapi -> k2etl //new ??-no connection according to A.Kalenik
     eventapi -> insightsapi //new
     isochroneapi -> osmroadsegments
@@ -250,6 +262,7 @@ digraph {
     geocint -> facebookroads [color=pink]
     geocint -> msbuildings [color=pink]
     geocint -> geoalertbuildings [color=pink]
+    geocint -> "insightsapi-database"
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
 
@@ -391,14 +404,18 @@ digraph {
     konturwebsite -> wordpress
 
     wordpress -> mailchimp
-    kibana [label=<kibana<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>]
+
+    "prometheus02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
+    "prometheus02" -> grafana02
+
+    "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />collects all logs in K8S<BR />K8S</FONT>>]
+    "fluent-bit" -> kibana
+
+    kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>]
     Kontur -> kibana //updated 2021-10-08
-    kibana -> livedashboard //updated 2021-10-08
-    kibana -> insightsapi//updated 2021-10-08
-    kibana -> eventapi//updated 2021-10-08
-    kibana -> isochroneapi//updated 2021-10-08
-
-
+    livedashboard -> kibana //updated 2021-10-08
+    eventapi -> kibana//updated 2021-10-08
+    isochroneapi -> kibana//updated 2021-10-08
 
     //konturiorest
     //konturioui -> konturiorest
