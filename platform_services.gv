@@ -113,6 +113,8 @@ digraph {
 
 
 
+    "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S</FONT>>]
+
     "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S<BR />Open Source</FONT>>]
     "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin<BR />K8S<BR />Open Source</FONT>>]
 
@@ -121,6 +123,7 @@ digraph {
     "disaster-ninja-fe" -> OSM_quality_report [color=orange] //updated 2021-10-08
 
     "disaster-ninja-be" -> "user-profile-api"
+    "disaster-ninja-be" -> "event-preview-image-generator"
     "disaster-ninja-be" -> insightsapi [color=orange]//Accrding to Katya L
     "disaster-ninja-fe" -> insightsapi //according to Sasha Dubinin
     "disaster-ninja-be" -> kcapi [color=orange]
