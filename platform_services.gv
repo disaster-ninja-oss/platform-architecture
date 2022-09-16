@@ -95,7 +95,7 @@ digraph {
 
 
     "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />K8S</FONT>>]
-    "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />New PG (Paris)</FONT>>]
+    "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />Paris PG</FONT>>]
     "user-profile-api" -> "user-profile-api-database"
 
     "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />Deployed with keycloak (AWS)</FONT>>]
@@ -218,7 +218,7 @@ digraph {
     citysplit -> isochroneapi
     insightsapi [label=<platform/insightsapi<BR />K8S>] //new
     insightsapi -> "insightsapi-database"
-    "insightsapi-database" [label=<insightsapi-database<FONT POINT-SIZE="10"><BR />New PG (Paris)</FONT>>]
+    "insightsapi-database" [label=<insightsapi-database<FONT POINT-SIZE="10"><BR />Paris PG</FONT>>]
     /*populationapi [label="platform/population-api"]
     isochroneapi -> populationapi
     populationapi -> konturpopulation*/
@@ -283,7 +283,7 @@ digraph {
     geocint -> facebookroads [color=pink]
     geocint -> msbuildings [color=pink]
     geocint -> geoalertbuildings [color=pink]
-    geocint -> "insightsapi-database"
+    "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
 
