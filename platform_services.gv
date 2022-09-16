@@ -41,6 +41,7 @@ digraph {
         ghs [label="GHSL Global Human Settlement",color=blue]
         gadm [label="gadm.org",color=blue]
         hotactivations [label="HOT Projects",color=blue]
+        hotactivationscsv [label="HOT Activateions CSV",color=blue]
         osmlayers [label="OpenStreetMap Editor Layer Index",color=blue]
         osmcommunities [label="OpenStreetMap Communities Index",color=blue]
         pdcdisasters [label="PDC Disaster feed",color=blue]
@@ -51,6 +52,8 @@ digraph {
         japantornado [label="Japan Tornado", color=blue] //new??
         firehydrants [label="Fire Hydrants", color=blue] //new
         osmnominatim [label="OSM Nominatim", color=blue]
+        unhcrukrainerefugee [label="UNHCR Ukraine Refugee", color=blue]
+        idpestimates [label="Ukraine: IDP Estimates", color=blue]
 
     }
 
@@ -121,6 +124,7 @@ digraph {
     "disaster-ninja-fe" ->  "disaster-ninja-be"
     "disaster-ninja-fe" -> kontur_boundaries [color=orange] //updated 2021-10-08
     "disaster-ninja-fe" -> OSM_quality_report [color=orange] //updated 2021-10-08
+    "disaster-ninja-fe" -> "layers-tiles-api"
 
     "disaster-ninja-be" -> "user-profile-api"
     "disaster-ninja-be" -> "event-preview-image-generator"
@@ -128,6 +132,7 @@ digraph {
     "disaster-ninja-fe" -> insightsapi //according to Sasha Dubinin
     "disaster-ninja-be" -> kcapi [color=orange]
     "disaster-ninja-be" -> eventapi [color=orange]
+    "disaster-ninja-be" -> "Layers-API"
 
     "disaster-ninja-be" -> "twitter-images-be" [color=orange]
     "twitter-images-be" -> eventapi [color=orange]
@@ -137,6 +142,18 @@ digraph {
 
     disasterninja -> "disaster-ninja-fe" [color=orange]
 
+    "Layers-API" [label=<Layers-API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
+    "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S</FONT>>]
+    "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
+    "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
+
+    "Layers-API" -> "layers-db"
+    "layers-tiles-api" -> "layers-db"
+    "layers-db" -> "layers-etl"
+    "layers-etl" -> hotactivations
+    "layers-etl" -> osmcontributors
+    "layers-etl" -> unhcrukrainerefugee
+    "layers-etl" -> idpestimates
 
     gdacs -> jrc
     ghs -> jrc
@@ -214,6 +231,7 @@ digraph {
     isochroneapi -> osmroadsegments
     osmroadsegments -> geocint
     buildingsminsk -> geocint
+    osmcontributors -> geocint
     addressesminsk -> geocint
     {
     // Global datasets
@@ -221,7 +239,7 @@ digraph {
         bivariatestat [label="Bivariate Stat Tiles"] [label=<Bivariate Stat Tiles<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
         osmroadsegments [label="OSM Road Segments"]
         konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
-
+        osmcontributors [label="OSM Active Contributors"]
     }
     {
     // Minsk datasets
@@ -271,7 +289,6 @@ digraph {
 
     osmboundaries
     osmboundaries -> geocint
-    kcdataetl -> osmboundaries
 
     //grafana [label="Grafana on Geocint"]
     //Kontur -> grafana
@@ -281,7 +298,7 @@ digraph {
     CSTAPP -> kccitysplitfe
     kccovid19fe [color=orange]
     eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Ekaterina Grudinskaya</FONT>>]
-    kcapi  [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Kira Stsepina</FONT>>]
+    kcapi  [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
     eventapi -> gdacs
     eventapi -> firms //new
     eventapi -> noaa //new
@@ -299,13 +316,13 @@ digraph {
     kcdonerking -> kcdataetl
     kcfirebrigade -> kcdataetl
     kcdataetl -> hotactivations
+    kcdataetl -> hotactivationscsv
 //    hotactivations -> HOT
     kcdataetl -> osmcommunities
     kcdataetl -> osmlayers
-    kcdataetl -> addressesminsk
-    kcdataetl -> buildingsminsk
     kcdataetl -> k2etl
-    kcdataetl -> firehydrants //
+    kcdataetl -> osmboundaries
+    kcdataetl -> firehydrants
     mchs -> mchsapp
     kcfirebrigadefe
     mchsapp -> kcfirebrigadefe
