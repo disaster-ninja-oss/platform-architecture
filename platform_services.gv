@@ -265,7 +265,7 @@ digraph {
     geocint -> facebookroads [color=pink]
     geocint -> msbuildings [color=pink]
     geocint -> geoalertbuildings [color=pink]
-    geocint -> "insightsapi-database"
+    "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
 
