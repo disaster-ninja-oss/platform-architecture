@@ -1,0 +1,347 @@
+digraph Information_architecture {
+    compound = True
+   
+/*subgraph cluster_Legend {
+    Information_Architecture_Legend ->
+        Persona, 
+        User_Flow, 
+        Entity, 
+        action,
+        Login_Feature, 
+        Problem_Feature
+
+action [shape = rectangle]
+Login_Feature [color = red] 
+Problem_Feature [style = filled]
+Persona [penwidth = 2]
+User_Flow [color = orange, penwidth = 2]
+}*/
+
+subgraph cluster_personas {
+
+HOT_Activator,
+HOT_Community_Manager,
+OSM_Mapper,
+Logistics_Manager,
+Disaster_Analyst,
+GIS_Analyst,
+Kontur_Potential_Client,
+Kontur_Admin,
+Kontur_Marketing,
+Raster_Imagery_Contributor
+[penwidth = 2]
+
+}
+
+Advanced_Analytics [color = red]
+Color_Editor [color = red]
+Exit_Disaster_Ninja [shape = square]
+Bivariate_Matrix [color = red]
+
+login [color = red, pin = true]
+edit_bivariate_sentiments [color = red, shape=rectangle]
+create_layer [color = red, shape = rectangle]
+upload_raster_layer [color = red]
+create_feature [color = red, shape = rectangle]
+search [shape = rectangle]
+create_feature_attribute [color = red, shape = rectangle] 
+deselect_focused_geometry [shape = rectangle, style = filled]
+download_geometry [shape = rectangle]
+upload_geometry [shape = rectangle]
+select_freehand_polygon [shape = rectangle]
+select_admin_boundary [shape = rectangle]
+edit_in_OSM [shape = rectangle]
+locate_me [shape = rectangle]
+search [shape = rectangle, style = filled]
+share [shape = rectangle, style = filled]
+create_embedded_map [shape = rectangle, style = filled]
+filter_events [shape = rectangle]
+select_event [shape = rectangle]
+deselect_focused_geometry [style = filled]
+measure_area [shape = rectangle, style = filled]
+
+{
+ edge [color = orange, penwidth = 2, weight = 10]
+ 
+ Explore_Disaster_Episodes [color = orange, penwidth = 2]
+ 
+ Disaster_Analyst
+ -> Explore_Disaster_Episodes 
+ -> Event_Feed
+ -> filter_events
+ -> select_event 
+ -> Event_Geometry
+ -> Legend
+ -> Focused_Geometry
+ -> Analytics
+ -> Timeline
+ -> Event_Episode 
+ -> Episode_Geometry
+ -> Raster_Layers
+ -> Analytics
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = green, penwidth = 2, weight = 10]
+ 
+ Explore_My_Location_Area [color = green, penwidth = 2]
+ 
+ GIS_Analyst
+ -> Explore_My_Location_Area 
+ -> login
+ -> locate_me 
+ -> select_admin_boundary
+ -> Focused_Geometry
+ -> Analytics
+ -> Advanced_Analytics
+ -> Layers
+ -> Legend
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = purple, penwidth = 2, weight = 10]
+ 
+ Explore_My_Location_Disasters [color = purple, penwidth = 2]
+ 
+ Disaster_Analyst
+ -> Explore_My_Location_Disasters 
+ -> locate_me
+ -> Event_Feed
+ -> filter_events
+ -> select_event
+ -> Event_Geometry
+ -> Layers
+ -> Legend
+ Exit_Disaster_Ninja
+ 
+ }
+
+{
+ edge [color = pink, penwidth = 2, weight = 10]
+ 
+ Explore_AOI [color = pink, penwidth = 2]
+ 
+ GIS_Analyst
+ -> Explore_AOI 
+ -> login
+ -> search 
+ -> select_admin_boundary
+ -> Focused_Geometry
+ -> Advanced_Analytics
+ -> Layers
+ -> Legend
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = violet, penwidth = 2, weight = 10]
+ 
+ Explore_Disasters_in_AOI [color = violet, penwidth = 2]
+
+ Disaster_Analyst 
+ -> Explore_Disasters_in_AOI 
+ -> Event_Feed
+ -> filter_events
+ -> select_event
+ -> Event_Geometry
+ -> Legend
+ -> Focused_Geometry
+ -> Analytics
+ -> Layers
+ -> Legend
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = grey, penwidth = 2, weight = 10]
+ 
+ Create_Embedded_Map [color = grey, penwidth = 2]
+
+ Logistics_Manager
+ -> Create_Embedded_Map
+ -> login
+ -> search
+ -> create_layer
+ -> create_feature
+ -> create_feature_attribute 
+ -> create_embedded_map 
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = navy, penwidth = 2, weight = 10]
+ 
+ Create_Map_with_Uploaded_Dataset [color = navy, penwidth = 2]
+
+ Logistics_Manager 
+ -> Create_Map_with_Uploaded_Dataset 
+ -> login 
+ -> upload_geometry 
+ -> create_layer 
+ -> create_feature 
+ -> create_feature_attribute 
+ -> create_embedded_map 
+ -> Exit_Disaster_Ninja
+ 
+}
+
+{
+ edge [color = maroon, penwidth = 2, weight = 10]
+ 
+ Define_Activation_Area [color = maroon, penwidth = 2]
+ 
+ HOT_Activator 
+ -> Define_Activation_Area 
+ -> Notifications 
+ -> Event_Geometry 
+ -> Focused_Geometry 
+ -> Urban_Core_Layer 
+ -> Settled_Periphery_Layer 
+ -> OSM_Quantity_Layers 
+ -> OSM_Antiquity_Layer 
+ -> deselect_focused_geometry 
+ -> Raster_Layers 
+ -> select_freehand_polygon 
+ -> download_geometry 
+ -> Exit_Disaster_Ninja
+ 
+ }
+ 
+ {
+ edge [color = blue, penwidth = 2, weight = 10]
+ 
+ Define_HOT_Project_Area [color = blue, penwidth = 2]
+ 
+ HOT_Community_Manager 
+ -> Define_HOT_Project_Area 
+ -> search 
+ -> select_admin_boundary 
+ -> HOT_Projects_Layer 
+ -> Urban_Core_Layer 
+ -> Settled_Periphery_Layer 
+ -> OSM_Quantity_Layers 
+ -> OSM_Antiquity_Layer 
+ -> deselect_focused_geometry 
+ -> select_freehand_polygon 
+ -> measure_area 
+ -> download_geometry 
+ -> Communities 
+ -> Exit_Disaster_Ninja
+ 
+ }
+ 
+ {
+ edge [color = yellow, penwidth = 2, weight = 10]
+ 
+ Define_Mapping_Area [color = yellow, penwidth = 2]
+ 
+ OSM_Mapper 
+ -> Define_Mapping_Area 
+ -> locate_me 
+ -> Active_Contributors_Layer 
+ -> Bivariate_Layers 
+ -> edit_in_OSM 
+ -> Exit_Disaster_Ninja
+ 
+ }
+ 
+ {
+ edge [color = lightblue, penwidth = 2, weight = 10]
+ 
+ Familirize_with_DN [color = lightblue, penwidth = 2]
+ 
+ Kontur_Potential_Client ->
+ Familirize_with_DN ->
+ About ->
+ locate_me ->
+ Focused_Geometry ->
+ Analytics ->
+ Exit_Disaster_Ninja
+ 
+ }
+ 
+  {
+ edge [color = darkgreen, penwidth = 2, weight = 10]
+ 
+ Edit_Bivariate_Sentiments [color = darkgreen, penwidth = 2]
+ 
+ Kontur_Admin ->
+ Edit_Bivariate_Sentiments ->
+ login ->
+ Color_Editor ->
+ edit_bivariate_sentiments ->
+ Layers ->
+ Legend ->
+ Exit_Disaster_Ninja
+ 
+ }
+ 
+ {
+ edge [color = indigo, penwidth = 2, weight = 10]
+ 
+ Calculate_Uploaded_Geometry_Analytics [color = indigo, penwidth = 2]
+ 
+ HOT_Activator, GIS_Analyst
+ -> Calculate_Uploaded_Geometry_Analytics 
+ -> upload_geometry 
+ -> Focused_Geometry 
+ -> Analytics 
+ -> Exit_Disaster_Ninja
+ 
+ }
+ 
+ {
+ edge [color = brown, penwidth = 2, weight = 10]
+ 
+ Make_Screenshot_with_Disaster [color = brown, penwidth = 2]
+ 
+ Kontur_Marketing
+ -> Make_Screenshot_with_Disaster
+ -> Event_Feed 
+ -> filter_events 
+ -> select_event 
+ -> Focused_Geometry 
+ -> Analytics 
+ -> Event_Geometry 
+ -> Legend 
+ -> share 
+ -> Exit_Disaster_Ninja
+}
+
+{
+ edge [color = khaki, penwidth = 2, weight = 10]
+ 
+ Explore_Bivariate_Matrix [color = khaki, penwidth = 2]
+ 
+ GIS_Analyst
+ -> Explore_Bivariate_Matrix 
+ -> login 
+ -> Bivariate_Matrix 
+ -> Bivariate_layers 
+ -> Legend 
+ -> Exit_Disaster_Ninja
+ 
+}
+
+ {
+ edge [color = red, penwidth = 2, weight = 10]
+ 
+ Upload_Raster_Imagery [color = red, penwidth = 2]
+ 
+ Raster_Imagery_Contributor
+ -> Upload_Raster_Imagery
+ -> login
+ -> upload_raster_layer
+ -> Raster_Layers
+ -> Exit_Disaster_Ninja
+}
+
+ 
+}
