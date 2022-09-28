@@ -89,6 +89,7 @@ digraph {
     subgraph cluster_k8s {
         label="k8s cluster"
         "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S</FONT>>]
+        "Layers-API" [label=<Layers-API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
         "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S<BR />Open Source</FONT>>]
         "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin<BR />K8S<BR />Open Source</FONT>>]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />K8S</FONT>>]
@@ -147,7 +148,6 @@ digraph {
 
     disasterninja -> "disaster-ninja-fe" [color=orange]
 
-    "Layers-API" [label=<Layers-API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
     "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
     "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
 
