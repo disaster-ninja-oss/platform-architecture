@@ -98,6 +98,7 @@ digraph {
         "prometheus02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />main monitoring solution in K8S<BR />K8S</FONT>>]
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />collects all logs in K8S<BR />K8S</FONT>>]
+        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<br/>K8S</FONT>>]
     }
 
     k2geocoder -> osmnominatim
@@ -148,7 +149,7 @@ digraph {
 
     disasterninja -> "disaster-ninja-fe" [color=orange]
 
-    "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik</FONT>>]
+   
     "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
 
     "Layers-API" -> "layers-db"
