@@ -88,6 +88,7 @@ digraph {
 
     subgraph cluster_k8s {
         label="k8s cluster"
+        "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">reverse proxy and load balancer<br/>K8S</FONT>>]
         "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S</FONT>>]
         "Layers-API" [label=<Layers-API<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S</FONT>>]
         "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">ask: Alexander Zapasnik<BR />K8S<BR />Open Source</FONT>>]
@@ -147,9 +148,10 @@ digraph {
     "HOT Slack" -> "disaster-ninja-be" [color=orange]
     //"disaster-ninja-be" -> socialfeed
 
-    disasterninja -> "disaster-ninja-fe" [color=orange]
+    "disasterninja" -> "nginx" [color=orange]
+    "nginx" -> "nginx-ingress-controller" [color=orange]
+    "nginx-ingress-controller" -> "disaster-ninja-fe" [color=orange]
 
-   
     "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
 
     "Layers-API" -> "layers-db"
@@ -432,6 +434,8 @@ digraph {
     "prometheus02" -> grafana02
 
     "fluent-bit" -> kibana
+
+    nginx [label=<nginx>]
 
     kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>]
     Kontur -> kibana //updated 2021-10-08
