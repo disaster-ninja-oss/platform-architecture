@@ -1,0 +1,362 @@
+digraph G {
+
+  subgraph cluster_0 {
+    color=lightgray;
+    node [shape=rectangle,color=white, penwidth=2];
+    read_only_user, NICS_user, GIS_user, admin, super_user;
+    label = "Roles";
+  }
+  
+   /* {
+    node [shape=oval,style=filled,color=gray];
+    registration, login, organization, incident, room, layer_feature, map, report, document, tracking,
+    feature_timeline, chat, weather, census
+  }*/
+  
+    subgraph user_actions {
+    style=filled;
+    color=lightgrey;
+    node [shape=rectangle,style=filled,color=white];
+    cru_incident, cru_room, export_room, print_map, send_message, send_announcement, send_alert,
+    crud_user, crud_organization, crud_incident_type, crud_region, crud_translation, crud_symbology,
+    crud_feature, crud_report, crud_document, download_document, share_workspace, search_location,
+    crud_stream, crud_alert, crud_announcement, search_incident, escalate_incident, change_user_role,
+    add_data_to_room, import_data, search_organization, change_user_role, upload_photo,
+    crud_feature_attribute, archive_incident, enable_disable_organization, edit_comment, edit_color, 
+    change_opacity, mark_as_hazard, edit_label, edit_description, zoom_box, zoom_in_out,
+    edit_hazard_label, edit_hazard_type, edit_radius, edit_first_name, edit_last_name, edit_job_title, 
+    edit_rank, edit_job_description, select_language, view_organization, view_username,
+    select_user_role, receive_message, undo_redo, copy_paste, enable_disable_user,
+    receive_announcement, receive_alert, upload_document, reset_password,
+    drag_map, receive_notification, move_other_users_position, allow_users_move_map, send_feedback,
+    measure_area, measure_distance, enable_disable_incident_type, enable_disable_report
+  }
+  
+      
+  subgraph admin {
+    edge [color = gray, penwidth = 2, weight = 10];
+    admin [color = gray];
+    admin -> 
+    registration ->
+    login ->
+    organization ->
+    incident, workspace, data, document
+    registration ->
+    reset_password
+    incident -> 
+    room, data, stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    incident_type ->
+    enable_disable_incident_type ->
+    organization
+    notification ->
+    receive_notification
+    cru_incident ->
+    enable_disable_organization
+    room ->
+    cru_room, export_room, user, layer
+    user_profile ->
+    view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
+    edit_job_description, select_language, 
+    select_user_role
+    select_language ->
+    language
+    room ->
+    chat, map, active_user, document
+    chat ->
+    group_chat, one_on_one_chat ->
+    send_message, receive_message
+    active_user ->
+    invite_to_chat ->
+    chat
+    layer_feature ->
+    crud_feature, select_feature, rotate_feature, feature_timeline, shape, line, fire_line,
+    label, symbology, search_cone
+    crud_feature ->
+    undo_redo, copy_paste
+    report ->
+    crud_report, enable_disable_report
+    enable_disable_report ->
+    organization
+    workspace ->
+    share_workspace, map
+    organization ->
+    map ->
+    print_map, map_navigation, layer
+    map_navigation ->
+    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map,
+    measure_area, measure_distance
+    selected_area ->
+    weather, census
+    document ->
+    upload_document, crud_document, download_document
+    stream ->
+    crud_stream
+    layer ->
+    legend
+    alert ->
+    crud_alert, send_alert, receive_alert
+    announcement ->
+    crud_announcement, send_announcement, receive_announcement
+    data ->
+    add_data_to_room, import_data, layer
+    layer ->
+    tracking, weather, selected_area, user_layer
+    layer ->
+    layer_feature
+    user ->
+    user_profile
+    layer ->
+    basemap
+    feature_attribute ->
+    crud_feature_attribute ->
+    edit_label, edit_description, upload_photo, edit_comment, edit_color, change_opacity,
+    mark_as_hazard
+    escalate_incident ->
+    parent_organization ->
+    organization
+    line ->
+    feature_attribute, thick, medium, thin, dashed, freehand
+    fire_line ->
+    feature_attribute, freehand
+    shape ->
+    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon ->
+    freehand
+    label ->
+    feature_attribute
+    mark_as_hazard ->
+    edit_hazard_label, edit_hazard_type, edit_radius
+    user ->
+    enable_disable_user
+    registration
+  }
+
+  subgraph GIS_user {
+    edge [color = green, penwidth = 2, weight = 10];
+    GIS_user [color = green];
+    GIS_user -> 
+    registration ->
+    login ->
+    organization ->
+    incident, workspace, data, document
+    registration ->
+    reset_password
+    incident -> 
+    room, data, stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    notification ->
+    receive_notification
+    cru_incident ->
+    enable_disable_organization
+    room ->
+    cru_room, export_room, user, layer
+    user_profile ->
+    view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
+    edit_job_description, select_language, 
+    select_user_role
+    select_language ->
+    language
+    room ->
+    chat, map, active_user, document
+    chat ->
+    group_chat, one_on_one_chat ->
+    send_message, receive_message
+    active_user ->
+    invite_to_chat ->
+    chat
+    layer_feature ->
+    crud_feature, select_feature, rotate_feature, feature_timeline, shape, line, fire_line,
+    label, symbology, search_cone
+    crud_feature ->
+    undo_redo, copy_paste
+    report ->
+    crud_report
+    workspace ->
+    share_workspace, map
+    organization ->
+    map ->
+    print_map, map_navigation, layer
+    map_navigation ->
+    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map,
+    measure_area, measure_distance
+    selected_area ->
+    weather, census
+    document ->
+    upload_document, crud_document, download_document
+    stream ->
+    crud_stream
+    layer ->
+    legend
+    alert ->
+    crud_alert, send_alert, receive_alert
+    announcement ->
+    crud_announcement, send_announcement, receive_announcement
+    data ->
+    add_data_to_room, import_data, layer
+    layer ->
+    tracking, weather, selected_area, user_layer
+    layer ->
+    layer_feature
+    user ->
+    user_profile
+    layer ->
+    basemap
+    feature_attribute ->
+    crud_feature_attribute ->
+    edit_label, edit_description, upload_photo, edit_comment, edit_color, change_opacity,
+    mark_as_hazard
+    escalate_incident ->
+    parent_organization ->
+    organization
+    line ->
+    feature_attribute, thick, medium, thin, dashed, freehand
+    fire_line ->
+    feature_attribute, freehand
+    shape ->
+    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon ->
+    freehand
+    label ->
+    feature_attribute
+    mark_as_hazard ->
+    edit_hazard_label, edit_hazard_type, edit_radius
+    registration
+  }
+  
+  
+    subgraph NICS_user {
+    edge [color = blue, penwidth = 2, weight = 10];
+    NICS_user [color = blue];
+    NICS_user -> 
+    registration ->
+    login ->
+    organization ->
+    incident, workspace, data, document
+    registration ->
+    reset_password
+    incident -> 
+    room, data, stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    notification ->
+    receive_notification
+    cru_incident ->
+    enable_disable_organization
+    room ->
+    cru_room, export_room, user, layer
+    user_profile ->
+    view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
+    edit_job_description, select_language, 
+    select_user_role
+    select_language ->
+    language
+    room ->
+    chat, map, active_user, document
+    chat ->
+    group_chat, one_on_one_chat ->
+    send_message, receive_message
+    active_user ->
+    invite_to_chat ->
+    chat
+    layer_feature ->
+    crud_feature, select_feature, rotate_feature, feature_timeline, shape, line, fire_line,
+    label, symbology, search_cone
+    crud_feature ->
+    undo_redo, copy_paste
+    report ->
+    crud_report
+    workspace ->
+    share_workspace, map
+    organization ->
+    map ->
+    print_map, map_navigation, layer
+    map_navigation ->
+    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map,
+    measure_area, measure_distance
+    selected_area ->
+    weather, census
+    document ->
+    upload_document, crud_document, download_document
+    stream ->
+    crud_stream
+    layer ->
+    legend
+    alert ->
+    crud_alert, send_alert, receive_alert
+    announcement ->
+    crud_announcement, send_announcement, receive_announcement
+    data ->
+    add_data_to_room, layer
+    layer ->
+    tracking, weather, selected_area, user_layer
+    layer ->
+    layer_feature
+    user ->
+    user_profile
+    layer ->
+    basemap
+    feature_attribute ->
+    crud_feature_attribute ->
+    edit_label, edit_description, upload_photo, edit_comment, edit_color, change_opacity,
+    mark_as_hazard
+    escalate_incident ->
+    parent_organization ->
+    organization
+    line ->
+    feature_attribute, thick, medium, thin, dashed, freehand
+    fire_line ->
+    feature_attribute, freehand
+    shape ->
+    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon ->
+    freehand
+    label ->
+    feature_attribute
+    mark_as_hazard ->
+    edit_hazard_label, edit_hazard_type, edit_radius
+    registration
+  }
+          
+  subgraph super_user {
+    edge [penwidth = 2, weight = 10];
+    super_user [color = darkgray];
+    super_user -> 
+    login ->
+    organization, user, symbology, incident_type, region, translation, send_feedback
+    registration ->
+    reset_password
+    organization ->
+    user
+    user ->
+    crud_user, change_user_role
+    organization ->
+    crud_organization, search_organization
+    translation ->
+    crud_translation, language
+    region ->
+    crud_region
+    incident_type ->
+    crud_incident_type
+    symbology ->
+    crud_symbology
+    
+  }
+    subgraph read_only_user {
+    edge [color = red, penwidth = 2, weight = 10];
+    read_only_user [color = red];
+    read_only_user ->
+    registration ->
+    login ->
+    organization ->
+    incident ->
+    room ->
+    chat ->
+    group_chat ->
+    receive_message
+    room ->
+    map ->
+    layer
+    registration ->
+    reset_password
+  }
+}
