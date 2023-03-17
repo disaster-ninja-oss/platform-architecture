@@ -7,12 +7,6 @@ digraph G {
     label = "Roles";
   }
   
-   /* {
-    node [shape=oval,style=filled,color=gray];
-    registration, login, organization, incident, room, layer_feature, map, report, document, tracking,
-    feature_timeline, chat, weather, census
-  }*/
-  
     subgraph user_actions {
     style=filled;
     color=lightgrey;
@@ -30,8 +24,7 @@ digraph G {
     receive_announcement, receive_alert, upload_document, reset_password,
     drag_map, receive_notification, move_other_users_position, allow_users_move_map, send_feedback,
     measure_area, measure_distance, enable_disable_incident_type, enable_disable_report
-  }
-  
+  } 
       
   subgraph admin {
     edge [color = gray, penwidth = 2, weight = 10];
@@ -222,8 +215,7 @@ digraph G {
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
     registration
-  }
-  
+  } 
   
     subgraph NICS_user {
     edge [color = blue, penwidth = 2, weight = 10];
