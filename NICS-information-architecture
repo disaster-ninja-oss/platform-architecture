@@ -133,6 +133,7 @@ digraph G {
     feature_timeline, 
     map_navigation,
     registration, 
+    tracking,
     translation,  
     user_layer
   }
@@ -170,7 +171,6 @@ digraph G {
     symbology, 
     thick,
     thin,
-    tracking,
     triangle,
     weather
   }
