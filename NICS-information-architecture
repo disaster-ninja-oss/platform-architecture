@@ -38,7 +38,7 @@ digraph G {
     edit_job_title, edit_rank, receive_message, undo_redo, copy_paste, enable_disable_user,
     receive_announcement, receive_alert, upload_document, reset_password, invite_to_chat,
     receive_notification, move_other_users_position, allow_users_move_map,
-    measure_area, enable_disable_incident_type, enable_disable_report
+    measure_area, enable_disable_incident_type, enable_disable_report, secure_room
   }
   
     subgraph developed {
@@ -87,7 +87,7 @@ digraph G {
     cru_incident ->
     enable_disable_organization
     room ->
-    cru_room, export_room, user, layer
+    cru_room, secure_room, export_room, user, layer
     user_profile ->
     view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
     edit_job_description, select_language, 
@@ -180,7 +180,7 @@ digraph G {
     cru_incident ->
     enable_disable_organization
     room ->
-    cru_room, export_room, user, layer
+    cru_room, secure_room, export_room, user, layer
     user_profile ->
     view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
     edit_job_description, select_language, 
@@ -269,7 +269,7 @@ digraph G {
     cru_incident ->
     enable_disable_organization
     room ->
-    cru_room, export_room, user, layer
+    cru_room, secure_room, export_room, user, layer
     user_profile ->
     view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
     edit_job_description, select_language, 
