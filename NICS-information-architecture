@@ -1,6 +1,6 @@
 digraph G {
 
-  subgraph cluster_0 {
+  subgraph cluster_roles {
     color=lightgray;
     node [shape=rectangle,color=white, penwidth=2];
     read_only_user, NICS_user, GIS_user, admin, super_user;
@@ -30,7 +30,7 @@ digraph G {
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=pink];
     cru_incident, cru_room, export_room, send_message, send_announcement, send_alert,
-    crud_region, crud_symbology, crud_report, crud_document, download_document, share_user_layer, 
+    crud_region, crud_symbology, crud_report, upload_document, update_document, download_document, share_user_layer, 
     crud_live_stream, crud_alert, crud_announcement, escalate_incident,
     add_data_to_room, search_organization, archive_incident, enable_disable_organization,
     edit_comment, edit_color, change_opacity, mark_as_hazard, edit_label, edit_description, 
@@ -122,7 +122,7 @@ digraph G {
     selected_area ->
     weather, census
     document ->
-    upload_document, crud_document, download_document
+    upload_document, update_document, download_document
     live_stream ->
     crud_live_stream
     layer ->
@@ -215,7 +215,7 @@ digraph G {
     selected_area ->
     weather, census
     document ->
-    upload_document, crud_document, download_document
+    upload_document, update_document, download_document
     live_stream ->
     crud_live_stream
     layer ->
@@ -306,7 +306,7 @@ digraph G {
     selected_area ->
     weather, census
     document ->
-    upload_document, crud_document, download_document
+    upload_document, update_document, download_document
     live_stream ->
     crud_live_stream
     layer ->
@@ -374,10 +374,7 @@ digraph G {
     group_chat ->
     receive_message
     layer_feature ->
-    feature_timeline, shape, line, fire_line,
-    label, symbology, search_cone
-    report
-    map
+    feature_timeline, select_feature, search_cone
     organization ->
     map ->
     print_map, map_navigation, layer
@@ -405,6 +402,8 @@ digraph G {
     basemap
     layer_feature ->
     feature_attribute
+    report ->
+    crud_report
   }
   
   subgraph super_user {
