@@ -14,7 +14,7 @@ digraph G {
     cru_incident, cru_room, export_room, print_map, send_message, send_announcement, send_alert,
     crud_user, crud_organization, crud_incident_type, crud_region, crud_translation, crud_symbology,
     crud_feature, crud_report, crud_document, download_document, share_workspace, search_location,
-    crud_stream, crud_alert, crud_announcement, search_incident, escalate_incident, change_user_role,
+    crud_live_stream, crud_alert, crud_announcement, search_incident, escalate_incident, change_user_role,
     add_data_to_room, import_data, search_organization, change_user_role, upload_photo,
     crud_feature_attribute, archive_incident, enable_disable_organization, edit_comment, edit_color, 
     change_opacity, mark_as_hazard, edit_label, edit_description, zoom_box, zoom_in_out,
@@ -24,7 +24,7 @@ digraph G {
     receive_announcement, receive_alert, upload_document, reset_password,
     drag_map, receive_notification, move_other_users_position, allow_users_move_map, send_feedback,
     measure_area, measure_distance, enable_disable_incident_type, enable_disable_report
-  } 
+  }
       
   subgraph admin {
     edge [color = gray, penwidth = 2, weight = 10];
@@ -33,12 +33,12 @@ digraph G {
     registration ->
     login ->
     organization ->
-    incident, workspace, data, document
+    incident, workspace, data, document, send_feedback
     registration ->
     reset_password
     incident -> 
-    room, data, stream, alert, announcement, notification, report, document, 
-    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    room, data, live_stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type, incident_region
     incident_type ->
     enable_disable_incident_type ->
     organization
@@ -83,8 +83,8 @@ digraph G {
     weather, census
     document ->
     upload_document, crud_document, download_document
-    stream ->
-    crud_stream
+    live_stream ->
+    crud_live_stream
     layer ->
     legend
     alert ->
@@ -109,20 +109,17 @@ digraph G {
     parent_organization ->
     organization
     line ->
-    feature_attribute, thick, medium, thin, dashed, freehand
+    thick, medium, thin, dashed, freehand
     fire_line ->
-    feature_attribute, freehand
+    freehand
     shape ->
-    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon, circle, triangle, square, hexagon
     polygon ->
     freehand
-    label ->
-    feature_attribute
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
     user ->
     enable_disable_user
-    registration
   }
 
   subgraph GIS_user {
@@ -132,12 +129,12 @@ digraph G {
     registration ->
     login ->
     organization ->
-    incident, workspace, data, document
+    incident, workspace, data, document, send_feedback
     registration ->
     reset_password
     incident -> 
-    room, data, stream, alert, announcement, notification, report, document, 
-    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    room, data, live_stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type, incident_region
     notification ->
     receive_notification
     cru_incident ->
@@ -177,14 +174,14 @@ digraph G {
     weather, census
     document ->
     upload_document, crud_document, download_document
-    stream ->
-    crud_stream
+    live_stream ->
+    crud_live_stream
     layer ->
     legend
     alert ->
     crud_alert, send_alert, receive_alert
     announcement ->
-    crud_announcement, send_announcement, receive_announcement
+    receive_announcement
     data ->
     add_data_to_room, import_data, layer
     layer ->
@@ -203,19 +200,16 @@ digraph G {
     parent_organization ->
     organization
     line ->
-    feature_attribute, thick, medium, thin, dashed, freehand
+    thick, medium, thin, dashed, freehand
     fire_line ->
-    feature_attribute, freehand
+    freehand
     shape ->
-    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon, circle, triangle, square, hexagon
     polygon ->
     freehand
-    label ->
-    feature_attribute
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
-    registration
-  } 
+  }
   
     subgraph NICS_user {
     edge [color = blue, penwidth = 2, weight = 10];
@@ -224,12 +218,12 @@ digraph G {
     registration ->
     login ->
     organization ->
-    incident, workspace, data, document
+    incident, workspace, data, document, send_feedback
     registration ->
     reset_password
     incident -> 
-    room, data, stream, alert, announcement, notification, report, document, 
-    search_incident, cru_incident, escalate_incident, archive_incident, incident_type
+    room, data, live_stream, alert, announcement, notification, report, document, 
+    search_incident, cru_incident, escalate_incident, archive_incident, incident_type, incident_region
     notification ->
     receive_notification
     cru_incident ->
@@ -269,14 +263,14 @@ digraph G {
     weather, census
     document ->
     upload_document, crud_document, download_document
-    stream ->
-    crud_stream
+    live_stream ->
+    crud_live_stream
     layer ->
     legend
     alert ->
     crud_alert, send_alert, receive_alert
     announcement ->
-    crud_announcement, send_announcement, receive_announcement
+    receive_announcement
     data ->
     add_data_to_room, layer
     layer ->
@@ -295,26 +289,87 @@ digraph G {
     parent_organization ->
     organization
     line ->
-    feature_attribute, thick, medium, thin, dashed, freehand
+    thick, medium, thin, dashed, freehand
     fire_line ->
-    feature_attribute, freehand
+    freehand
     shape ->
-    polygon, circle, triangle, square, hexagon, feature_attribute
+    polygon, circle, triangle, square, hexagon
     polygon ->
     freehand
-    label ->
-    feature_attribute
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
-    registration
   }
           
-  subgraph super_user {
+    subgraph read_only_user {
+    edge [color = red, penwidth = 2, weight = 10];
+    read_only_user [color = red];
+    read_only_user ->
+    registration ->
+    login ->
+    organization ->
+    incident, workspace, data, document, send_feedback
+    registration ->
+    reset_password
+    incident -> 
+    room, data, live_stream, alert, announcement, notification, report, document, 
+    search_incident
+    notification ->
+    receive_notification
+    room ->
+    cru_room, export_room, layer
+    user_profile ->
+    view_username, edit_first_name, edit_last_name, view_organization, edit_job_title, edit_rank,
+    edit_job_description, select_language
+    select_language ->
+    language
+    room ->
+    chat, map, active_user, document
+    chat ->
+    group_chat ->
+    receive_message
+    layer_feature ->
+    feature_timeline, shape, line, fire_line,
+    label, symbology, search_cone
+    report
+    workspace ->
+    map
+    organization ->
+    map ->
+    print_map, map_navigation, layer
+    map_navigation ->
+    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map,
+    measure_area, measure_distance
+    selected_area ->
+    weather, census
+    document ->
+    upload_document, crud_document, download_document
+    live_stream ->
+    crud_live_stream
+    layer ->
+    legend
+    alert ->
+    receive_alert
+    announcement ->
+    receive_announcement
+    data ->
+    layer ->
+    tracking, weather, selected_area, user_layer
+    layer ->
+    user ->
+    user_profile
+    layer ->
+    basemap
+    layer_feature ->
+    feature_attribute
+    
+  }
+  
+    subgraph super_user {
     edge [penwidth = 2, weight = 10];
     super_user [color = darkgray];
     super_user -> 
     login ->
-    organization, user, symbology, incident_type, region, translation, send_feedback
+    organization, user, symbology, incident_type, region, translation
     registration ->
     reset_password
     organization ->
@@ -326,29 +381,11 @@ digraph G {
     translation ->
     crud_translation, language
     region ->
-    crud_region
+    crud_region ->
+    incident_region
     incident_type ->
     crud_incident_type
     symbology ->
     crud_symbology
-    
-  }
-    subgraph read_only_user {
-    edge [color = red, penwidth = 2, weight = 10];
-    read_only_user [color = red];
-    read_only_user ->
-    registration ->
-    login ->
-    organization ->
-    incident ->
-    room ->
-    chat ->
-    group_chat ->
-    receive_message
-    room ->
-    map ->
-    layer
-    registration ->
-    reset_password
   }
 }
