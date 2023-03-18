@@ -7,7 +7,7 @@ digraph G {
     label = "Roles";
   }
 
-    subgraph user_actions_developed {
+  subgraph user_actions_developed {
     style=filled;
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=green];
@@ -15,7 +15,7 @@ digraph G {
     drag_map, send_feedback, measure_distance, rotate_feature
   }
   
-    subgraph user_actions_partially_developed {
+  subgraph user_actions_partially_developed {
     style=filled;
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=yellow];
@@ -25,7 +25,7 @@ digraph G {
     select_user_role, reset_password, measure_area, import_data
   }
   
-    subgraph user_actions_non_developed {
+  subgraph user_actions_non_developed {
     style=filled;
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=pink];
@@ -41,7 +41,7 @@ digraph G {
     measure_area, enable_disable_incident_type, enable_disable_report, secure_room
   }
   
-    subgraph developed {
+  subgraph developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=green];
@@ -49,14 +49,14 @@ digraph G {
     shape, line, polygon, select_feature, layer_feature
   }
   
-    subgraph partially_developed {
+  subgraph partially_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=yellow];
     feature_timeline, registration, user_layer, translation, map_navigation, feature_attribute, data
   }
  
-    subgraph not_developed {
+  subgraph not_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=pink];
@@ -382,12 +382,11 @@ digraph G {
     map ->
     print_map, map_navigation, layer
     map_navigation ->
-    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map,
-    measure_area, measure_distance
+    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map
     selected_area ->
     weather, census
     document ->
-    upload_document, crud_document, download_document
+    upload_document, download_document
     live_stream ->
     crud_live_stream
     layer ->
@@ -408,7 +407,7 @@ digraph G {
     feature_attribute
   }
   
-    subgraph super_user {
+  subgraph super_user {
     edge [penwidth = 1, weight = 10];
     super_user [color = darkgray];
     super_user -> 
