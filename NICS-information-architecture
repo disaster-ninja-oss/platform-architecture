@@ -3,11 +3,11 @@ digraph G {
   subgraph cluster_roles {
     color=lightgray;
     node [shape=rectangle,color=white, penwidth=2];
-    read_only_user, 
+    Read_only_user, 
     NICS_user, 
     GIS_user, 
-    admin, 
-    super_user;
+    Admin, 
+    Super_user;
     label = "Roles";
   }
 
@@ -43,6 +43,7 @@ digraph G {
     reset_password, 
     search_location, 
     search_incident, 
+    select_feature,
     select_user_role, 
     upload_photo,
     zoom_in_out
@@ -108,87 +109,91 @@ digraph G {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=green];
-    basemap,
-    census,
-    map, 
-    language, 
-    layer,
-    layer_feature,
-    legend, 
-    line, 
-    login, 
-    polygon, 
-    selected_area, 
-    shape, select_feature,
-    user,
-    user_profile
+    Basemap,
+    Census,
+    Map, 
+    Language, 
+    Layer,
+    Layer_feature,
+    Legend, 
+    Line, 
+    Login, 
+    Polygon, 
+    Selected_area, 
+    Shape,
+    User,
+    User_profile
   }
   
   subgraph partially_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=yellow];
-    data,
-    feature_attribute, 
-    feature_timeline, 
-    map_navigation,
-    registration, 
-    tracking,
-    translation,  
-    user_layer
+    Data,
+    Feature_attribute, 
+    Feature_timeline, 
+    Map_navigation,
+    Registration, 
+    Tracking,
+    Translation,  
+    User_layer
   }
  
   subgraph not_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=pink];
-    active_user, 
-    alert, 
-    announcement, 
-    chat, 
-    circle, 
-    dashed,
-    document, 
-    fire_line, 
-    freehand, 
-    group_chat, 
-    hexagon, 
-    incident, 
-    incident_region
-    incident_type,
-    label, 
-    live_stream,
-    medium,
-    notification,
-    one_on_one_chat, 
-    organization,
-    parent_organization, 
-    region, 
-    report,
-    room, 
-    search_cone, 
-    square, 
-    symbology, 
-    thick,
-    thin,
-    triangle,
-    weather
+    Active_user, 
+    Alert, 
+    Announcement, 
+    Chat, 
+    Circle, 
+    Dashed,
+    Document, 
+    Fire_line, 
+    Freehand,
+    Common_chat,
+    Group_chat, 
+    Hexagon, 
+    Incident, 
+    Incident_region
+    Incident_type,
+    Label, 
+    Live_stream,
+    Medium,
+    Notification,
+    One_on_one_chat, 
+    Organization,
+    Parent_organization, 
+    Region, 
+    Report,
+    Room, 
+    Search_cone, 
+    Square, 
+    Symbology, 
+    Thick,
+    Thin,
+    Triangle,
+    Weather
   }
       
-  subgraph admin {
+  subgraph Admin {
     edge [color = gray, penwidth = 1, weight = 10];
-    admin [color = gray];
-    admin -> 
-    login -> organization 
-    alert -> crud_alert
-    alert -> send_alert
-    alert -> receive_alert
-    announcement -> crud_announcement
-    announcement -> send_announcement
-    announcement -> receive_announcement
-    chat -> group_chat, one_on_one_chat
-    chat -> send_message
-    chat -> receive_message
+    Admin [color = gray];
+    Admin -> Registration
+    Active_user -> invite_to_chat
+    Login -> Organization 
+    Alert -> crud_alert
+    Alert -> send_alert
+    Alert -> receive_alert
+    Announcement -> crud_announcement
+    Announcement -> send_announcement
+    Announcement -> receive_announcement
+    Chat -> Common_chat
+    Chat -> Group_chat
+    Chat -> One_on_one_chat
+    Chat -> send_message
+    Chat -> receive_message
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -199,127 +204,131 @@ digraph G {
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
     cru_incident -> enable_disable_organization
-    data -> add_data_to_room
-    data -> import_data
-    data -> layer
-    document -> upload_document
-    document ->update_document
-    document -> download_document
-    escalate_incident -> parent_organization
-    enable_disable_incident_type -> organization
-    enable_disable_report -> organization
-    feature_attribute -> crud_feature_attribute
-    fire_line -> freehand
-    incident -> room
-    incident -> data
-    incident -> live_stream
-    incident -> alert
-    incident -> announcement
-    incident -> notification
-    incident -> report
-    incident -> document
-    incident -> search_incident
-    incident -> cru_incident
-    incident -> escalate_incident
-    incident -> archive_incident
-    incident -> incident_type
-    incident -> incident_region
-    incident_type -> enable_disable_incident_type
-    invite_to_chat -> chat
-    layer -> legend
-    layer -> tracking
-    layer -> weather
-    layer -> selected_area
-    layer -> user_layer
-    layer -> layer_feature
-    layer -> basemap
-    layer_feature -> crud_feature
-    layer_feature -> select_feature
-    layer_feature -> rotate_feature
-    layer_feature -> feature_timeline
-    layer_feature -> shape
-    layer_feature -> line
-    layer_feature -> fire_line
-    layer_feature -> label
-    layer_feature -> symbology
-    layer_feature -> search_cone
-    line -> thick
-    line -> medium
-    line -> thin
-    line -> dashed
-    line -> freehand
-    live_stream -> crud_live_stream
-    map -> print_map
-    map -> map_navigation
-    map -> layer
-    map_navigation -> search_location
-    map_navigation -> zoom_box
-    map_navigation -> zoom_in_out, drag_map,
-    map_navigation -> move_other_users_position
-    map_navigation -> allow_users_move_map
-    map_navigation -> measure_area
-    map_navigation -> measure_distance
+    Data -> add_data_to_room
+    Data -> import_data
+    Data -> Layer
+    Document -> upload_document
+    Document ->update_document
+    Document -> download_document
+    escalate_incident -> Parent_organization
+    enable_disable_incident_type -> Organization
+    enable_disable_report -> Organization
+    Feature_attribute -> crud_feature_attribute
+    Fire_line -> Freehand
+    Incident -> Room
+    Incident -> Data
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Announcement
+    Incident -> Notification
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Incident -> cru_incident
+    Incident -> escalate_incident
+    Incident -> archive_incident
+    Incident -> Incident_type
+    Incident -> Incident_region
+    Incident_type -> enable_disable_incident_type
+    invite_to_chat -> Chat
+    Layer -> Legend
+    Layer -> Tracking
+    Layer -> Weather
+    Layer -> Selected_area
+    Layer -> User_layer
+    Layer -> Layer_feature
+    Layer -> Basemap
+    Layer_feature -> crud_feature
+    Layer_feature -> select_feature
+    Layer_feature -> rotate_feature
+    Layer_feature -> Feature_timeline
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
+    Layer_feature -> Feature_attribute
+    Line -> Thick
+    Line -> Medium
+    Line -> Thin
+    Line -> Dashed
+    Line -> Freehand
+    Live_stream -> crud_live_stream
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> move_other_users_position
+    Map_navigation -> allow_users_move_map
+    Map_navigation -> measure_area
+    Map_navigation -> measure_distance
     mark_as_hazard -> edit_hazard_label
     mark_as_hazard -> edit_hazard_type
     mark_as_hazard -> edit_radius
-    notification -> receive_notification
-    organization -> incident
-    organization -> data
-    organization -> document
-    organization -> send_feedback
-    organization -> map
-    parent_organization -> organization
-    polygon -> freehand
-    registration -> login
-    registration -> reset_password
-    active_user -> invite_to_chat
-    report -> crud_report
-    report -> enable_disable_report
-    room -> cru_room
-    room -> secure_room
-    room -> export_room
-    room -> user
-    room -> layer
-    room -> chat
-    room -> map
-    room -> active_user
-    room -> document
+    Notification -> receive_notification
+    Organization -> Incident
+    Organization -> Data
+    Organization -> Document
+    Organization -> send_feedback
+    Organization -> Map
+    Parent_organization -> Organization
+    Polygon -> Freehand
+    Registration -> Login
+    Registration -> reset_password
+    Report -> crud_report
+    Report -> enable_disable_report
+    Room -> cru_room
+    Room -> secure_room
+    Room -> export_room
+    Room -> User
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Active_user
+    Room -> Document
     secure_room -> change_user_role
-    select_language -> language
-    selected_area -> weather
-    selected_area -> census
-    shape -> polygon
-    shape -> circle
-    shape -> triangle
-    shape -> square
-    shape -> hexagon
-    user -> enable_disable_user
-    user -> user_profile
-    user_layer -> share_user_layer
-    user_layer -> map
-    user_profile -> view_username
-    user_profile -> edit_first_name
-    user_profile -> edit_last_name
-    user_profile -> view_organization
-    user_profile -> edit_job_title
-    user_profile -> edit_rank
-    user_profile -> edit_job_description
-    user_profile -> select_language
-    user_profile -> select_user_role
+    select_language -> Language
+    Selected_area -> Weather
+    Selected_area -> Census
+    Shape -> Polygon
+    Shape -> Circle
+    Shape -> Triangle
+    Shape -> Square
+    Shape -> Hexagon
+    User -> enable_disable_user
+    User -> User_profile
+    User_layer -> share_user_layer
+    User_layer -> Map
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_language
+    User_profile -> select_user_role
   }
 
   subgraph GIS_user {
     edge [color = darkgreen, penwidth = 1, weight = 10];
     GIS_user [color = darkgreen];
-    GIS_user -> 
-    login -> organization 
-    alert -> crud_alert
-    alert -> send_alert
-    alert -> receive_alert
-    announcement -> receive_announcement
-    chat -> group_chat, one_on_one_chat
-    chat -> send_message
-    chat -> receive_message
+    GIS_user -> Registration
+    Active_user -> invite_to_chat
+    Login -> Organization 
+    Alert -> crud_alert
+    Alert -> send_alert
+    Alert -> receive_alert
+    Announcement -> receive_announcement
+    Chat -> Common_chat
+    Chat -> Group_chat
+    Chat -> One_on_one_chat
+    Chat -> send_message
+    Chat -> receive_message
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -329,122 +338,128 @@ digraph G {
     crud_feature_attribute -> edit_color
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
-    data -> add_data_to_room
-    data -> import_data
-    data -> layer
-    document -> upload_document
-    document ->update_document
-    document -> download_document
-    escalate_incident -> parent_organization
-    feature_attribute -> crud_feature_attribute
-    fire_line -> freehand
-    incident -> room
-    incident -> data
-    incident -> live_stream
-    incident -> alert
-    incident -> announcement
-    incident -> notification
-    incident -> report
-    incident -> document
-    incident -> search_incident
-    incident -> cru_incident
-    incident -> escalate_incident
-    incident -> archive_incident
-    incident -> incident_type
-    incident -> incident_region
-    invite_to_chat -> chat
-    layer -> legend
-    layer -> tracking
-    layer -> weather
-    layer -> selected_area
-    layer -> user_layer
-    layer -> layer_feature
-    layer -> basemap
-    layer_feature -> crud_feature
-    layer_feature -> select_feature
-    layer_feature -> rotate_feature
-    layer_feature -> feature_timeline
-    layer_feature -> shape
-    layer_feature -> line
-    layer_feature -> fire_line
-    layer_feature -> label
-    layer_feature -> symbology
-    layer_feature -> search_cone
-    line -> thick
-    line -> medium
-    line -> thin
-    line -> dashed
-    line -> freehand
-    live_stream -> crud_live_stream
-    map -> print_map
-    map -> map_navigation
-    map -> layer
-    map_navigation -> search_location
-    map_navigation -> zoom_box
-    map_navigation -> zoom_in_out, drag_map,
-    map_navigation -> move_other_users_position
-    map_navigation -> allow_users_move_map
-    map_navigation -> measure_area
-    map_navigation -> measure_distance
+    cru_incident -> enable_disable_organization
+    Data -> add_data_to_room
+    Data -> import_data
+    Data -> Layer
+    Document -> upload_document
+    Document ->update_document
+    Document -> download_document
+    escalate_incident -> Parent_organization
+    Feature_attribute -> crud_feature_attribute
+    Fire_line -> Freehand
+    Incident -> Room
+    Incident -> Data
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Announcement
+    Incident -> Notification
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Incident -> cru_incident
+    Incident -> escalate_incident
+    Incident -> archive_incident
+    Incident -> Incident_type
+    Incident -> Incident_region
+    invite_to_chat -> Chat
+    Layer -> Legend
+    Layer -> Tracking
+    Layer -> Weather
+    Layer -> Selected_area
+    Layer -> User_layer
+    Layer -> Layer_feature
+    Layer -> Basemap
+    Layer_feature -> crud_feature
+    Layer_feature -> select_feature
+    Layer_feature -> rotate_feature
+    Layer_feature -> Feature_timeline
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
+    Layer_feature -> Feature_attribute
+    Line -> Thick
+    Line -> Medium
+    Line -> Thin
+    Line -> Dashed
+    Line -> Freehand
+    Live_stream -> crud_live_stream
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> move_other_users_position
+    Map_navigation -> allow_users_move_map
+    Map_navigation -> measure_area
+    Map_navigation -> measure_distance
     mark_as_hazard -> edit_hazard_label
     mark_as_hazard -> edit_hazard_type
     mark_as_hazard -> edit_radius
-    notification -> receive_notification
-    organization -> incident
-    organization -> data
-    organization -> document
-    organization -> send_feedback
-    organization -> map
-    parent_organization -> organization
-    polygon -> freehand
-    registration -> login
-    registration -> reset_password
-    active_user -> invite_to_chat
-    report -> crud_report
-    room -> cru_room
-    room -> secure_room
-    room -> export_room
-    room -> user
-    room -> layer
-    room -> chat
-    room -> map
-    room -> active_user
-    room -> document
+    Notification -> receive_notification
+    Organization -> Incident
+    Organization -> Data
+    Organization -> Document
+    Organization -> send_feedback
+    Organization -> Map
+    Parent_organization -> Organization
+    Polygon -> Freehand
+    Registration -> login
+    Registration -> reset_password
+    Report -> crud_report
+    Room -> cru_room
+    Room -> secure_room
+    Room -> export_room
+    Room -> User
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Active_user
+    Room -> Document
     secure_room -> change_user_role
-    select_language -> language
-    selected_area -> weather
-    selected_area -> census
-    shape -> polygon
-    shape -> circle
-    shape -> triangle
-    shape -> square
-    shape -> hexagon
-    user -> user_profile
-    user_layer -> share_user_layer
-    user_layer -> map
-    user_profile -> view_username
-    user_profile -> edit_first_name
-    user_profile -> edit_last_name
-    user_profile -> view_organization
-    user_profile -> edit_job_title
-    user_profile -> edit_rank
-    user_profile -> edit_job_description
-    user_profile -> select_language
-    user_profile -> select_user_role
+    select_language -> Language
+    Selected_area -> Weather
+    Selected_area -> Census
+    Shape -> Polygon
+    Shape -> Circle
+    Shape -> Triangle
+    Shape -> Square
+    Shape -> Hexagon
+    User -> enable_disable_user
+    User -> User_profile
+    User_layer -> share_user_layer
+    User_layer -> Map
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_language
+    User_profile -> select_user_role
   }
   
     subgraph NICS_user {
     edge [color = blue, penwidth = 1, weight = 10];
     NICS_user [color = blue];
-    NICS_user -> 
-    login -> organization 
-    alert -> crud_alert
-    alert -> send_alert
-    alert -> receive_alert
-    announcement -> receive_announcement
-    chat -> group_chat, one_on_one_chat
-    chat -> send_message
-    chat -> receive_message
+    NICS_user -> Registration
+    Active_user -> invite_to_chat
+    Login -> Organization 
+    Alert -> crud_alert
+    Alert -> send_alert
+    Alert -> receive_alert
+    Announcement -> receive_announcement
+    Chat -> Common_chat
+    Chat -> Group_chat
+    Chat -> One_on_one_chat
+    Chat -> send_message
+    Chat -> receive_message
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -454,201 +469,204 @@ digraph G {
     crud_feature_attribute -> edit_color
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
-    data -> add_data_to_room
-    data -> layer
-    document -> upload_document
-    document ->update_document
-    document -> download_document
-    escalate_incident -> parent_organization
-    feature_attribute -> crud_feature_attribute
-    fire_line -> freehand
-    incident -> room
-    incident -> data
-    incident -> live_stream
-    incident -> alert
-    incident -> announcement
-    incident -> notification
-    incident -> report
-    incident -> document
-    incident -> search_incident
-    incident -> cru_incident
-    incident -> escalate_incident
-    incident -> archive_incident
-    incident -> incident_type
-    incident -> incident_region
-    invite_to_chat -> chat
-    layer -> legend
-    layer -> tracking
-    layer -> weather
-    layer -> selected_area
-    layer -> user_layer
-    layer -> layer_feature
-    layer -> basemap
-    layer_feature -> crud_feature
-    layer_feature -> select_feature
-    layer_feature -> rotate_feature
-    layer_feature -> feature_timeline
-    layer_feature -> shape
-    layer_feature -> line
-    layer_feature -> fire_line
-    layer_feature -> label
-    layer_feature -> symbology
-    layer_feature -> search_cone
-    line -> thick
-    line -> medium
-    line -> thin
-    line -> dashed
-    line -> freehand
-    live_stream -> crud_live_stream
-    map -> print_map
-    map -> map_navigation
-    map -> layer
-    map_navigation -> search_location
-    map_navigation -> zoom_box
-    map_navigation -> zoom_in_out, drag_map,
-    map_navigation -> move_other_users_position
-    map_navigation -> allow_users_move_map
-    map_navigation -> measure_area
-    map_navigation -> measure_distance
+    cru_incident -> enable_disable_organization
+    Data -> add_data_to_room
+    Data -> Layer
+    Document -> upload_document
+    Document ->update_document
+    Document -> download_document
+    escalate_incident -> Parent_organization
+    Feature_attribute -> crud_feature_attribute
+    Fire_line -> Freehand
+    Incident -> Room
+    Incident -> Data
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Announcement
+    Incident -> Notification
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Incident -> cru_incident
+    Incident -> escalate_incident
+    Incident -> archive_incident
+    Incident -> Incident_type
+    Incident -> Incident_region
+    invite_to_chat -> Chat
+    Layer -> Legend
+    Layer -> Tracking
+    Layer -> Weather
+    Layer -> Selected_area
+    Layer -> User_layer
+    Layer -> Layer_feature
+    Layer -> Basemap
+    Layer_feature -> crud_feature
+    Layer_feature -> select_feature
+    Layer_feature -> rotate_feature
+    Layer_feature -> Feature_timeline
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
+    Layer_feature -> Feature_attribute
+    Line -> Thick
+    Line -> Medium
+    Line -> Thin
+    Line -> Dashed
+    Line -> Freehand
+    Live_stream -> crud_live_stream
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> move_other_users_position
+    Map_navigation -> allow_users_move_map
+    Map_navigation -> measure_area
+    Map_navigation -> measure_distance
     mark_as_hazard -> edit_hazard_label
     mark_as_hazard -> edit_hazard_type
     mark_as_hazard -> edit_radius
-    notification -> receive_notification
-    organization -> incident
-    organization -> data
-    organization -> document
-    organization -> send_feedback
-    organization -> map
-    parent_organization -> organization
-    polygon -> freehand
-    registration -> login
-    registration -> reset_password
-    active_user -> invite_to_chat
-    report -> crud_report
-    room -> cru_room
-    room -> secure_room
-    room -> export_room
-    room -> user
-    room -> layer
-    room -> chat
-    room -> map
-    room -> active_user
-    room -> document
+    Notification -> receive_notification
+    Organization -> Incident
+    Organization -> Data
+    Organization -> Document
+    Organization -> send_feedback
+    Organization -> Map
+    Parent_organization -> Organization
+    Polygon -> Freehand
+    Registration -> login
+    Registration -> reset_password
+    Report -> crud_report
+    Room -> cru_room
+    Room -> secure_room
+    Room -> export_room
+    Room -> User
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Active_user
+    Room -> Document
     secure_room -> change_user_role
-    select_language -> language
-    selected_area -> weather
-    selected_area -> census
-    shape -> polygon
-    shape -> circle
-    shape -> triangle
-    shape -> square
-    shape -> hexagon
-    user -> user_profile
-    user_layer -> share_user_layer
-    user_layer -> map
-    user_profile -> view_username
-    user_profile -> edit_first_name
-    user_profile -> edit_last_name
-    user_profile -> view_organization
-    user_profile -> edit_job_title
-    user_profile -> edit_rank
-    user_profile -> edit_job_description
-    user_profile -> select_language
-    user_profile -> select_user_role
+    select_language -> Language
+    Selected_area -> Weather
+    Selected_area -> Census
+    Shape -> Polygon
+    Shape -> Circle
+    Shape -> Triangle
+    Shape -> Square
+    Shape -> Hexagon
+    User -> enable_disable_user
+    User -> User_profile
+    User_layer -> share_user_layer
+    User_layer -> Map
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_language
+    User_profile -> select_user_role
   }
           
     subgraph read_only_user {
     edge [color = red, penwidth = 1, weight = 10];
-    read_only_user [color = red];
-    read_only_user ->
-    alert -> receive_alert
-    announcement -> receive_announcement
-    chat -> group_chat
-    data -> layer
-    document -> upload_document
-    document -> download_document
-    group_chat -> receive_message
-    incident -> room
-    incident -> data
-    incident -> live_stream
-    incident -> alert
-    incident -> announcement
-    incident -> notification
-    incident -> report
-    incident -> document
-    incident -> search_incident
-    layer -> basemap
-    layer -> legend
-    layer -> selected_area
-    layer -> tracking
-    layer -> user
-    layer -> user_layer
-    layer -> weather
-    layer_feature -> feature_timeline
-    layer_feature -> select_feature
-    layer_feature -> search_cone
-    live_stream -> crud_live_stream
-    layer_feature -> feature_attribute
-    login -> organization
-    map -> print_map
-    map -> map_navigation
-    map -> layer
-    map_navigation -> search_location
-    map_navigation -> zoom_box
-    map_navigation -> zoom_in_out
-    map_navigation -> drag_map
-    map_navigation -> allow_users_move_map
-    notification -> receive_notification
-    organization -> map
-    organization -> incident
-    organization -> data
-    organization -> document
-    organization -> send_feedback
-    registration -> login
-    registration -> reset_password
-    report -> crud_report
-    room -> cru_room
-    room -> export_room
-    room -> layer
-    room -> chat
-    room -> map
-    room -> active_user
-    room -> document
-    select_language -> language
-    selected_area -> weather
-    selected_area -> census
-    user -> user_profile
-    user_profile -> view_username
-    user_profile -> edit_first_name
-    user_profile -> edit_last_name
-    user_profile -> view_organization
-    user_profile -> edit_job_title
-    user_profile -> edit_rank
-    user_profile -> edit_job_description
-    user_profile -> select_language
+    Read_only_user [color = red];
+    Read_only_user -> Registration
+    Alert -> receive_alert
+    Announcement -> receive_announcement
+    Data -> Layer
+    Document -> upload_document
+    Document -> download_document
+    Chat -> receive_message
+    Incident -> Room
+    Incident -> Data
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Announcement
+    Incident -> Notification
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Layer -> Basemap
+    Layer -> Legend
+    Layer -> Selected_area
+    Layer -> Ttracking
+    Layer -> User
+    Layer -> User_layer
+    Layer -> Weather
+    Layer_feature -> feature_timeline
+    Layer_feature -> select_feature
+    Layer_feature -> search_cone
+    Live_stream -> crud_live_stream
+    Layer_feature -> Feature_attribute
+    Login -> Organization
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> allow_users_move_map
+    Notification -> receive_notification
+    Organization -> Map
+    Organization -> Incident
+    Organization -> Data
+    Organization -> Document
+    Organization -> send_feedback
+    Registration -> Login
+    Registration -> reset_password
+    Report -> crud_report
+    Room -> cru_room
+    Room -> export_room
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Active_user
+    Room -> Document
+    select_language -> Language
+    Selected_area -> Weather
+    Selected_area -> Census
+    User -> User_profile
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_language
   }
   
-  subgraph super_user {
+  subgraph Super_user {
     edge [penwidth = 1, weight = 10];
-    super_user [color = darkgray];
-    super_user -> 
-    crud_region -> incident_region
-    crud_translation -> language
-    incident_type -> crud_incident_type
-    login -> organization
-    login -> user
-    login -> symbology
-    login -> incident_type
-    login -> region 
-    login -> translation
-    organization -> user
-    organization -> crud_organization
-    organization -> search_organization
-    region -> crud_region
-    registration -> reset_password
-    symbology -> crud_symbology
-    translation -> crud_translation
-    user -> crud_user
-    user -> change_user_role
+    Super_user [color = darkgray];
+    Super_user -> reset_password
+    Super_user -> Login
+    crud_region -> Incident_region
+    crud_translation -> Language
+    Incident_type -> crud_incident_type
+    Login -> Organization
+    Login -> User
+    Login -> Symbology
+    Login -> Incident_type
+    Login -> Region 
+    Login -> Translation
+    Organization -> User
+    Organization -> crud_organization
+    Organization -> search_organization
+    Region -> crud_region
+    Registration -> reset_password
+    Symbology -> crud_symbology
+    Translation -> crud_translation
+    User -> crud_user
+    User -> change_user_role
   }
 }
