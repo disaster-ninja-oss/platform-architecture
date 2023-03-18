@@ -1,4 +1,4 @@
-digraph G {
+digraph NICS_information_architecture {
 
   subgraph cluster_roles {
     color=lightgray;
