@@ -597,7 +597,7 @@ digraph G {
     Layer -> Basemap
     Layer -> Legend
     Layer -> Selected_area
-    Layer -> Ttracking
+    Layer -> Tracking
     Layer -> User
     Layer -> User_layer
     Layer -> Weather
