@@ -160,6 +160,8 @@ digraph G {
     edit_hazard_label, edit_hazard_type, edit_radius
     user ->
     enable_disable_user
+    secure_room ->
+    change_user_role
   }
 
   subgraph GIS_user {
@@ -249,6 +251,8 @@ digraph G {
     freehand
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
+    secure_room ->
+    change_user_role
   }
   
     subgraph NICS_user {
@@ -338,6 +342,8 @@ digraph G {
     freehand
     mark_as_hazard ->
     edit_hazard_label, edit_hazard_type, edit_radius
+    secure_room ->
+    change_user_role
   }
           
     subgraph read_only_user {
