@@ -382,7 +382,7 @@ digraph G {
     map ->
     print_map, map_navigation, layer
     map_navigation ->
-    search_location, zoom_box, zoom_in_out, drag_map, move_other_users_position, allow_users_move_map
+    search_location, zoom_box, zoom_in_out, drag_map, allow_users_move_map
     selected_area ->
     weather, census
     document ->
