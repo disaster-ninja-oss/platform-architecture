@@ -95,7 +95,6 @@ digraph NICS_information_architecture {
     reset_password, 
     search_organization, 
     secure_room,
-    send_alert,
     send_announcement, 
     send_message, 
     share_user_layer, 
@@ -184,7 +183,6 @@ digraph NICS_information_architecture {
     Active_user -> invite_to_chat
     Login -> Organization 
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
     Announcement -> send_announcement
@@ -194,6 +192,7 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Chat -> Notification
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -220,7 +219,6 @@ digraph NICS_information_architecture {
     Incident -> Live_stream
     Incident -> Alert
     Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -321,7 +319,6 @@ digraph NICS_information_architecture {
     Active_user -> invite_to_chat
     Login -> Organization 
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
     Chat -> Common_chat
@@ -329,6 +326,7 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Chat -> Notification
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -353,7 +351,6 @@ digraph NICS_information_architecture {
     Incident -> Live_stream
     Incident -> Alert
     Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -409,7 +406,7 @@ digraph NICS_information_architecture {
     Organization -> Map
     Parent_organization -> Organization
     Polygon -> Freehand
-    Registration -> login
+    Registration -> Login
     Registration -> reset_password
     Report -> crud_report
     Room -> cru_room
@@ -452,7 +449,6 @@ digraph NICS_information_architecture {
     Active_user -> invite_to_chat
     Login -> Organization 
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
     Chat -> Common_chat
@@ -460,6 +456,7 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Chat -> Notification
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature_attribute -> edit_label
@@ -483,7 +480,6 @@ digraph NICS_information_architecture {
     Incident -> Live_stream
     Incident -> Alert
     Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -539,7 +535,7 @@ digraph NICS_information_architecture {
     Organization -> Map
     Parent_organization -> Organization
     Polygon -> Freehand
-    Registration -> login
+    Registration -> Login
     Registration -> reset_password
     Report -> crud_report
     Room -> cru_room
@@ -590,7 +586,6 @@ digraph NICS_information_architecture {
     Incident -> Live_stream
     Incident -> Alert
     Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -601,9 +596,9 @@ digraph NICS_information_architecture {
     Layer -> User
     Layer -> User_layer
     Layer -> Weather
-    Layer_feature -> feature_timeline
+    Layer_feature -> Feature_timeline
     Layer_feature -> select_feature
-    Layer_feature -> search_cone
+    Layer_feature -> Search_cone
     Live_stream -> crud_live_stream
     Layer_feature -> Feature_attribute
     Login -> Organization
