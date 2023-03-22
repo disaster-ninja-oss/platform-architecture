@@ -311,7 +311,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
-    User_layer -> crud_feature_attribute
+    User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -449,7 +449,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
-    User_layer -> crud_feature_attribute
+    User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -586,7 +586,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
-    User_layer -> crud_feature_attribute
+    User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
