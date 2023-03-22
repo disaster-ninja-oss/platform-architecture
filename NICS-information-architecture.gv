@@ -23,7 +23,8 @@ digraph NICS_information_architecture {
     select_language, 
     send_feedback, 
     view_organization, 
-    view_username
+    view_username,
+    login
   }
   
   subgraph user_actions_partially_developed {
@@ -46,7 +47,8 @@ digraph NICS_information_architecture {
     select_feature,
     select_user_role, 
     upload_photo,
-    zoom_in_out
+    zoom_in_out,
+    registration
   }
   
   subgraph user_actions_non_developed {
@@ -116,7 +118,6 @@ digraph NICS_information_architecture {
     Layer_feature,
     Legend, 
     Line, 
-    Login, 
     Polygon, 
     Selected_area, 
     Shape,
@@ -131,7 +132,6 @@ digraph NICS_information_architecture {
     Feature_attribute, 
     Feature_timeline, 
     Map_navigation,
-    Registration, 
     Tracking,
     Translation,  
     User_layer,
@@ -174,15 +174,18 @@ digraph NICS_information_architecture {
     Thick,
     Thin,
     Triangle,
-    Weather
+    Weather,
+    General_messages_report,
+    EOD_report,
+    Other_reports
   }
       
   subgraph Admin {
     edge [color = gray, penwidth = 1, weight = 10];
     Admin [color = gray];
-    Admin -> Registration
+    Admin -> registration
     Active_user -> invite_to_chat
-    Login -> Organization 
+    login -> Organization 
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
@@ -277,10 +280,13 @@ digraph NICS_information_architecture {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    Registration -> Login
-    Registration -> reset_password
+    registration -> login
+    registration -> reset_password
     Report -> crud_report
     Report -> enable_disable_report
+    Report -> General_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -321,9 +327,9 @@ digraph NICS_information_architecture {
   subgraph GIS_user {
     edge [color = darkgreen, penwidth = 1, weight = 10];
     GIS_user [color = darkgreen];
-    GIS_user -> Registration
+    GIS_user -> registration
     Active_user -> invite_to_chat
-    Login -> Organization 
+    login -> Organization 
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
@@ -413,9 +419,12 @@ digraph NICS_information_architecture {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    Registration -> Login
-    Registration -> reset_password
+    registration -> login
+    registration -> reset_password
     Report -> crud_report
+    Report -> General_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -456,9 +465,9 @@ digraph NICS_information_architecture {
     subgraph NICS_user {
     edge [color = blue, penwidth = 1, weight = 10];
     NICS_user [color = blue];
-    NICS_user -> Registration
+    NICS_user -> registration
     Active_user -> invite_to_chat
-    Login -> Organization 
+    login -> Organization 
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
@@ -547,9 +556,12 @@ digraph NICS_information_architecture {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    Registration -> Login
-    Registration -> reset_password
+    registration -> login
+    registration -> reset_password
     Report -> crud_report
+    Report -> General_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -590,7 +602,7 @@ digraph NICS_information_architecture {
     subgraph read_only_user {
     edge [color = red, penwidth = 1, weight = 10];
     Read_only_user [color = red];
-    Read_only_user -> Registration
+    Read_only_user -> registration
     Alert -> receive_alert
     Announcement -> receive_announcement
     Document -> upload_document
@@ -615,7 +627,7 @@ digraph NICS_information_architecture {
     Layer_feature -> Search_cone
     Live_stream -> crud_live_stream
     Layer_feature -> Feature_attribute
-    Login -> Organization
+    login -> Organization
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -629,9 +641,12 @@ digraph NICS_information_architecture {
     Organization -> Layer
     Organization -> Document
     Organization -> send_feedback
-    Registration -> Login
-    Registration -> reset_password
+    registration -> login
+    registration -> reset_password
     Report -> crud_report
+    Report -> General_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> export_room
     Room -> Layer
@@ -659,21 +674,21 @@ digraph NICS_information_architecture {
     edge [penwidth = 1, weight = 10];
     Super_user [color = darkgray];
     Super_user -> reset_password
-    Super_user -> Login
+    Super_user -> login
     crud_region -> Incident_region
     crud_translation -> Language
     Incident_type -> crud_incident_type
-    Login -> Organization
-    Login -> User
-    Login -> Symbology
-    Login -> Incident_type
-    Login -> Region 
-    Login -> Translation
+    login -> Organization
+    login -> User
+    login -> Symbology
+    login -> Incident_type
+    login -> Region 
+    login -> Translation
     Organization -> User
     Organization -> crud_organization
     Organization -> search_organization
     Region -> crud_region
-    Registration -> reset_password
+    registration -> reset_password
     Symbology -> crud_symbology
     Translation -> crud_translation
     User -> crud_user
