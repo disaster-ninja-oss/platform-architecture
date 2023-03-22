@@ -197,6 +197,7 @@ digraph NICS_information_architecture {
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Draw_tools
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -246,7 +247,6 @@ digraph NICS_information_architecture {
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -290,6 +290,7 @@ digraph NICS_information_architecture {
     Room -> Map
     Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
     select_language -> Language
     Selected_area -> Weather
@@ -304,6 +305,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
+    User_layer -> crud_feature_attribute
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -334,6 +336,7 @@ digraph NICS_information_architecture {
     crud_feature -> Draw_tools
     crud_feature -> undo_redo
     crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -380,7 +383,6 @@ digraph NICS_information_architecture {
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -423,6 +425,7 @@ digraph NICS_information_architecture {
     Room -> Map
     Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
     select_language -> Language
     Selected_area -> Weather
@@ -437,6 +440,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
+    User_layer -> crud_feature_attribute
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -467,6 +471,7 @@ digraph NICS_information_architecture {
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Draw_tools
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -512,7 +517,6 @@ digraph NICS_information_architecture {
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -555,6 +559,7 @@ digraph NICS_information_architecture {
     Room -> Map
     Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
     select_language -> Language
     Selected_area -> Weather
@@ -569,6 +574,7 @@ digraph NICS_information_architecture {
     User -> Active_user
     User_layer -> Map
     User_layer -> Workspace
+    User_layer -> crud_feature_attribute
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -605,7 +611,6 @@ digraph NICS_information_architecture {
     Layer -> User
     Layer -> User_layer
     Layer -> Weather
-    Layer_feature -> Feature_timeline
     Layer_feature -> select_feature
     Layer_feature -> Search_cone
     Live_stream -> crud_live_stream
@@ -634,6 +639,7 @@ digraph NICS_information_architecture {
     Room -> Map
     Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     select_language -> Language
     Selected_area -> Weather
     Selected_area -> Census
