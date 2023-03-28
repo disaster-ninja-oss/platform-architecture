@@ -206,6 +206,7 @@ digraph NICS_information_architecture {
     Thick,
     Thin,
     Triangle,
+    UXO_report,
     Weather
   }
 
