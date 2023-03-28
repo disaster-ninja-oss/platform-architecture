@@ -1,23 +1,18 @@
 digraph NICS_information_architecture {
     
-    subgraph cluster_Legend {
-    Information_Architecture_Legend ->
-        Developed_entity, 
-        Partially_developed_entity,
-        Not_developed_entity,
-        Developed_action,
-        Partially_developed_action,
-        Not_developed_action
+subgraph cluster_Legend {
+    color=gray;
     Developed_action [shape = rectangle, color=green]
     Partially_developed_action [shape = rectangle, color=yellow]
     Not_developed_action [shape = rectangle, color=pink]
     Developed_entity [style = filled, color=green]
     Partially_developed_entity [style = filled, color=yellow]
     Not_developed_entity [style = filled, color=pink]
+    label = "Legend"
 }
 
   subgraph cluster_roles {
-    color=lightgray;
+    color=gray;
     node [shape=rectangle,color=white, penwidth=2];
     Read_only_user, 
     NICS_user, 
