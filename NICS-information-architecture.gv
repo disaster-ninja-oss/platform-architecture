@@ -214,7 +214,6 @@ digraph NICS_information_architecture {
     edge [penwidth = 1, weight = 10];
     Super_user [color = darkgray];
     Super_user -> registration
-    Super_user -> reset_password
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
