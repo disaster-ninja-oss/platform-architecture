@@ -296,6 +296,7 @@ digraph NICS_information_architecture {
     Live_stream -> crud_live_stream
     login -> Organization
     login -> Help
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -314,7 +315,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
     Organization -> switch_organization
     Organization -> User
@@ -453,6 +453,7 @@ digraph NICS_information_architecture {
     Live_stream -> crud_live_stream
     login -> Help
     login -> Organization 
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -471,7 +472,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
     Organization -> switch_organization
     Organization -> User
@@ -597,6 +597,7 @@ digraph NICS_information_architecture {
     Live_stream -> crud_live_stream
     login -> Organization 
     login -> Help
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -615,7 +616,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
     Organization -> switch_organization
     Organization -> User
@@ -739,6 +739,7 @@ digraph NICS_information_architecture {
     Live_stream -> crud_live_stream
     login -> Organization 
     login -> Help
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -757,7 +758,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
     Organization -> switch_organization
     Organization -> User
@@ -882,6 +882,7 @@ digraph NICS_information_architecture {
     login -> Country_workspace 
     login -> Settings
     login -> Help
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -898,7 +899,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
     Organization -> switch_organization
     Organization -> User
@@ -978,6 +978,7 @@ digraph NICS_information_architecture {
     Layer_feature -> Feature_attribute
     login -> Organization
     login -> Help
+    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -990,7 +991,6 @@ digraph NICS_information_architecture {
     Organization -> Incident
     Organization -> Layer
     Organization -> Document
-    Organization -> send_feedback
     Organization -> User
     Organization -> switch_organization
     Other_reports -> crud_report
