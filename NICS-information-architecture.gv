@@ -68,6 +68,7 @@ subgraph cluster_Legend {
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=pink];
     add_layer_to_room,
+    add_server,
     allow_users_move_map,
     archive_incident, 
     change_opacity, 
@@ -116,7 +117,7 @@ subgraph cluster_Legend {
     secure_room,
     send_announcement, 
     send_message, 
-    server_connection,
+    select_server,
     share_workspace, 
     switch_organization,
     undo_redo, 
@@ -155,7 +156,7 @@ subgraph cluster_Legend {
     Tracking,
     User_layer,
     User_profile
-    Workspace
+    Private_workspace
   }
  
   subgraph not_developed {
@@ -190,10 +191,10 @@ subgraph cluster_Legend {
     Organization,
     Other_reports,
     Parent_organization, 
-    Region, 
     Report,
     Room, 
     Search_cone, 
+    Server,
     Settings,
     Small_label,
     Square, 
@@ -208,7 +209,7 @@ subgraph cluster_Legend {
   subgraph Super_user {
     edge [penwidth = 1, weight = 10];
     Super_user [color = darkgray];
-    Super_user -> registration
+    Super_user -> Country_workspace
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
@@ -219,6 +220,13 @@ subgraph cluster_Legend {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     create_message -> upload_photo
     crud_feature -> undo_redo
     crud_feature -> copy_paste
@@ -250,7 +258,6 @@ subgraph cluster_Legend {
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -289,9 +296,6 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
-    login -> Organization
-    login -> Help
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -309,6 +313,7 @@ subgraph cluster_Legend {
     Notification -> receive_notification
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> Map
     Organization -> switch_organization
@@ -320,9 +325,7 @@ subgraph cluster_Legend {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    Region -> crud_region
-    registration -> login
-    registration -> reset_password
+    Incident_region -> crud_region
     Report -> enable_disable_report
     Report -> General_messages_report
     Report -> Chat_messages_report
@@ -352,7 +355,7 @@ subgraph cluster_Legend {
     User -> User_profile
     User -> invite_to_chat
     User_layer -> Map
-    User_layer -> Workspace
+    User_layer -> Private_workspace
     User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
@@ -361,16 +364,16 @@ subgraph cluster_Legend {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
+    User_profile -> Language
     UXO_report
-    Workspace -> share_workspace
+    Private_workspace -> share_workspace
   }
   
   subgraph Admin {
     edge [color = gray, penwidth = 1, weight = 10];
     Admin [color = gray];
-    Admin -> registration
+    Admin -> Country_workspace
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
@@ -381,6 +384,13 @@ subgraph cluster_Legend {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Draw_tools
@@ -411,7 +421,6 @@ subgraph cluster_Legend {
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -446,9 +455,6 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
-    login -> Help
-    login -> Organization 
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -466,6 +472,7 @@ subgraph cluster_Legend {
     Notification -> receive_notification
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> Map
     Organization -> switch_organization
@@ -474,8 +481,6 @@ subgraph cluster_Legend {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    registration -> login
-    registration -> reset_password
     Report -> enable_disable_report
     Report -> General_messages_report
     Report -> Chat_messages_report
@@ -502,7 +507,7 @@ subgraph cluster_Legend {
     User -> User_profile
     User -> invite_to_chat
     User_layer -> Map
-    User_layer -> Workspace
+    User_layer -> Private_workspace
     User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
@@ -511,15 +516,15 @@ subgraph cluster_Legend {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
-    Workspace -> share_workspace
+    User_profile -> Language
+    Private_workspace -> share_workspace
   }
 
   subgraph GIS_user {
     edge [color = darkgreen, penwidth = 1, weight = 10];
     GIS_user [color = darkgreen];
-    GIS_user -> registration
+    GIS_user -> Country_workspace
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
@@ -528,6 +533,13 @@ subgraph cluster_Legend {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     crud_feature -> Draw_tools
     crud_feature -> undo_redo
     crud_feature -> copy_paste
@@ -556,7 +568,6 @@ subgraph cluster_Legend {
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -590,9 +601,6 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
-    login -> Organization 
-    login -> Help
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -610,6 +618,7 @@ subgraph cluster_Legend {
     Notification -> receive_notification
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> Map
     Organization -> switch_organization
@@ -618,8 +627,6 @@ subgraph cluster_Legend {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    registration -> login
-    registration -> reset_password
     Report -> General_messages_report
     Report -> EOD_report
     Report -> Other_reports
@@ -645,7 +652,7 @@ subgraph cluster_Legend {
     User -> User_profile
     User -> invite_to_chat
     User_layer -> Map
-    User_layer -> Workspace
+    User_layer -> Private_workspace
     User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
@@ -654,15 +661,15 @@ subgraph cluster_Legend {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
-    Workspace -> share_workspace
+    User_profile -> Language
+    Private_workspace -> share_workspace
   }
   
     subgraph NICS_user {
     edge [color = blue, penwidth = 1, weight = 10];
     NICS_user [color = blue];
-    NICS_user -> registration
+    NICS_user -> Country_workspace
     Alert -> crud_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
@@ -671,6 +678,13 @@ subgraph cluster_Legend {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Draw_tools
@@ -699,7 +713,6 @@ subgraph cluster_Legend {
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -732,9 +745,6 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
-    login -> Organization 
-    login -> Help
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -752,6 +762,7 @@ subgraph cluster_Legend {
     Notification -> receive_notification
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> Map
     Organization -> switch_organization
@@ -760,8 +771,6 @@ subgraph cluster_Legend {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    registration -> login
-    registration -> reset_password
     Report -> General_messages_report
     Report -> Chat_messages_report
     Report -> EOD_report
@@ -787,7 +796,7 @@ subgraph cluster_Legend {
     User -> User_profile
     User -> invite_to_chat
     User_layer -> Map
-    User_layer -> Workspace
+    User_layer -> Private_workspace
     User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
@@ -796,15 +805,15 @@ subgraph cluster_Legend {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
-    Workspace -> share_workspace
+    User_profile -> Language
+    Private_workspace -> share_workspace
   }
   
     subgraph Mobile_user {
     edge [color = purple, penwidth = 1, weight = 10];
     Mobile_user [color = purple];
-    Mobile_user -> registration
+    Mobile_user -> Server
     Alert -> receive_alert
     Announcement -> receive_announcement
     Chat -> Common_chat
@@ -813,6 +822,12 @@ subgraph cluster_Legend {
     Chat -> send_message
     Chat -> receive_message
     Country_workspace -> Organization
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Settings
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Draw_tools
@@ -842,7 +857,6 @@ subgraph cluster_Legend {
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -874,10 +888,6 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
-    login -> Country_workspace 
-    login -> Settings
-    login -> Help
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -893,6 +903,7 @@ subgraph cluster_Legend {
     Notification -> receive_notification
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> Map
     Organization -> switch_organization
@@ -901,8 +912,6 @@ subgraph cluster_Legend {
     Parent_organization -> Organization
     Polygon -> Freehand
     receive_notification -> Chat
-    registration -> server_connection
-    registration -> reset_password
     Report -> General_messages_report
     Report -> Chat_messages_report
     Report -> EOD_report
@@ -915,7 +924,9 @@ subgraph cluster_Legend {
     secure_room -> change_user_role
     Selected_area -> Weather
     Selected_area -> Census
-    server_connection -> login
+    Server -> select_server
+    Server -> Country_workspace
+    Server -> add_server
     Settings -> Language
     Shape -> Polygon
     Shape -> Circle
@@ -924,7 +935,7 @@ subgraph cluster_Legend {
     User -> enable_disable_user
     User -> User_profile
     User_layer -> Map
-    User_layer -> Workspace
+    User_layer -> Private_workspace
     User_layer -> crud_feature
     User_profile -> view_username
     User_profile -> edit_first_name
@@ -935,23 +946,29 @@ subgraph cluster_Legend {
     User_profile -> edit_job_description
     User_profile -> select_user_role
     UXO_report -> crud_uxo_report
-    Workspace -> share_workspace
+    Private_workspace -> share_workspace
   }
           
     subgraph read_only_user {
     edge [color = red, penwidth = 1, weight = 10];
     Read_only_user [color = red];
-    Read_only_user -> registration
+    Read_only_user -> Country_workspace
     Alert -> receive_alert
     Announcement -> receive_announcement
     Document -> upload_document
     Document -> download_document
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     Incident -> Room
     Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -971,9 +988,6 @@ subgraph cluster_Legend {
     Layer_feature -> Search_cone
     Live_stream -> crud_live_stream
     Layer_feature -> Feature_attribute
-    login -> Organization
-    login -> Help
-    login -> send_feedback
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -985,13 +999,13 @@ subgraph cluster_Legend {
     Organization -> Map
     Organization -> Incident
     Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
     Organization -> User
     Organization -> switch_organization
     Other_reports -> crud_report
+    Private_workspace -> share_workspace
     Parent_organization -> Organization
-    registration -> login
-    registration -> reset_password
     Report -> General_messages_report
     Report -> Chat_messages_report
     Report -> EOD_report
@@ -1006,6 +1020,7 @@ subgraph cluster_Legend {
     Selected_area -> Weather
     Selected_area -> Census
     User -> User_profile
+    User_layer -> Private_workspace
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -1013,6 +1028,6 @@ subgraph cluster_Legend {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
+    User_profile -> Language
   }
 }
