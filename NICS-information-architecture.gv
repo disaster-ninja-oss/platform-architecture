@@ -144,7 +144,6 @@ subgraph cluster_Legend {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=yellow];
-    Draw_tools,
     Feature_attribute, 
     Feature_timeline, 
     Help,
@@ -230,7 +229,6 @@ subgraph cluster_Legend {
     create_message -> upload_photo
     crud_feature -> undo_redo
     crud_feature -> copy_paste
-    crud_feature -> Draw_tools
     crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
@@ -243,12 +241,12 @@ subgraph cluster_Legend {
     Document -> upload_document
     Document ->update_document
     Document -> download_document
-    Draw_tools -> Shape
-    Draw_tools -> Line
-    Draw_tools -> Fire_line
-    Draw_tools -> Label
-    Draw_tools -> Symbology
-    Draw_tools -> Search_cone
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     enable_disable_incident_type -> Organization
     enable_disable_report -> Organization
@@ -393,7 +391,6 @@ subgraph cluster_Legend {
     Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
-    crud_feature -> Draw_tools
     crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
@@ -406,12 +403,12 @@ subgraph cluster_Legend {
     Document -> upload_document
     Document ->update_document
     Document -> download_document
-    Draw_tools -> Shape
-    Draw_tools -> Line
-    Draw_tools -> Fire_line
-    Draw_tools -> Label
-    Draw_tools -> Symbology
-    Draw_tools -> Search_cone
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     enable_disable_incident_type -> Organization
     enable_disable_report -> Organization
@@ -540,7 +537,6 @@ subgraph cluster_Legend {
     Country_workspace -> Help
     Country_workspace -> reset_password
     Country_workspace -> Organization
-    crud_feature -> Draw_tools
     crud_feature -> undo_redo
     crud_feature -> copy_paste
     crud_feature -> Feature_timeline
@@ -555,12 +551,12 @@ subgraph cluster_Legend {
     Document -> upload_document
     Document ->update_document
     Document -> download_document
-    Draw_tools -> Shape
-    Draw_tools -> Line
-    Draw_tools -> Fire_line
-    Draw_tools -> Label
-    Draw_tools -> Symbology
-    Draw_tools -> Search_cone
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     Feature_attribute -> crud_feature_attribute
     Fire_line -> Freehand
@@ -687,7 +683,6 @@ subgraph cluster_Legend {
     Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
-    crud_feature -> Draw_tools
     crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
@@ -700,12 +695,12 @@ subgraph cluster_Legend {
     Document -> upload_document
     Document ->update_document
     Document -> download_document
-    Draw_tools -> Shape
-    Draw_tools -> Line
-    Draw_tools -> Fire_line
-    Draw_tools -> Label
-    Draw_tools -> Symbology
-    Draw_tools -> Search_cone
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     Feature_attribute -> crud_feature_attribute
     Fire_line -> Freehand
@@ -830,7 +825,6 @@ subgraph cluster_Legend {
     Country_workspace -> Settings
     crud_feature -> undo_redo
     crud_feature -> copy_paste
-    crud_feature -> Draw_tools
     crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
@@ -842,12 +836,12 @@ subgraph cluster_Legend {
     Document -> upload_document
     Document ->update_document
     Document -> download_document
-    Draw_tools -> Shape
-    Draw_tools -> Line
-    Draw_tools -> Fire_line
-    Draw_tools -> Label
-    Draw_tools -> Symbology
-    Draw_tools -> Search_cone
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     EOD_report -> crud_report
     EOD_report -> upload_photo
     EOD_report -> UXO_report
