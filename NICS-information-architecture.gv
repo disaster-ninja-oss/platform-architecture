@@ -123,6 +123,7 @@ subgraph cluster_Legend {
     undo_redo, 
     update_document,
     upload_document,
+    watch_live_stream,
     zoom_box
   }
   
@@ -131,7 +132,6 @@ subgraph cluster_Legend {
     color=lightgrey;
     node [shape=oval,style=filled,color=green];
     Basemap,
-    Census,
     Map, 
     Language, 
     Layer,
@@ -144,6 +144,7 @@ subgraph cluster_Legend {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=yellow];
+    Census,
     Feature_attribute, 
     Feature_timeline, 
     Help,
@@ -195,6 +196,7 @@ subgraph cluster_Legend {
     Search_cone, 
     Server,
     Settings,
+    Shared_user_layer,
     Small_label,
     Square, 
     Symbology, 
@@ -280,7 +282,6 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
     Layer -> import_layer
     Layer -> add_layer_to_room
@@ -294,6 +295,7 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -355,6 +357,8 @@ subgraph cluster_Legend {
     User_layer -> Map
     User_layer -> Private_workspace
     User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -438,7 +442,6 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
     Layer -> import_layer
     Layer -> add_layer_to_room
@@ -452,6 +455,7 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -506,6 +510,8 @@ subgraph cluster_Legend {
     User_layer -> Map
     User_layer -> Private_workspace
     User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -583,7 +589,6 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
     Layer -> import_layer
     Layer -> add_layer_to_room
@@ -597,6 +602,7 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -650,6 +656,8 @@ subgraph cluster_Legend {
     User_layer -> Map
     User_layer -> Private_workspace
     User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -727,7 +735,6 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
     Layer -> add_layer_to_room
     Layer_feature -> crud_feature
@@ -740,6 +747,7 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -790,9 +798,11 @@ subgraph cluster_Legend {
     User -> enable_disable_user
     User -> User_profile
     User -> invite_to_chat
+    User_layer -> Layer_feature
     User_layer -> Map
     User_layer -> Private_workspace
     User_layer -> crud_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -870,7 +880,6 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
@@ -882,6 +891,7 @@ subgraph cluster_Legend {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -931,6 +941,8 @@ subgraph cluster_Legend {
     User_layer -> Map
     User_layer -> Private_workspace
     User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -980,8 +992,9 @@ subgraph cluster_Legend {
     Layer -> Weather
     Layer_feature -> select_feature
     Layer_feature -> Search_cone
-    Live_stream -> crud_live_stream
     Layer_feature -> Feature_attribute
+    Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -1015,6 +1028,7 @@ subgraph cluster_Legend {
     Selected_area -> Census
     User -> User_profile
     User_layer -> Private_workspace
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
