@@ -1,13 +1,25 @@
 digraph NICS_information_architecture {
+    
+subgraph cluster_Legend {
+    color=gray;
+    Developed_action [shape = rectangle, color=green]
+    Partially_developed_action [shape = rectangle, color=yellow]
+    Not_developed_action [shape = rectangle, color=pink]
+    Developed_entity [style = filled, color=green]
+    Partially_developed_entity [style = filled, color=yellow]
+    Not_developed_entity [style = filled, color=pink]
+    label = "Legend"
+}
 
   subgraph cluster_roles {
-    color=lightgray;
+    color=gray;
     node [shape=rectangle,color=white, penwidth=2];
     Read_only_user, 
     NICS_user, 
     GIS_user, 
     Admin, 
-    Super_user;
+    Super_user,
+    Mobile_user;
     label = "Roles";
   }
 
@@ -23,7 +35,8 @@ digraph NICS_information_architecture {
     select_language, 
     send_feedback, 
     view_organization, 
-    view_username
+    view_username,
+    login
   }
   
   subgraph user_actions_partially_developed {
@@ -35,10 +48,10 @@ digraph NICS_information_architecture {
     crud_feature_attribute, 
     crud_incident_type, 
     crud_organization,
-    crud_translation, 
+    crud_language, 
     crud_user, 
     edit_comment, 
-    import_data,
+    import_layer,
     measure_area,
     reset_password, 
     search_location, 
@@ -46,18 +59,21 @@ digraph NICS_information_architecture {
     select_feature,
     select_user_role, 
     upload_photo,
-    zoom_in_out
+    zoom_in_out,
+    registration
   }
   
-  subgraph user_actions_non_developed {
+  subgraph user_actions_not_developed {
     style=filled;
     color=lightgrey;
     node [shape=rectangle,style=outlined,penwidth = 2,color=pink];
-    add_data_to_room,
+    add_layer_to_room,
+    add_server,
     allow_users_move_map,
     archive_incident, 
     change_opacity, 
     copy_paste, 
+    create_message,
     crud_alert, 
     crud_announcement, 
     cru_incident, 
@@ -66,6 +82,7 @@ digraph NICS_information_architecture {
     cru_room, 
     crud_report, 
     crud_symbology, 
+    crud_uxo_report,
     download_document, 
     edit_color, 
     edit_comment, 
@@ -81,10 +98,12 @@ digraph NICS_information_architecture {
     enable_disable_incident_type, 
     enable_disable_organization,
     enable_disable_report, 
+    enable_disable_tracking,
     enable_disable_user,
     escalate_incident,
     export_room, 
     invite_to_chat,
+    manage_report,
     mark_as_hazard, 
     measure_area, 
     move_other_users_position, 
@@ -92,16 +111,19 @@ digraph NICS_information_architecture {
     receive_announcement, 
     receive_message,
     receive_notification, 
+    receive_warning,
     reset_password, 
     search_organization, 
     secure_room,
-    send_alert,
     send_announcement, 
     send_message, 
-    share_user_layer, 
+    select_server,
+    share_workspace, 
+    switch_organization,
     undo_redo, 
     update_document,
     upload_document,
+    watch_live_stream,
     zoom_box
   }
   
@@ -110,81 +132,86 @@ digraph NICS_information_architecture {
     color=lightgrey;
     node [shape=oval,style=filled,color=green];
     Basemap,
-    Census,
     Map, 
     Language, 
     Layer,
-    Layer_feature,
     Legend, 
-    Line, 
-    Login, 
-    Polygon, 
     Selected_area, 
-    Shape,
-    User,
-    User_profile
+    User
   }
   
   subgraph partially_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=yellow];
-    Data,
+    Census,
     Feature_attribute, 
     Feature_timeline, 
+    Help,
+    Layer_feature,
+    Line, 
     Map_navigation,
-    Registration, 
+    Polygon, 
+    Shape,
     Tracking,
-    Translation,  
-    User_layer
+    User_layer,
+    User_profile
+    Private_workspace
   }
  
   subgraph not_developed {
     style=filled;
     color=lightgrey;
     node [shape=oval,style=filled,color=pink];
-    Active_user, 
     Alert, 
     Announcement, 
     Chat, 
+    Chat_messages_report,
     Circle, 
+    Country_workspace,
     Dashed,
     Document, 
+    EOD_report,
     Fire_line, 
     Freehand,
     Common_chat,
+    General_messages_report,
     Group_chat, 
     Hexagon, 
     Incident, 
     Incident_region
     Incident_type,
     Label, 
+    Large_label,
     Live_stream,
     Medium,
+    Medium_label,
     Notification,
     One_on_one_chat, 
     Organization,
+    Other_reports,
     Parent_organization, 
-    Region, 
     Report,
     Room, 
     Search_cone, 
+    Server,
+    Settings,
+    Shared_user_layer,
+    Small_label,
     Square, 
     Symbology, 
     Thick,
     Thin,
     Triangle,
+    UXO_report,
     Weather
   }
-      
-  subgraph Admin {
-    edge [color = gray, penwidth = 1, weight = 10];
-    Admin [color = gray];
-    Admin -> Registration
-    Active_user -> invite_to_chat
-    Login -> Organization 
+
+  subgraph Super_user {
+    edge [penwidth = 1, weight = 10];
+    Super_user [color = darkgray];
+    Super_user -> Country_workspace
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> crud_announcement
     Announcement -> send_announcement
@@ -194,8 +221,17 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
+    create_message -> upload_photo
     crud_feature -> undo_redo
     crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -204,23 +240,24 @@ digraph NICS_information_architecture {
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
     cru_incident -> enable_disable_organization
-    Data -> add_data_to_room
-    Data -> import_data
-    Data -> Layer
     Document -> upload_document
     Document ->update_document
     Document -> download_document
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     enable_disable_incident_type -> Organization
     enable_disable_report -> Organization
     Feature_attribute -> crud_feature_attribute
     Fire_line -> Freehand
     Incident -> Room
-    Incident -> Data
+    Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -229,25 +266,28 @@ digraph NICS_information_architecture {
     Incident -> archive_incident
     Incident -> Incident_type
     Incident -> Incident_region
+    Incident -> User
+    Incident_region -> crud_region
+    Incident_type -> crud_incident_type
     Incident_type -> enable_disable_incident_type
-    invite_to_chat -> Chat
+    invite_to_chat -> Notification
+    General_messages_report -> create_message
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> crud_language
+    Language -> select_language
     Layer -> Legend
     Layer -> Tracking
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
+    Layer -> import_layer
+    Layer -> add_layer_to_room
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
-    Layer_feature -> Shape
-    Layer_feature -> Line
-    Layer_feature -> Fire_line
-    Layer_feature -> Label
-    Layer_feature -> Symbology
-    Layer_feature -> Search_cone
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -255,6 +295,7 @@ digraph NICS_information_architecture {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -271,16 +312,25 @@ digraph NICS_information_architecture {
     mark_as_hazard -> edit_radius
     Notification -> receive_notification
     Organization -> Incident
-    Organization -> Data
+    Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
+    Organization -> switch_organization
+    Organization -> User
+    Organization -> crud_organization
+    Organization -> search_organization
+    Other_reports -> crud_report
+    Other_reports -> manage_report
     Parent_organization -> Organization
     Polygon -> Freehand
-    Registration -> Login
-    Registration -> reset_password
-    Report -> crud_report
+    receive_notification -> Chat
+    Incident_region -> crud_region
     Report -> enable_disable_report
+    Report -> General_messages_report
+    Report -> Chat_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -288,10 +338,165 @@ digraph NICS_information_architecture {
     Room -> Layer
     Room -> Chat
     Room -> Map
-    Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
-    select_language -> Language
+    Selected_area -> Weather
+    Selected_area -> Census
+    Shape -> Polygon
+    Shape -> Circle
+    Shape -> Triangle
+    Shape -> Square
+    Shape -> Hexagon
+    Symbology -> crud_symbology
+    User -> crud_user
+    User -> change_user_role
+    User -> enable_disable_user
+    User -> User_profile
+    User -> invite_to_chat
+    User_layer -> Map
+    User_layer -> Private_workspace
+    User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_user_role
+    User_profile -> Language
+    UXO_report
+    Private_workspace -> share_workspace
+  }
+  
+  subgraph Admin {
+    edge [color = gray, penwidth = 1, weight = 10];
+    Admin [color = gray];
+    Admin -> Country_workspace
+    Alert -> crud_alert
+    Alert -> receive_alert
+    Announcement -> crud_announcement
+    Announcement -> send_announcement
+    Announcement -> receive_announcement
+    Chat -> Common_chat
+    Chat -> Group_chat
+    Chat -> One_on_one_chat
+    Chat -> send_message
+    Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
+    crud_feature -> undo_redo
+    crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
+    crud_feature_attribute -> edit_label
+    crud_feature_attribute -> edit_description
+    crud_feature_attribute -> upload_photo
+    crud_feature_attribute -> edit_comment
+    crud_feature_attribute -> edit_color
+    crud_feature_attribute -> change_opacity
+    crud_feature_attribute -> mark_as_hazard
+    cru_incident -> enable_disable_organization
+    Document -> upload_document
+    Document ->update_document
+    Document -> download_document
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
+    escalate_incident -> Parent_organization
+    enable_disable_incident_type -> Organization
+    enable_disable_report -> Organization
+    Feature_attribute -> crud_feature_attribute
+    Fire_line -> Freehand
+    Incident -> Room
+    Incident -> Layer
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Incident -> cru_incident
+    Incident -> escalate_incident
+    Incident -> archive_incident
+    Incident -> Incident_type
+    Incident -> Incident_region
+    Incident -> User
+    Incident_type -> enable_disable_incident_type
+    invite_to_chat -> Notification
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> select_language
+    Layer -> Legend
+    Layer -> Tracking
+    Layer -> Weather
+    Layer -> Selected_area
+    Layer -> User_layer
+    Layer -> Basemap
+    Layer -> import_layer
+    Layer -> add_layer_to_room
+    Layer_feature -> crud_feature
+    Layer_feature -> select_feature
+    Layer_feature -> rotate_feature
+    Layer_feature -> Feature_attribute
+    Line -> Thick
+    Line -> Medium
+    Line -> Thin
+    Line -> Dashed
+    Line -> Freehand
+    Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> move_other_users_position
+    Map_navigation -> allow_users_move_map
+    Map_navigation -> measure_area
+    Map_navigation -> measure_distance
+    mark_as_hazard -> edit_hazard_label
+    mark_as_hazard -> edit_hazard_type
+    mark_as_hazard -> edit_radius
+    Notification -> receive_notification
+    Organization -> Incident
+    Organization -> Layer
+    Organization -> Live_stream
+    Organization -> Document
+    Organization -> Map
+    Organization -> switch_organization
+    Organization -> User
+    Other_reports -> crud_report
+    Parent_organization -> Organization
+    Polygon -> Freehand
+    receive_notification -> Chat
+    Report -> enable_disable_report
+    Report -> General_messages_report
+    Report -> Chat_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
+    Room -> cru_room
+    Room -> secure_room
+    Room -> export_room
+    Room -> User
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Document
+    Room -> Feature_timeline
+    secure_room -> change_user_role
     Selected_area -> Weather
     Selected_area -> Census
     Shape -> Polygon
@@ -301,8 +506,12 @@ digraph NICS_information_architecture {
     Shape -> Hexagon
     User -> enable_disable_user
     User -> User_profile
-    User_layer -> share_user_layer
+    User -> invite_to_chat
     User_layer -> Map
+    User_layer -> Private_workspace
+    User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -310,18 +519,16 @@ digraph NICS_information_architecture {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
+    User_profile -> Language
+    Private_workspace -> share_workspace
   }
 
   subgraph GIS_user {
     edge [color = darkgreen, penwidth = 1, weight = 10];
     GIS_user [color = darkgreen];
-    GIS_user -> Registration
-    Active_user -> invite_to_chat
-    Login -> Organization 
+    GIS_user -> Country_workspace
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
     Chat -> Common_chat
@@ -329,8 +536,16 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -339,21 +554,22 @@ digraph NICS_information_architecture {
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
     cru_incident -> enable_disable_organization
-    Data -> add_data_to_room
-    Data -> import_data
-    Data -> Layer
     Document -> upload_document
     Document ->update_document
     Document -> download_document
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     Feature_attribute -> crud_feature_attribute
     Fire_line -> Freehand
     Incident -> Room
-    Incident -> Data
+    Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -362,24 +578,23 @@ digraph NICS_information_architecture {
     Incident -> archive_incident
     Incident -> Incident_type
     Incident -> Incident_region
-    invite_to_chat -> Chat
+    Incident -> User
+    invite_to_chat -> Notification
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> select_language
     Layer -> Legend
     Layer -> Tracking
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
+    Layer -> import_layer
+    Layer -> add_layer_to_room
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
-    Layer_feature -> Shape
-    Layer_feature -> Line
-    Layer_feature -> Fire_line
-    Layer_feature -> Label
-    Layer_feature -> Symbology
-    Layer_feature -> Search_cone
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -387,6 +602,7 @@ digraph NICS_information_architecture {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -403,15 +619,20 @@ digraph NICS_information_architecture {
     mark_as_hazard -> edit_radius
     Notification -> receive_notification
     Organization -> Incident
-    Organization -> Data
+    Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
+    Organization -> switch_organization
+    Organization -> User
+    Other_reports -> crud_report
     Parent_organization -> Organization
     Polygon -> Freehand
-    Registration -> login
-    Registration -> reset_password
-    Report -> crud_report
+    receive_notification -> Chat
+    Report -> General_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
+    Report -> Chat_messages_report
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -419,10 +640,9 @@ digraph NICS_information_architecture {
     Room -> Layer
     Room -> Chat
     Room -> Map
-    Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
-    select_language -> Language
     Selected_area -> Weather
     Selected_area -> Census
     Shape -> Polygon
@@ -432,8 +652,12 @@ digraph NICS_information_architecture {
     Shape -> Hexagon
     User -> enable_disable_user
     User -> User_profile
-    User_layer -> share_user_layer
+    User -> invite_to_chat
     User_layer -> Map
+    User_layer -> Private_workspace
+    User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -441,18 +665,16 @@ digraph NICS_information_architecture {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
+    User_profile -> Language
+    Private_workspace -> share_workspace
   }
   
     subgraph NICS_user {
     edge [color = blue, penwidth = 1, weight = 10];
     NICS_user [color = blue];
-    NICS_user -> Registration
-    Active_user -> invite_to_chat
-    Login -> Organization 
+    NICS_user -> Country_workspace
     Alert -> crud_alert
-    Alert -> send_alert
     Alert -> receive_alert
     Announcement -> receive_announcement
     Chat -> Common_chat
@@ -460,8 +682,16 @@ digraph NICS_information_architecture {
     Chat -> One_on_one_chat
     Chat -> send_message
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     crud_feature -> undo_redo
     crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
     crud_feature_attribute -> edit_label
     crud_feature_attribute -> edit_description
     crud_feature_attribute -> upload_photo
@@ -470,20 +700,22 @@ digraph NICS_information_architecture {
     crud_feature_attribute -> change_opacity
     crud_feature_attribute -> mark_as_hazard
     cru_incident -> enable_disable_organization
-    Data -> add_data_to_room
-    Data -> Layer
     Document -> upload_document
     Document ->update_document
     Document -> download_document
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
     escalate_incident -> Parent_organization
     Feature_attribute -> crud_feature_attribute
     Fire_line -> Freehand
     Incident -> Room
-    Incident -> Data
+    Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
@@ -492,24 +724,22 @@ digraph NICS_information_architecture {
     Incident -> archive_incident
     Incident -> Incident_type
     Incident -> Incident_region
-    invite_to_chat -> Chat
+    Incident -> User
+    invite_to_chat -> Notification
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> select_language
     Layer -> Legend
     Layer -> Tracking
     Layer -> Weather
     Layer -> Selected_area
     Layer -> User_layer
-    Layer -> Layer_feature
     Layer -> Basemap
+    Layer -> add_layer_to_room
     Layer_feature -> crud_feature
     Layer_feature -> select_feature
     Layer_feature -> rotate_feature
-    Layer_feature -> Feature_timeline
-    Layer_feature -> Shape
-    Layer_feature -> Line
-    Layer_feature -> Fire_line
-    Layer_feature -> Label
-    Layer_feature -> Symbology
-    Layer_feature -> Search_cone
     Layer_feature -> Feature_attribute
     Line -> Thick
     Line -> Medium
@@ -517,6 +747,7 @@ digraph NICS_information_architecture {
     Line -> Dashed
     Line -> Freehand
     Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -533,15 +764,20 @@ digraph NICS_information_architecture {
     mark_as_hazard -> edit_radius
     Notification -> receive_notification
     Organization -> Incident
-    Organization -> Data
+    Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
-    Organization -> send_feedback
     Organization -> Map
+    Organization -> switch_organization
+    Organization -> User
+    Other_reports -> crud_report
     Parent_organization -> Organization
     Polygon -> Freehand
-    Registration -> login
-    Registration -> reset_password
-    Report -> crud_report
+    receive_notification -> Chat
+    Report -> General_messages_report
+    Report -> Chat_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> secure_room
     Room -> export_room
@@ -549,10 +785,9 @@ digraph NICS_information_architecture {
     Room -> Layer
     Room -> Chat
     Room -> Map
-    Room -> Active_user
     Room -> Document
+    Room -> Feature_timeline
     secure_room -> change_user_role
-    select_language -> Language
     Selected_area -> Weather
     Selected_area -> Census
     Shape -> Polygon
@@ -562,8 +797,12 @@ digraph NICS_information_architecture {
     Shape -> Hexagon
     User -> enable_disable_user
     User -> User_profile
-    User_layer -> share_user_layer
+    User -> invite_to_chat
+    User_layer -> Layer_feature
     User_layer -> Map
+    User_layer -> Private_workspace
+    User_layer -> crud_feature
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -571,29 +810,179 @@ digraph NICS_information_architecture {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
     User_profile -> select_user_role
+    User_profile -> Language
+    Private_workspace -> share_workspace
+  }
+  
+    subgraph Mobile_user {
+    edge [color = purple, penwidth = 1, weight = 10];
+    Mobile_user [color = purple];
+    Mobile_user -> Server
+    Alert -> receive_alert
+    Announcement -> receive_announcement
+    Chat -> Common_chat
+    Chat -> Group_chat
+    Chat -> One_on_one_chat
+    Chat -> send_message
+    Chat -> receive_message
+    Country_workspace -> Organization
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Settings
+    crud_feature -> undo_redo
+    crud_feature -> copy_paste
+    crud_feature -> Feature_timeline
+    crud_feature_attribute -> edit_label
+    crud_feature_attribute -> edit_description
+    crud_feature_attribute -> upload_photo
+    crud_feature_attribute -> edit_comment
+    crud_feature_attribute -> edit_color
+    crud_feature_attribute -> change_opacity
+    cru_incident -> enable_disable_organization
+    Document -> upload_document
+    Document ->update_document
+    Document -> download_document
+    Layer_feature -> Shape
+    Layer_feature -> Line
+    Layer_feature -> Fire_line
+    Layer_feature -> Label
+    Layer_feature -> Symbology
+    Layer_feature -> Search_cone
+    EOD_report -> crud_report
+    EOD_report -> upload_photo
+    EOD_report -> UXO_report
+    escalate_incident -> Parent_organization
+    Feature_attribute -> crud_feature_attribute
+    Incident -> Room
+    Incident -> Layer
+    Incident -> Live_stream
+    Incident -> Alert
+    Incident -> Report
+    Incident -> Document
+    Incident -> search_incident
+    Incident -> cru_incident
+    Incident -> escalate_incident
+    Incident -> archive_incident
+    Incident -> Incident_type
+    Incident -> Incident_region
+    Incident -> User
+    invite_to_chat -> Notification
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> select_language
+    Layer -> Legend
+    Layer -> Tracking
+    Layer -> Weather
+    Layer -> Selected_area
+    Layer -> User_layer
+    Layer -> Basemap
+    Layer_feature -> crud_feature
+    Layer_feature -> select_feature
+    Layer_feature -> rotate_feature
+    Layer_feature -> Feature_attribute
+    Line -> Thick
+    Line -> Medium
+    Line -> Thin
+    Line -> Dashed
+    Line -> Freehand
+    Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
+    Map -> print_map
+    Map -> Map_navigation
+    Map -> Layer
+    Map_navigation -> search_location
+    Map_navigation -> zoom_box
+    Map_navigation -> zoom_in_out
+    Map_navigation -> drag_map
+    Map_navigation -> move_other_users_position
+    Map_navigation -> allow_users_move_map
+    Map_navigation -> measure_area
+    Map_navigation -> measure_distance
+    mark_as_hazard -> receive_warning
+    Notification -> receive_notification
+    Organization -> Incident
+    Organization -> Layer
+    Organization -> Live_stream
+    Organization -> Document
+    Organization -> Map
+    Organization -> switch_organization
+    Organization -> User
+    Other_reports -> crud_report
+    Parent_organization -> Organization
+    Polygon -> Freehand
+    receive_notification -> Chat
+    Report -> General_messages_report
+    Report -> Chat_messages_report
+    Report -> EOD_report
+    Room -> User
+    Room -> Layer
+    Room -> Chat
+    Room -> Map
+    Room -> Document
+    Room -> Feature_timeline
+    secure_room -> change_user_role
+    Selected_area -> Weather
+    Selected_area -> Census
+    Server -> select_server
+    Server -> Country_workspace
+    Server -> add_server
+    Settings -> Language
+    Shape -> Polygon
+    Shape -> Circle
+    Shape -> Square
+    Tracking -> enable_disable_tracking
+    User -> enable_disable_user
+    User -> User_profile
+    User_layer -> Map
+    User_layer -> Private_workspace
+    User_layer -> crud_feature
+    User_layer -> Layer_feature
+    User_layer -> Shared_user_layer
+    User_profile -> view_username
+    User_profile -> edit_first_name
+    User_profile -> edit_last_name
+    User_profile -> view_organization
+    User_profile -> edit_job_title
+    User_profile -> edit_rank
+    User_profile -> edit_job_description
+    User_profile -> select_user_role
+    UXO_report -> crud_uxo_report
+    Private_workspace -> share_workspace
   }
           
     subgraph read_only_user {
     edge [color = red, penwidth = 1, weight = 10];
     Read_only_user [color = red];
-    Read_only_user -> Registration
+    Read_only_user -> Country_workspace
     Alert -> receive_alert
     Announcement -> receive_announcement
-    Data -> Layer
     Document -> upload_document
     Document -> download_document
     Chat -> receive_message
+    Country_workspace -> Announcement
+    Country_workspace -> registration
+    Country_workspace -> login
+    Country_workspace -> send_feedback
+    Country_workspace -> Help
+    Country_workspace -> reset_password
+    Country_workspace -> Organization
     Incident -> Room
-    Incident -> Data
+    Incident -> Layer
     Incident -> Live_stream
     Incident -> Alert
-    Incident -> Announcement
-    Incident -> Notification
     Incident -> Report
     Incident -> Document
     Incident -> search_incident
+    Incident -> User
+    Label -> Small_label
+    Label -> Medium_label
+    Label -> Large_label
+    Language -> select_language
     Layer -> Basemap
     Layer -> Legend
     Layer -> Selected_area
@@ -601,12 +990,11 @@ digraph NICS_information_architecture {
     Layer -> User
     Layer -> User_layer
     Layer -> Weather
-    Layer_feature -> feature_timeline
     Layer_feature -> select_feature
-    Layer_feature -> search_cone
-    Live_stream -> crud_live_stream
+    Layer_feature -> Search_cone
     Layer_feature -> Feature_attribute
-    Login -> Organization
+    Live_stream -> crud_live_stream
+    Live_stream -> watch_live_stream
     Map -> print_map
     Map -> Map_navigation
     Map -> Layer
@@ -615,26 +1003,32 @@ digraph NICS_information_architecture {
     Map_navigation -> zoom_in_out
     Map_navigation -> drag_map
     Map_navigation -> allow_users_move_map
-    Notification -> receive_notification
     Organization -> Map
     Organization -> Incident
-    Organization -> Data
+    Organization -> Layer
+    Organization -> Live_stream
     Organization -> Document
-    Organization -> send_feedback
-    Registration -> Login
-    Registration -> reset_password
-    Report -> crud_report
+    Organization -> User
+    Organization -> switch_organization
+    Other_reports -> crud_report
+    Private_workspace -> share_workspace
+    Parent_organization -> Organization
+    Report -> General_messages_report
+    Report -> Chat_messages_report
+    Report -> EOD_report
+    Report -> Other_reports
     Room -> cru_room
     Room -> export_room
     Room -> Layer
     Room -> Chat
     Room -> Map
-    Room -> Active_user
     Room -> Document
-    select_language -> Language
+    Room -> Feature_timeline
     Selected_area -> Weather
     Selected_area -> Census
     User -> User_profile
+    User_layer -> Private_workspace
+    User_layer -> Shared_user_layer
     User_profile -> view_username
     User_profile -> edit_first_name
     User_profile -> edit_last_name
@@ -642,31 +1036,6 @@ digraph NICS_information_architecture {
     User_profile -> edit_job_title
     User_profile -> edit_rank
     User_profile -> edit_job_description
-    User_profile -> select_language
-  }
-  
-  subgraph Super_user {
-    edge [penwidth = 1, weight = 10];
-    Super_user [color = darkgray];
-    Super_user -> reset_password
-    Super_user -> Login
-    crud_region -> Incident_region
-    crud_translation -> Language
-    Incident_type -> crud_incident_type
-    Login -> Organization
-    Login -> User
-    Login -> Symbology
-    Login -> Incident_type
-    Login -> Region 
-    Login -> Translation
-    Organization -> User
-    Organization -> crud_organization
-    Organization -> search_organization
-    Region -> crud_region
-    Registration -> reset_password
-    Symbology -> crud_symbology
-    Translation -> crud_translation
-    User -> crud_user
-    User -> change_user_role
+    User_profile -> Language
   }
 }
