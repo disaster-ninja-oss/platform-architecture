@@ -211,8 +211,8 @@ digraph {
     isochroneapi 
     citysplit -> isochroneapi
     insightsapi -> "insightsapi-database"
-    insightsapi -> "insights-api-db"
-    "insights-api-db" -> "insightsapi-database"
+    insightsapi -> "insights-db"
+    "insights-db" -> "insightsapi-database"
     "insightsapi-database" [label=<insightsapi-database<FONT POINT-SIZE="10"><BR />Paris PG</FONT>>]
     konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi //new
