@@ -29,7 +29,6 @@ digraph Platform_services{
     {
         rank=same;
         osm [label="OpenStreetMap.org",color=blue]
-        twitter [label="Twitter",color=blue]
         facebookpopulation [label="Facebook Population (HRSL)",color=blue]
         facebookroads [label="Facebook Roads",color=blue]
         msbuildings [label="Microsoft Buildings",color=blue]
@@ -78,7 +77,7 @@ digraph Platform_services{
         rank=same
         kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: A.Valasiuk</FONT>>]
         OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: A.Valasiuk</FONT>>]
-        k2routing
+        k2routing [label=<k2routing<BR />proxy request to OSRM>]
         k2layers
         k2geocoder
     }
@@ -96,22 +95,19 @@ digraph Platform_services{
 
     subgraph cluster_k8s {
         label="k8s cluster"
-        "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">reverse proxy and load balancer<br/>K8S</FONT>>]
+        concentrate=true
+        "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
         "layers-tiles-api" [label=<Layers Tiles API>]
-        "Layers-API" [label=<Layers API>]
-        "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">K8S<BR />Open Source</FONT>>]
-        "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin<BR />K8S<BR />Open Source</FONT>>]
+        "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
+        "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>]
+        "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />K8S</FONT>>]
-        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">K8S</FONT>>]
+        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
         insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-
-        "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]                    
-
+        "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
-
-
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />collects all logs in K8S<BR />K8S</FONT>>]
-        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">K8S</FONT>>]
+        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />K8S</FONT>>]
         "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
         eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich</FONT>>]
     }
@@ -128,34 +124,34 @@ digraph Platform_services{
 
     keycloak 
     eventapi -> keycloak
-    mailchimp -> keycloak  [color=orange]
+    mailchimp -> keycloak  
 
-    bivariatestat -> insightsapi [color=orange]
+    bivariatestat -> insightsapi 
 
     "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
-    "disaster-ninja-fe" -> "basemap tiles" [color=orange]
+    "disaster-ninja-fe" -> "basemap tiles" 
     "basemap tiles" -> geocint
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"
-    "disaster-ninja-fe" -> kontur_boundaries [color=orange]
-    "disaster-ninja-fe" -> OSM_quality_report [color=orange]
+    "disaster-ninja-fe" -> kontur_boundaries 
+    "disaster-ninja-fe" -> OSM_quality_report 
     "disaster-ninja-fe" -> "layers-tiles-api"
 
     "disaster-ninja-be" -> "user-profile-api"
     "disaster-ninja-be" -> "event-preview-image-generator"
     "event-preview-image-generator" -> "disaster-ninja-fe"
-    "disaster-ninja-be" -> insightsapi [color=orange]
+    "disaster-ninja-be" -> insightsapi 
     "disaster-ninja-fe" -> insightsapi
-    "disaster-ninja-be" -> kcapi [color=orange]
-    "disaster-ninja-be" -> eventapi [color=orange]
+    "disaster-ninja-be" -> kcapi 
+    "disaster-ninja-be" -> eventapi 
     "disaster-ninja-be" -> "Layers-API"
 
-    "HOT Slack" -> "disaster-ninja-be" [color=orange]
+    "HOT Slack" -> "disaster-ninja-be" 
 
-    "disasterninja" -> "nginx" [color=orange]
-    "nginx" -> "nginx-ingress-controller" [color=orange]
-    "nginx-ingress-controller" -> "disaster-ninja-fe" [color=orange]
-    "nginx-ingress-controller" -> "disaster-ninja-be" [color=orange]
+    "disasterninja" -> "nginx" 
+    "nginx" -> "nginx-ingress-controller" 
+    "nginx-ingress-controller" -> "disaster-ninja-fe" 
+    "nginx-ingress-controller" -> "disaster-ninja-be" 
 
 
 
@@ -182,7 +178,9 @@ digraph Platform_services{
         eventapiprod [label="https://apps.kontur.io/events/"]
         mchsapp [label="https://apps.kontur.io/firebrigade/minsk/"]
         konturwebsite [label="https://kontur.io/"]
-        hotlandingpage [label="https://apps.kontur.io/hot-activations-landing/"]
+        hotlandingpage [label="https://apps.kontur.io/hot-activations-landing/"]        
+        smartcity [label=<Smart City App<BR />maps.kontur.io>]
+        roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
         "HOT Slack"
         UserManagement
         DisasterAware7
@@ -193,6 +191,11 @@ digraph Platform_services{
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
 
+    DonkorLabs -> smartcity
+    DonkorLabs -> roadqualityapp
+    roadqualityapp -> "layers-db"
+    smartcity -> "layers-db"
+
     Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
 
@@ -201,7 +204,6 @@ digraph Platform_services{
 
     eventapiprod -> eventapi
     hotlandingpage -> kcapi //new
-    socialfeed -> twitter
     CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin</FONT>>]
     mchs -> CSTAPP[color=pink]
     DonerKing -> CSTAPP [color=pink]
@@ -237,7 +239,7 @@ digraph Platform_services{
         addressesminsk [label="OSM Addresses Minsk"]
         buildingsminsk [label="OSM Buildings Minsk"]
         belarusosmpbf [label="OSM Belarus extract"]
-        pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA>]//Area of interest updated 2024-30-01
+        pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]//Area of interest updated 2024-30-01
 
     }
     bivariatestat -> geocint
@@ -291,7 +293,7 @@ digraph Platform_services{
     kccitysplitfe [label=<kccitysplit-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin</FONT>>]
     kccitysplitfe -> isochroneapi
     CSTAPP -> kccitysplitfe
-    kccovid19fe [color=orange]
+    kccovid19fe 
 
     kcapi  
     eventapi -> gdacs
@@ -331,9 +333,9 @@ digraph Platform_services{
     pdcmapservices -> pdcdisasters
     k2etl 
     k2layers
-    k2dflib [color=orange]
-    k2parent [color=orange]
-    k2bom [color=orange]
+    k2dflib 
+    k2parent 
+    k2bom 
     k2etl -> k2parent // update 2021-10-8
     k2parent -> k2bom // update 2021-10-8
     k2routing -> k2parent // update 2021-10-8
@@ -345,10 +347,10 @@ digraph Platform_services{
     k2layers -> "kcapi db"
     k2geocoder -> "kcapi db"
     "kcapi db" -> kcdataetl
-    k2cayennepg
+    k2cayennepg [label=<k2cayennepg<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski<BR />Apache Cayenne library</FONT>>]
     k2api [label=<k2api<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski<BR />old legacy api</FONT>>]
     k2api -> k2cayennepg
-    minskfiredemo [color=orange]
+    minskfiredemo 
     k2routing
     kcapi -> k2routing
     k2routing -> osm
@@ -365,7 +367,7 @@ digraph Platform_services{
     kcdonerkingfe -> k2frontend
     kcfirebrigadefe -> k2frontend
     kccitysplitfe -> k2frontend
-    kccovid19fe -> k2frontend [color=orange]
+    kccovid19fe -> k2frontend 
     pdcrvaeditorfe
     PDC -> pdcrvaeditorfe
     pdceventbrieffe
