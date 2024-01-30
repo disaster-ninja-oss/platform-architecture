@@ -22,6 +22,7 @@ digraph {
         Kontur [label="Kontur",color=red]
         Unfolded [label="Unfolded / Foursquare",color=red]
         cartocatalog [label="Carto Catalog", color=red] //updated 2021-10-08
+        DonkorLabs [label="Donkor Labs",color=red]
     }
     // user facing
     // external
@@ -29,7 +30,7 @@ digraph {
         rank=same;
         osm [label="OpenStreetMap.org",color=blue]
         twitter [label="Twitter",color=blue]
-        facebookpopulation [label="Facebook Population",color=blue]
+        facebookpopulation [label="Facebook Population (HRSL)",color=blue]
         facebookroads [label="Facebook Roads",color=blue]
         msbuildings [label="Microsoft Buildings",color=blue]
         geoalertbuildings [label="GeoAlert Buildings",color=blue]
@@ -82,6 +83,17 @@ digraph {
         k2geocoder
     }
 
+    subgraph cluster_legend {
+        label="Legend"        
+        
+        "Partners" [color=red]
+        "Data Providers" [color=blue]
+        "Existing services" [color=black]
+        "Will be implemented" [color=yellow]
+        "Will be removed" [color=pink]       
+        
+    }
+
     subgraph cluster_k8s {
         label="k8s cluster"
         "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">reverse proxy and load balancer<br/>K8S</FONT>>]
@@ -91,9 +103,13 @@ digraph {
         "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin<BR />K8S<BR />Open Source</FONT>>]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />K8S</FONT>>]
         "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">K8S</FONT>>]
-        insightsapi [label=<Insights API<BR />K8S>]
-        "prometheus02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
-        "grafana02" [label=<prometheus02<FONT POINT-SIZE="10"><BR />main monitoring solution in K8S<BR />K8S</FONT>>]
+        insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
+
+        "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]                    
+
+        "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
+
+
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />collects all logs in K8S<BR />K8S</FONT>>]
         "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">K8S</FONT>>]
         "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
@@ -157,6 +173,7 @@ digraph {
     "layers-etl" -> osmcontributors
     "layers-etl" -> unhcrukrainerefugee
     "layers-etl" -> idpestimates
+    "layers-etl" -> osmlayers
     
 
     gdacs -> jrc
@@ -228,7 +245,7 @@ digraph {
         rank=same;
         
         osmroadsegments [label="OSM Road Segments"]
-        konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Pavel Pashagin</FONT>>]
+        konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
         osmcontributorstiles [label="OSM Active Contributors"]
     }
     {
@@ -237,7 +254,7 @@ digraph {
         addressesminsk [label="OSM Addresses Minsk"]
         buildingsminsk [label="OSM Buildings Minsk"]
         belarusosmpbf [label="OSM Belarus extract"]
-        pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE>]//Area of interest updated 2021-10-08
+        pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA>]//Area of interest updated 2024-30-01
 
     }
     livedashboard -> bivariatestat
@@ -259,21 +276,36 @@ digraph {
     osrmdistanceminsk -> belarusosmpbf
     konturpopulation -> geocint
     HDX -> konturpopulation
-    geocint [label="Geocint Pipeline"]
+    HDX -> kontur_boundaries
+
+
+    subgraph cluster_geocint {
+        label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
+        color=blue
+
+        "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
+        "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
+        "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
+        geocint [label="Geocint Pipeline"][label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
+    }
+    
+    "geocint-runner" -> geocint
+    "geocint-openstreetmap" -> geocint
+    "geocint-kontur" -> geocint
     geocint -> osm
     geocint -> facebookpopulation
     facebookpopulation -> gadm
     geocint -> gadm
     geocint -> ghs
-    geocint -> facebookroads [color=pink]
-    geocint -> msbuildings [color=pink]
-    geocint -> geoalertbuildings [color=pink]
+    geocint -> facebookroads
+    geocint -> msbuildings
+    geocint -> geoalertbuildings
     "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
-
     osmboundaries
     osmboundaries -> geocint
+
     kccitysplitfe [label=<kccitysplit-fe<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin</FONT>>]
     kccitysplitfe -> isochroneapi
     CSTAPP -> kccitysplitfe
