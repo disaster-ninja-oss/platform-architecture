@@ -1,4 +1,4 @@
-digraph {
+digraph Platform_services{
     ratio=0.5625
     #ratio=0.7
     #ratio=1.0407 // 1993:1915
@@ -8,13 +8,13 @@ digraph {
     newrank=true
     edge[minlen=1,weight=1]
     node[shape=octagon]
+    concentrate=true
     // customers
     {
         rank=same;
         HOT [label="Humanitarian OSM Team",color=red]
         PDC [label="Pacific Disaster Center",color=red]
         Tenefit [label="Tenefit",color=red]
-        SwissRe [label="Swiss Re",color=red]
         //Vianova [label="Vianova",color=red]
         DonerKing [label="Doner King",color=red]
         mchs [label="Minsk Emergency Call Center",color=red]
@@ -43,7 +43,7 @@ digraph {
         osmlayers [label="OpenStreetMap Editor Layer Index",color=blue]
         osmcommunities [label="OpenStreetMap Communities Index",color=blue]
         pdcdisasters [label="PDC Disaster feed",color=blue]
-        taskingmanagerapi [label="Tasking Manager API",color=blue] //new
+        //taskingmanagerapi [label="Tasking Manager API",color=blue] //new
         firms [label="FIRMS", color=blue] //new
         noaa [label="NOAA", color=blue] //new
         emdat [label="EM-DAT", color=blue] //new
@@ -117,12 +117,6 @@ digraph {
     }
 
     k2geocoder -> osmnominatim
-    livedashboard -> osmlayers [color=orange]
-    livedashboard -> osmcommunities [color=orange]
-    livedashboard -> hotactivations [color=orange]
-    livedashboard -> kcapi [color=pink]
-    livedashboard -> taskingmanagerapi//new
-
 
     "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />Paris PG</FONT>>]
     "user-profile-api" -> "user-profile-api-database"
@@ -140,7 +134,6 @@ digraph {
 
     "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
     "disaster-ninja-fe" -> "basemap tiles" [color=orange]
-    livedashboard -> "basemap tiles"
     "basemap tiles" -> geocint
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"
@@ -180,7 +173,6 @@ digraph {
     ghs -> jrc
     facebookpopulation -> facebook
     facebookroads -> facebook
-    SwissRe -> geoalertbuildings
     jrc [label="European Commission Joint Research Center",color=blue]
     facebook [label="Facebook",color=blue]
     {
@@ -200,8 +192,6 @@ digraph {
     HOT -> disasterninja
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
-    "HOT Slack" ->  livedashboard
-    SwissRe -> eventapiprod
 
     Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
@@ -209,15 +199,8 @@ digraph {
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
     cartocatalog -> geocint //updated 2021-10-08
 
-    livedashboard [label="platform/live-dashboard"][label=<platform/live-dashboard<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin</FONT>>]
-    disasterninja -> livedashboard
-    livedashboard -> eventapi
-    
-    livedashboard -> insightsapi //new
     eventapiprod -> eventapi
     hotlandingpage -> kcapi //new
-    
-    livedashboard -> socialfeed
     socialfeed -> twitter
     CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Alexander Dubinin</FONT>>]
     mchs -> CSTAPP[color=pink]
@@ -257,7 +240,6 @@ digraph {
         pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA>]//Area of interest updated 2024-30-01
 
     }
-    livedashboard -> bivariatestat
     bivariatestat -> geocint
     belarusosmpbf -> geocint
     pdsdataset -> geocint //updated 2021-10-08
@@ -364,7 +346,7 @@ digraph {
     k2geocoder -> "kcapi db"
     "kcapi db" -> kcdataetl
     k2cayennepg
-    k2api
+    k2api [label=<k2api<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski<BR />old legacy api</FONT>>]
     k2api -> k2cayennepg
     minskfiredemo [color=orange]
     k2routing
@@ -416,7 +398,6 @@ digraph {
     nginx [label=<nginx>]
     kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>]
     Kontur -> kibana //updated 2021-10-08
-    livedashboard -> kibana //updated 2021-10-08
     eventapi -> kibana//updated 2021-10-08
     isochroneapi -> kibana//updated 2021-10-08
 
