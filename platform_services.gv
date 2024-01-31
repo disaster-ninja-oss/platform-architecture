@@ -201,7 +201,7 @@ digraph Platform_services{
     {
         rank=same;
         donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]
-        oam [label=<https://new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse]
+        oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse]
         disasterninja [label="disaster.ninja/",shape=ellipse]
         eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
         mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse]
