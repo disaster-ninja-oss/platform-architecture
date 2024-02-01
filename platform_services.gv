@@ -58,17 +58,6 @@ digraph Platform_services{
     }
 
     {
-        rank=same;
-        osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-        osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-        osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-        osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-        osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-        osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-        osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-    }
-
-    {
         rank=same
         kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,shape=rectangle]
         OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle]
@@ -126,6 +115,7 @@ digraph Platform_services{
         "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />K8S</FONT>>]
         "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,shape=cylinder]
+        "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
         "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
         insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
@@ -144,7 +134,7 @@ digraph Platform_services{
 
     "user-profile-api" -> "user-profile-api-database"
 
-    "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />Deployed with keycloak (AWS)</FONT>>]
+    
     "user-profile-spi-plugin" -> "user-profile-api-database"
 
     keycloak -> "user-profile-spi-plugin"
@@ -226,6 +216,10 @@ digraph Platform_services{
     Kontur -> embeddeddisaster
     konturpopulation -> embeddedpop
     disasterninja -> "nginx-ingress-controller"
+    solarfarm -> "nginx-ingress-controller"
+    embeddedpop -> "nginx-ingress-controller"
+    embeddeddisaster -> "nginx-ingress-controller"
+    oam -> "nginx-ingress-controller"
 
     DonkorLabs -> smartcity
     DonkorLabs -> roadqualityapp
@@ -300,11 +294,28 @@ digraph Platform_services{
     HDX -> embeddedpop
 
 
-    "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
-    "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
-    "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
-    geocint [label="Geocint Pipeline"][label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
-        
+    subgraph cluster_geocint {
+        label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
+        color=green
+
+        "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
+        "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
+        "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
+        geocint [label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
+        isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+
+        {
+            rank=same;
+            osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
+            osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
+            osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+            osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+            osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+            osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+            osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+        }
+    } 
+
     "geocint-runner" -> geocint
     "geocint-openstreetmap" -> geocint
     "geocint-kontur" -> geocint
@@ -415,6 +426,7 @@ digraph Platform_services{
     Tenefit -> DASv4 // update 2021-10-8
     Kontur -> DASv4 // update 2021-10-8
     Kontur -> konturwebsite
+    wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>]
     konturwebsite -> wordpress
     wordpress -> mailchimp
     "prometheus02" -> grafana02
