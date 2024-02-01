@@ -95,7 +95,6 @@ digraph Platform_services{
         }
 
         {
-            //rank=same;
             outdated [label=<Outdated entity<BR /><FONT POINT-SIZE="10">Keeped for history reasons</FONT>>,style=dashed]
             another_entity [shape=octagon]
             outdated -> another_entity [label="outdated edge",style=dashed]
@@ -110,7 +109,7 @@ digraph Platform_services{
         "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
         "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>]
         "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>]
-        "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />K8S</FONT>>]
+        "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
         "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,shape=cylinder]
         "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
         "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
@@ -118,11 +117,11 @@ digraph Platform_services{
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
-        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />K8S</FONT>>]
+        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
         "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,shape=cylinder]
-        "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+        "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
         "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
-        eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich</FONT>>]
+        eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
         keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
         "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
     }
@@ -192,10 +191,7 @@ digraph Platform_services{
         hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse]        
         smartcity [label=<Smart City App<BR />maps.kontur.io>,shape=ellipse]
         roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-        "HOT Slack"
-        UserManagement
-        DisasterAware7
-        DASv4
+        "HOT Slack"      
     }
     
     solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
@@ -248,17 +244,6 @@ digraph Platform_services{
     buildingsminsk -> geocint
     osmcontributorstiles -> geocint
     addressesminsk -> geocint
-    
-    {
-    // Minsk datasets
-        rank=same;
-        addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle]
-        buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle]
-        belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-        pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]//Area of interest updated 2024-30-01
-
-    }
-    
     insightsapi -> geocint
     belarusosmpbf -> geocint
     pdsdataset -> geocint //updated 2021-10-08
@@ -309,6 +294,15 @@ digraph Platform_services{
             konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
             kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,shape=rectangle]
             osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
+        }
+
+        {
+            // Minsk datasets
+            //rank=same;
+            addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle    ]
+            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle]
+            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
+            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]//Area of interest updated 2024-30-01
         }
     } 
 
@@ -399,35 +393,40 @@ digraph Platform_services{
     kccitysplitfe -> k2frontend [color=purple]
 
     subgraph cluster_PDC {
-        label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>
+        label=<PDC<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>
         style=bold
 
-        pdcrvaeditorfe
-        PDC -> pdcrvaeditorfe
-        pdceventbrieffe
-        PDC -> pdceventbrieffe
-        pdceventbrieffe -> pdcdisasters
-        pdceventbrieffe -> pdcrvaeditorfe
-        pdchazardbrief
-        PDC -> pdchazardbrief
-        pdchazardbrief -> pdcdas
-        pdchazardbrief -> pdcdisasters
-        pdcdas
-        PDC -> pdcdas
-        pdcdas -> pdcdisasters
-        pdctrafficcams
-        PDC -> pdctrafficcams
-        pdceventbrieffe -> pdctrafficcams
-        PDC -> pdccmdp -> pdctrafficcams
-        Tenefit -> OrgAPI // update 2021-10-8
-        PDC -> UserManagement -> JWT         // update 2021-10-8
-        UserManagement -> OrgAPI // update 2021-10-8
-        PDC -> DisasterAware7 -> JWT -> OrgAPI // update 2021-10-8
-        PDC -> DASv4 // update 2021-10-8
-        Tenefit -> DASv4 // update 2021-10-8
+        pdcrvaeditorfe        
+        pdceventbrieffe        
+        pdchazardbrief        
+        pdcdas        
+        pdctrafficcams 
+        DASv4          
+        UserManagement
+        DisasterAware7
+        pdccmdp   
+        OrgAPI
+        JWT
     }
     
-    
+    PDC -> pdcrvaeditorfe
+    PDC -> pdceventbrieffe
+    pdceventbrieffe -> pdcdisasters
+    pdceventbrieffe -> pdcrvaeditorfe
+    PDC -> pdchazardbrief
+    pdchazardbrief -> pdcdas
+    pdchazardbrief -> pdcdisasters
+    PDC -> pdcdas
+    pdcdas -> pdcdisasters
+    PDC -> pdctrafficcams
+    pdceventbrieffe -> pdctrafficcams
+    PDC -> pdccmdp -> pdctrafficcams
+    Tenefit -> OrgAPI // update 2021-10-8
+    PDC -> UserManagement -> JWT         // update 2021-10-8
+    UserManagement -> OrgAPI // update 2021-10-8
+    PDC -> DisasterAware7 -> JWT -> OrgAPI // update 2021-10-8
+    PDC -> DASv4 // update 2021-10-8
+    Tenefit -> DASv4 // update 2021-10-8
     Kontur -> DASv4 // update 2021-10-8
     Kontur -> konturwebsite
     wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>]
