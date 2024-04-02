@@ -210,8 +210,8 @@ digraph Platform_services{
     embeddeddisaster -> "nginx-ingress-controller"
     oam -> "nginx-ingress-controller"
 
-    DonkorLabs -> smartcity
-    DonkorLabs -> roadqualityapp
+    DonkorLabs -> smartcity -> keycloak
+    DonkorLabs -> roadqualityapp -> keycloak
     roadqualityapp -> "layers-db"
     smartcity -> "layers-db"
 
