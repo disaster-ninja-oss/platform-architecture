@@ -24,6 +24,7 @@ digraph Platform_services{
         cartocatalog [label="Carto Catalog", color=red] //updated 2021-10-08
         DonkorLabs [label="Donkor Labs",color=red]
         Sunbim [label="Sunbim (KREO)",color=red]
+        public_event_feed_users [label="Public Event Feed users",color=red]
     }
     // user facing
     // external
@@ -114,6 +115,7 @@ digraph Platform_services{
         "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
         "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
         insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
+        graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
@@ -149,6 +151,7 @@ digraph Platform_services{
     "event-preview-image-generator" -> "disaster-ninja-fe"
     "disaster-ninja-be" -> insightsapi 
     "disaster-ninja-fe" -> insightsapi
+    graphqlapi -> insightsapi
     "disaster-ninja-be" -> kcapi 
     "disaster-ninja-be" -> eventapi 
     "disaster-ninja-be" -> "Layers-API"
@@ -182,38 +185,45 @@ digraph Platform_services{
     facebook [label="Facebook",color=blue]
     {
         rank=same;
-        donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]
-        oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse]
+        donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]        
         disasterninja [label="disaster.ninja/",shape=ellipse]
         eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
         mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse]
         konturwebsite [label="kontur.io/",shape=ellipse]
-        hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse]        
-        smartcity [label=<Smart City App<BR />maps.kontur.io>,shape=ellipse]
+        hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse]   
         roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
         "HOT Slack"      
     }
     
-    solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-    embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-    embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
+    {
+        rank=same;
+        smartcity [label=<Smart City App<BR />maps.kontur.io>,shape=ellipse]
+        oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse]
+        solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
+        embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
+        embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
+    }
+    disasterninja -> "nginx-ingress-controller"
+    Sunbim -> solarfarm
+    embeddedpop -> disasterninja
+    embeddeddisaster -> disasterninja
+    oam -> disasterninja
+    DonkorLabs -> smartcity -> disasterninja
+    DonkorLabs -> roadqualityapp -> keycloak
+    roadqualityapp -> "layers-db"
+    solarfarm -> disasterninja
+
+
+    public_event_feed_users -> keycloak
+    public_event_feed_users -> eventapi
     HOT -> disasterninja
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
     HOT -> oam
+    HOT -> graphqlapi
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
-    disasterninja -> "nginx-ingress-controller"
-    solarfarm -> "nginx-ingress-controller"
-    solarfarm -> Sunbim
-    embeddedpop -> "nginx-ingress-controller"
-    embeddeddisaster -> "nginx-ingress-controller"
-    oam -> "nginx-ingress-controller"
-
-    DonkorLabs -> smartcity -> keycloak
-    DonkorLabs -> roadqualityapp -> keycloak
-    roadqualityapp -> "layers-db"
-    smartcity -> "layers-db"
+    
 
     Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
