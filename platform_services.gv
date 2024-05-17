@@ -204,6 +204,7 @@ digraph Platform_services{
         embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
     }
     disasterninja -> "nginx-ingress-controller"
+    disasterninja -> keycloak
     Sunbim -> solarfarm
     embeddedpop -> disasterninja
     embeddeddisaster -> disasterninja
