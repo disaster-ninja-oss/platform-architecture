@@ -12,9 +12,8 @@ digraph Platform_services{
   
     subgraph cluster_customers {
         label="Customers"
-        rank=min;
-        style=filled;
-        node[shape=tab,fillcolor=lightgreen]//,color=red]
+        //rank=min;
+        node[shape=tab,style="filled",fillcolor=lightgreen]//,color=red]
 
         HOT     [label="Humanitarian OSM Team"]
         PDC     [label="Pacific Disaster Center"]
@@ -32,8 +31,9 @@ digraph Platform_services{
 
         subgraph cluster_outdated {
           label="Outdated"
+          style=filled;
           fillcolor=lightgrey
-          node[fillcolor=grey,color=darkgrey]
+          node[fillcolor=white,color=grey]
         
           //Vianova [label="Vianova",color=red]
           SwissRe [label="Swiss Re"] //,color=red,style=dashed]
