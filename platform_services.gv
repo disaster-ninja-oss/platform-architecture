@@ -162,7 +162,6 @@ digraph Platform_services{
 
     keycloak -> "user-profile-spi-plugin"
     eventapi -> keycloak
-    mailchimp -> keycloak [color=orange]
 
     "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
     "disaster-ninja-fe" -> "basemap tiles" 
@@ -216,7 +215,7 @@ digraph Platform_services{
         donerkingapp [label="apps.kontur.io/donerking/",group="donerking",shape=ellipse]        
         eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
         mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse,group="firebrig"]
-        konturwebsite [label="kontur.io/",shape=ellipse,group="kontur"]
+        konturwebsite [label="kontur.io/",shape=ellipse,group=konturwebsite]
 
         {
           hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse,group="hot"]
@@ -486,10 +485,14 @@ digraph Platform_services{
     PDC -> DASv4 // update 2021-10-8
     Tenefit -> DASv4 // update 2021-10-8
     Kontur -> DASv4 // update 2021-10-8
-    Kontur -> konturwebsite
-    wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>]
-    konturwebsite -> wordpress
-    wordpress -> mailchimp
+
+    // konturwebsite stack
+    wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
+    mailchimp [group=konturwebsite]
+    Kontur -> konturwebsite -> wordpress -> mailchimp
+    mailchimp -> keycloak [color=orange]
+
+
     "prometheus02" -> grafana02
     "fluent-bit" -> kibana
     kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich<BR />Data visualization dashboard for Elasticsearch</FONT>>]
