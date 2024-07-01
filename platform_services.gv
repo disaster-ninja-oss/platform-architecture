@@ -10,8 +10,8 @@ digraph Platform_services{
     node[shape=octagon]
     // customers
   
-    subgraph cluster_customers {
-        label="Customers"
+    subgraph cluster_partners {
+        label="Partners"
         //rank=min;
         node[shape=tab,style="filled",fillcolor=lightgreen]//,color=red]
 
