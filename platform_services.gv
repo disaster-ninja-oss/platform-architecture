@@ -8,38 +8,24 @@ digraph Platform_services{
     newrank=true
     edge[minlen=1,weight=1]
     node[shape=octagon]
+
     // customers
-  
-    subgraph cluster_partners {
-        label="Partners"
-        //rank=min;
-        node[shape=tab,style="filled",fillcolor=lightgreen]//,color=red]
-
-        HOT     [label="Humanitarian OSM Team"]
-        PDC     [label="Pacific Disaster Center"]
-        Tenefit [label="Tenefit"]
-        DonerKing [label="Doner King"]
-        mchs      [label="Minsk Emergency Call Center"]
-        HDX       [label="UN OCHA Humanitarian Data Exchange"]
-        Kontur    [label="Kontur"]
-        Unfolded  [label="Unfolded / Foursquare"]
-        cartocatalog  [label="Carto Catalog"] //updated 2021-10-08
-        DonkorLabs    [label="Donkor Labs"]
-        Sunbim        [label="Sunbim (KREO)"]
-        public_event_feed_users [label="Public Event Feed users"]
+    HOT           [label="Humanitarian OSM Team",shape=tab,style=filled,fillcolor=lightgreen]
+    PDC           [label="Pacific Disaster Center",shape=tab,style=filled,fillcolor=lightgreen]
+    Tenefit       [label="Tenefit",shape=tab,style=filled,fillcolor=lightgreen]
+    DonerKing     [label="Doner King",shape=tab,style=filled,fillcolor=lightgreen]
+    mchs          [label="Minsk Emergency Call Center",shape=tab,style=filled,fillcolor=lightgreen]
+    HDX           [label="UN OCHA Humanitarian Data Exchange",shape=tab,style=filled,fillcolor=lightgreen]
+    Kontur        [label="Kontur",shape=tab,style=filled,fillcolor=lightgreen]
+    Unfolded      [label="Unfolded / Foursquare",shape=tab,style=filled,fillcolor=lightgreen]
+    cartocatalog  [label="Carto Catalog",shape=tab,style=filled,fillcolor=lightgreen] //updated 2021-10-08
+    DonkorLabs    [label="Donkor Labs",shape=tab,style=filled,fillcolor=lightgreen]
+    Sunbim                  [label="Sunbim (KREO)",shape=tab,style=filled,fillcolor=lightgreen]
+    public_event_feed_users [label="Public Event Feed users",shape=tab,style=filled,fillcolor=lightgreen]
+    //Vianova [label="Vianova",color=red]
+    SwissRe                 [label="Swiss Re",shape=tab,style=filled,fontcolor=white,fillcolor=darkgrey] //,color=red,style=dashed]
 
 
-        subgraph cluster_outdated {
-          label="Outdated"
-          style=filled;
-          fillcolor=lightgrey
-          node[fillcolor=white,color=grey]
-        
-          //Vianova [label="Vianova",color=red]
-          SwissRe [label="Swiss Re"] //,color=red,style=dashed]
-        }
-
-    }
 
     // user facing
     // external
@@ -222,6 +208,8 @@ digraph Platform_services{
     ghs -> jrc
     facebookpopulation -> facebook
     facebookroads -> facebook
+
+
     {
         rank=same;
         donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]        
@@ -373,6 +361,7 @@ digraph Platform_services{
     geocint -> geoalertbuildings
     geocint -> wikidata
     geocint -> linz
+
     "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
