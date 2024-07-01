@@ -58,6 +58,7 @@ digraph Platform_services{
         { // Meta
           facebookpopulation [label="Facebook Population (HRSL)"]
           facebookroads      [label="Facebook Roads"]
+          facebook           [label="Facebook"]
         }
 
         { // OSM
@@ -88,9 +89,10 @@ digraph Platform_services{
           gdacs              [label="GDACS"]
           ghs                [label="GHSL Global Human Settlement"]
           gadm               [label="gadm.org"]
-          wikidata           [label="Wikidata"]
+          jrc                [label="European Commission Joint Research Center"]
           linz               [label="LINZ (Land Information New Zealand)"]
           pdcdisasters       [label="PDC Disaster feed"]
+          wikidata           [label="Wikidata"]
         }
     }
 
@@ -166,12 +168,6 @@ digraph Platform_services{
         "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
     }
 
-    subgraph cluster_partners {
-        label="partners"
-        style="bold"  
-        "some node"
-    }
-
     k2geocoder -> osmnominatim [color=purple]
 
     "user-profile-api" -> "user-profile-api-database"    
@@ -226,8 +222,6 @@ digraph Platform_services{
     ghs -> jrc
     facebookpopulation -> facebook
     facebookroads -> facebook
-    jrc [label="European Commission Joint Research Center",color=blue]
-    facebook [label="Facebook",color=blue]
     {
         rank=same;
         donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]        
