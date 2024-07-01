@@ -9,23 +9,38 @@ digraph Platform_services{
     edge[minlen=1,weight=1]
     node[shape=octagon]
     // customers
-    {
-        rank=same;
-        HOT [label="Humanitarian OSM Team",color=red]
-        PDC [label="Pacific Disaster Center",color=red]
-        Tenefit [label="Tenefit",color=red]
-        //Vianova [label="Vianova",color=red]
-        SwissRe [label="Swiss Re",color=red,style=dashed]
-        DonerKing [label="Doner King",color=red]
-        mchs [label="Minsk Emergency Call Center",color=red]
-        HDX [label="UN OCHA Humanitarian Data Exchange",color=red]
-        Kontur [label="Kontur",color=red]
-        Unfolded [label="Unfolded / Foursquare",color=red]
-        cartocatalog [label="Carto Catalog", color=red] //updated 2021-10-08
-        DonkorLabs [label="Donkor Labs",color=red]
-        Sunbim [label="Sunbim (KREO)",color=red]
-        public_event_feed_users [label="Public Event Feed users",color=red]
+  
+    subgraph cluster_customers {
+        label="Customers"
+        rank=min;
+        style=filled;
+        node[shape=tab,fillcolor=lightgreen]//,color=red]
+
+        HOT     [label="Humanitarian OSM Team"]
+        PDC     [label="Pacific Disaster Center"]
+        Tenefit [label="Tenefit"]
+        DonerKing [label="Doner King"]
+        mchs      [label="Minsk Emergency Call Center"]
+        HDX       [label="UN OCHA Humanitarian Data Exchange"]
+        Kontur    [label="Kontur"]
+        Unfolded  [label="Unfolded / Foursquare"]
+        cartocatalog  [label="Carto Catalog"] //updated 2021-10-08
+        DonkorLabs    [label="Donkor Labs"]
+        Sunbim        [label="Sunbim (KREO)"]
+        public_event_feed_users [label="Public Event Feed users"]
+
+
+        subgraph cluster_outdated {
+          label="Outdated"
+          fillcolor=lightgrey
+          node[fillcolor=grey,color=darkgrey]
+        
+          //Vianova [label="Vianova",color=red]
+          SwissRe [label="Swiss Re"] //,color=red,style=dashed]
+        }
+
     }
+
     // user facing
     // external
     {
@@ -127,6 +142,12 @@ digraph Platform_services{
         eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
         keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
         "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
+    }
+
+    subgraph cluster_partners {
+        label="partners"
+        style="bold"  
+        "some node"
     }
 
     k2geocoder -> osmnominatim [color=purple]
