@@ -46,7 +46,7 @@ digraph Platform_services{
     subgraph cluster_data_providers {
         //rank=same;
         label = "Data Providers"
-        node[shape=house,style="filled",fillcolor=blue,color=white]
+        node[shape=house,style="filled",fillcolor=blue,fontcolor=white]
 
         // grouping is just for better clarity, its not architectural
 
