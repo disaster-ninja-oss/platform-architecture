@@ -43,33 +43,55 @@ digraph Platform_services{
 
     // user facing
     // external
-    {
-        rank=same;
-        osm [label="OpenStreetMap.org",color=blue,shape=rectangle]
-        facebookpopulation [label="Facebook Population (HRSL)",color=blue,shape=rectangle]
-        facebookroads [label="Facebook Roads",color=blue,shape=rectangle]
-        msbuildings [label="Microsoft Buildings",color=blue,shape=rectangle]
-        geoalertbuildings [label="GeoAlert Buildings",color=blue,shape=rectangle]
-        gdacs [label="GDACS", color=blue,shape=rectangle]
-        ghs [label="GHSL Global Human Settlement",color=blue,shape=rectangle]
-        gadm [label="gadm.org",color=blue,shape=rectangle]
-        hotactivations [label="HOT Projects",color=blue,shape=rectangle]
-        hotactivationscsv [label="HOT Activateions CSV",color=blue,shape=rectangle]
-        wikidata [label="Wikidata",color=blue,shape=rectangle]
-        linz [label="LINZ (Land Information New Zealand)",color=blue,shape=rectangle]
+    subgraph cluster_data_providers {
+        //rank=same;
+        label = "Data Providers"
+        node[shape=house,style="filled",fillcolor=blue,color=white]
 
-        osmlayers [label="OpenStreetMap Editor Layer Index",color=blue,shape=rectangle]
-        osmcommunities [label="OpenStreetMap Communities Index",color=blue,shape=rectangle]
-        pdcdisasters [label="PDC Disaster feed",color=blue,shape=rectangle]
-        taskingmanagerapi [label="Tasking Manager API",color=blue] //new
-        firms [label="FIRMS", color=blue,shape=rectangle] //new
-        noaa [label="NOAA", color=blue,shape=rectangle] //new
-        emdat [label="EM-DAT", color=blue,shape=rectangle] //new
-        japantornado [label="Japan Tornado", color=blue,shape=rectangle] //new??
-        firehydrants [label="Fire Hydrants", color=blue,shape=rectangle] //new
-        osmnominatim [label="OSM Nominatim", color=blue,shape=rectangle]
-        unhcrukrainerefugee [label="UNHCR Ukraine Refugee", color=blue,shape=rectangle]
-        idpestimates [label="Ukraine: IDP Estimates", color=blue,shape=rectangle]
+        // grouping is just for better clarity, its not architectural
+
+        { // HOT
+          hotactivations     [label="HOT Projects"]
+          hotactivationscsv  [label="HOT Activateions CSV"]
+        }
+
+        { // Meta
+          facebookpopulation [label="Facebook Population (HRSL)"]
+          facebookroads      [label="Facebook Roads"]
+        }
+
+        { // OSM
+          osm                [label="OpenStreetMap.org"]
+          osmlayers          [label="OpenStreetMap Editor Layer Index"]
+          osmcommunities     [label="OpenStreetMap Communities Index"]
+          osmnominatim       [label="OSM Nominatim"]
+        }
+
+        { //new
+          taskingmanagerapi [label="Tasking Manager API"] //new
+          firms             [label="FIRMS"] //new
+          noaa              [label="NOAA"] //new
+          emdat             [label="EM-DAT"] //new
+          japantornado      [label="Japan Tornado"] //new??
+          firehydrants      [label="Fire Hydrants"] //new
+        }
+
+
+        { // Ukraine
+          unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+          idpestimates [label="Ukraine: IDP Estimates"]
+        }
+
+        { // other
+          msbuildings        [label="Microsoft Buildings"]
+          geoalertbuildings  [label="GeoAlert Buildings"]
+          gdacs              [label="GDACS"]
+          ghs                [label="GHSL Global Human Settlement"]
+          gadm               [label="gadm.org"]
+          wikidata           [label="Wikidata"]
+          linz               [label="LINZ (Land Information New Zealand)"]
+          pdcdisasters       [label="PDC Disaster feed"]
+        }
     }
 
     "layers-db" -> taskingmanagerapi
