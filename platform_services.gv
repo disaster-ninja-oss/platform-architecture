@@ -10,21 +10,22 @@ digraph Platform_services{
     node[shape=octagon]
 
     // customers
-    HOT           [label="Humanitarian OSM Team",shape=tab,style=filled,fillcolor=lightgreen]
-    PDC           [label="Pacific Disaster Center",shape=tab,style=filled,fillcolor=lightgreen]
-    Tenefit       [label="Tenefit",shape=tab,style=filled,fillcolor=lightgreen]
-    DonerKing     [label="Doner King",shape=tab,style=filled,fillcolor=lightgreen]
-    mchs          [label="Minsk Emergency Call Center",shape=tab,style=filled,fillcolor=lightgreen]
-    HDX           [label="UN OCHA Humanitarian Data Exchange",shape=tab,style=filled,fillcolor=lightgreen]
-    Kontur        [label="Kontur",shape=tab,style=filled,fillcolor=lightgreen]
-    Unfolded      [label="Unfolded / Foursquare",shape=tab,style=filled,fillcolor=lightgreen]
-    cartocatalog  [label="Carto Catalog",shape=tab,style=filled,fillcolor=lightgreen] //updated 2021-10-08
-    DonkorLabs    [label="Donkor Labs",shape=tab,style=filled,fillcolor=lightgreen]
-    Sunbim                  [label="Sunbim (KREO)",shape=tab,style=filled,fillcolor=lightgreen]
-    public_event_feed_users [label="Public Event Feed users",shape=tab,style=filled,fillcolor=lightgreen]
-    //Vianova [label="Vianova",color=red]
-    SwissRe                 [label="Swiss Re",shape=tab,style=filled,fontcolor=white,fillcolor=darkgrey] //,color=red,style=dashed]
-
+    {
+      HOT           [label="Humanitarian OSM Team",shape=tab,style=filled,fillcolor=lightgreen]
+      PDC           [label="Pacific Disaster Center",shape=tab,style=filled,fillcolor=lightgreen]
+      Tenefit       [label="Tenefit",shape=tab,style=filled,fillcolor=lightgreen]
+      DonerKing     [label="Doner King",shape=tab,style=filled,fillcolor=lightgreen,group="donerking"]
+      mchs          [label="Minsk Emergency Call Center",shape=tab,style=filled,fillcolor=lightgreen]
+      HDX           [label="UN OCHA Humanitarian Data Exchange",shape=tab,style=filled,fillcolor=lightgreen]
+      Kontur        [label="Kontur",shape=tab,style=filled,fillcolor=lightgreen]
+      Unfolded      [label="Unfolded / Foursquare",shape=tab,style=filled,fillcolor=lightgreen]
+      cartocatalog  [label="Carto Catalog",shape=tab,style=filled,fillcolor=lightgreen] //updated 2021-10-08
+      DonkorLabs    [label="Donkor Labs",shape=tab,style=filled,fillcolor=lightgreen]
+      Sunbim                  [label="Sunbim (KREO)",shape=tab,style=filled,fillcolor=lightgreen]
+      public_event_feed_users [label="Public Event Feed users",shape=tab,style=filled,fillcolor=lightgreen]
+      //Vianova [label="Vianova",color=red]
+      SwissRe                 [label="Swiss Re",shape=tab,style=filled,fontcolor=white,fillcolor=darkgrey] //,color=red,style=dashed]
+    }
 
 
     // user facing
@@ -212,14 +213,14 @@ digraph Platform_services{
 
     {
         rank=same;
-        donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]        
-        disasterninja [label="disaster.ninja/",shape=ellipse]
+        donerkingapp [label="apps.kontur.io/donerking/",group="donerking",shape=ellipse]        
         eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
-        mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse]
+        mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse,group="firebrig"]
         konturwebsite [label="kontur.io/",shape=ellipse]
         hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse]   
         roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
         "HOT Slack"      
+        disasterninja [label="disaster.ninja/",shape=ellipse]
     }
     
     {
@@ -378,16 +379,20 @@ digraph Platform_services{
     eventapi -> noaa //new
     eventapi -> emdat //new
     eventapi -> japantornado //new
-    DonerKing -> donerkingapp
     eventapi -> kcapi
-    kcdonerkingfe [color=purple]
+
+    // donerking legacy stack
+    kcdonerkingfe [color=purple,group="donerking"]
+    kcdonerking [color=purple,group="donerking"]
+
+    DonerKing -> donerkingapp
     donerkingapp -> kcdonerkingfe [color=purple]
-    kcdonerking [color=purple]
     kcdonerkingfe -> kcdonerking [color=purple]
     kcdonerking -> buildingsminsk [color=purple]
-    kcdataetl [color=purple]
     kcdonerking -> kcdataetl [color=purple]
-    kcfirebrigade -> kcdataetl [color=purple]
+
+
+    kcdataetl [color=purple]
     kcdataetl -> hotactivations [color=purple]
     kcdataetl -> hotactivationscsv [color=purple]
     kcdataetl -> osmcommunities [color=purple]
@@ -395,11 +400,15 @@ digraph Platform_services{
     kcdataetl -> k2etl [color=purple]
     kcdataetl -> osmboundaries [color=purple]
     kcdataetl -> firehydrants [color=purple]
+   
+    // firebrig stack  
+    kcfirebrigadefe [color=purple, group="firebrig"]
+    kcfirebrigade [color=purple, group="firebrig"]
     mchs -> mchsapp
-    kcfirebrigadefe [color=purple]
     mchsapp -> kcfirebrigadefe [color=purple]
-    kcfirebrigade [color=purple]
     kcfirebrigadefe -> kcfirebrigade [color=purple]
+    kcfirebrigade -> kcdataetl [color=purple]
+
     kcapi [color=purple]
     kcdonerking -> kcapi [color=purple]
     kcfirebrigade -> kcapi [color=purple]
