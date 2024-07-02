@@ -88,7 +88,7 @@ digraph Platform_services{
 
     {
         rank=same
-        OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle]
+        OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
         k2routing [label=<k2routing<BR />proxy request to OSRM>]
         k2layers
         k2geocoder
@@ -109,7 +109,7 @@ digraph Platform_services{
             "Existing entity" [color=black]
             database [label=<Database>,shape=cylinder,color=black]
             "Existing entity" -> database
-            dataset [label=<Dataset>,shape=rectangle,color=black]
+            dataset [label=<Dataset>,shape=rectangle,style=filled,fillcolor=lightskyblue,color=black]
             "Existing entity" -> dataset
             service [label=<Service>,shape=octagon,color=black]
             "Existing entity" -> service
@@ -263,7 +263,7 @@ digraph Platform_services{
     Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
 
-    "13 months of Fires" [label=<13 months of Fires>,shape=rectangle]
+    "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
     cartocatalog -> geocint //updated 2021-10-08
 
@@ -338,19 +338,19 @@ digraph Platform_services{
             // Global datasets
             //rank=same;
         
-            osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,shape=rectangle]
-            osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
+            osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
         }
 
         {
             // Minsk datasets
             //rank=same;
-            addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle    ]
-            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle]
-            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]//Area of interest updated 2024-30-01
+            addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
+            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]//Area of interest updated 2024-30-01
         }
     } 
 
