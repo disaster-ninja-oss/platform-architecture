@@ -131,10 +131,10 @@ digraph Platform_services{
         style=bold
 
         "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>,style=filled,fillcolor=red]
-        "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
-        "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,style=filled,fillcolor=red]
+        "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red,group=ninja]
+        "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,style=filled,fillcolor=red,group=ninja]
         
-        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,style=filled,fillcolor=red]
+        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,style=filled,fillcolor=red,group=ninja]
         
         "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
         "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
@@ -151,8 +151,8 @@ digraph Platform_services{
         "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
         "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
         "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
-        eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
-        keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
+        eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,group=eventapidata,style=filled,fillcolor=red]
+        keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
         "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
     }
 
@@ -161,8 +161,8 @@ digraph Platform_services{
     "user-profile-api" -> "user-profile-api-database"    
     "user-profile-spi-plugin" -> "user-profile-api-database"
 
-    keycloak -> "user-profile-spi-plugin"
-    eventapi -> keycloak
+    keycloak -> "user-profile-spi-plugin"[color=red]
+    eventapi -> keycloak[color=red]
 
     "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
     "disaster-ninja-fe" -> "basemap tiles" 
@@ -180,8 +180,8 @@ digraph Platform_services{
     "disaster-ninja-fe" -> insightsapi
     "disaster-ninja-be" -> "insights-llm-api"
     graphqlapi -> insightsapi
-    "disaster-ninja-be" -> kcapi 
-    "disaster-ninja-be" -> eventapi 
+    "disaster-ninja-be" -> kcapi[color=red]
+    "disaster-ninja-be" -> eventapi[color=red]
     "disaster-ninja-be" -> "Layers-API"
 
     "HOT Slack" -> "disaster-ninja-be"[color=red] // should be to ingress controller, maybe...
@@ -236,7 +236,7 @@ digraph Platform_services{
         embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
     }
     disasterninja -> "nginx-ingress-controller"
-    disasterninja -> keycloak
+    disasterninja -> keycloak[color=red]
     Sunbim -> solarfarm
 
     embeddedpop -> disasterninja
@@ -244,14 +244,14 @@ digraph Platform_services{
     oam -> disasterninja
 
     DonkorLabs -> smartcity -> disasterninja
-    DonkorLabs -> roadqualityapp -> keycloak
+    DonkorLabs -> roadqualityapp -> keycloak[color=red]
 
     roadqualityapp -> "layers-db"
     solarfarm -> disasterninja
 
 
-    public_event_feed_users -> keycloak
-    public_event_feed_users -> eventapi
+    public_event_feed_users -> keycloak[color=red]
+    public_event_feed_users -> eventapi[color=red]
     HOT -> disasterninja
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
@@ -381,13 +381,14 @@ digraph Platform_services{
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
-    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
-    eventapi -> gdacs
-    eventapi -> firms //new
-    eventapi -> noaa //new
-    eventapi -> emdat //new
-    eventapi -> japantornado //new
-    eventapi -> kcapi
+    // lets use orange for outdated+interactive
+    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=orange]
+    eventapi -> gdacs[color=blue]
+    eventapi -> firms[color=blue] //new
+    eventapi -> noaa[color=blue] //new
+    eventapi -> emdat[color=blue] //new
+    eventapi -> japantornado[color=blue] //new
+    eventapi -> kcapi[color=red]
 
     // donerking legacy stack
     kcdonerkingfe [color=purple,group="donerking"]
