@@ -313,19 +313,19 @@ digraph Platform_services{
     insightsapi -> geocint
     belarusosmpbf -> geocint
     pdsdataset -> geocint //updated 2021-10-08
-    osrmdocker_foot -> pdsdataset //updated 2021-10-08
-    osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
-    osrmdocker_car -> pdsdataset //updated 2021-10-08
-    osrmdocker_emergency -> pdsdataset //updated 2021-10-08
-    osrmdocker_motobike -> pdsdataset //updated 2021-10-08
-    isochroneapi -> osrmdocker_foot  //updated 2021-10-08
-    isochroneapi -> osrmdocker_bicycle //updated 2021-10-08
-    isochroneapi -> osrmdocker_car //updated 2021-10-08
-    isochroneapi -> osrmdocker_emergency //updated 2021-10-08
-    isochroneapi -> osrmdocker_motobike   //updated 2021-10-08
+    osrmdocker_foot -> pdsdataset[color=red] //updated 2021-10-08
+    osrmdocker_bicycle -> pdsdataset[color=red] //updated 2021-10-08
+    osrmdocker_car -> pdsdataset[color=red] //updated 2021-10-08
+    osrmdocker_emergency -> pdsdataset[color=red] //updated 2021-10-08
+    osrmdocker_motobike -> pdsdataset[color=red] //updated 2021-10-08
+    isochroneapi -> osrmdocker_foot[color=red]  //updated 2021-10-08
+    isochroneapi -> osrmdocker_bicycle[color=red] //updated 2021-10-08
+    isochroneapi -> osrmdocker_car[color=red] //updated 2021-10-08
+    isochroneapi -> osrmdocker_emergency[color=red] //updated 2021-10-08
+    isochroneapi -> osrmdocker_motobike[color=red]   //updated 2021-10-08
 
-    osrmemergencyminsk -> belarusosmpbf
-    osrmdistanceminsk -> belarusosmpbf
+    osrmemergencyminsk -> belarusosmpbf[color=red]
+    osrmdistanceminsk -> belarusosmpbf[color=red]
     konturpopulation -> geocint
     HDX -> konturpopulation
     HDX -> kontur_boundaries[color=red]
@@ -344,13 +344,13 @@ digraph Platform_services{
 
         {
             rank=same;
-            osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-            osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-            osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
+            osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+            osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
         }
         {
             // Global datasets
@@ -369,8 +369,9 @@ digraph Platform_services{
             addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
             buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,
               shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
-            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]//Area of interest updated 2024-30-01
+            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
+            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,
+              shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]//Area of interest updated 2024-30-01
         }
     } 
 
@@ -460,9 +461,9 @@ digraph Platform_services{
     k2routing -> osm [color=purple]
     k2routing -> osrmemergencyminsk [color=purple]
     k2routing -> osmboundaries [color=purple] // accoring to A.Kalenik
-    osrmemergencyminsk -> osm
+    osrmemergencyminsk -> osm[color=blue]
     k2routing -> osrmdistanceminsk [color=purple]
-    osrmdistanceminsk -> osm
+    osrmdistanceminsk -> osm[color=blue]
     k2geocoder [color=purple]
     kcapi -> k2geocoder [color=purple]
     k2geocoder -> osm [color=purple]
