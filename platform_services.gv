@@ -136,8 +136,10 @@ digraph Platform_services{
         
         "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,style=filled,fillcolor=red,group=ninja]
         
-        "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
-        "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
+        "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>,
+                                      style=filled,fillcolor=red]
+        "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>,
+                                      style=filled,fillcolor=red]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>,
                                       style=filled,fillcolor=red]
         "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
@@ -150,8 +152,10 @@ digraph Platform_services{
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
-        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
-        "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,shape=cylinder]
+        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>,
+                              style=filled,fillcolor=red]
+        "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+                              shape=cylinder,style=filled,fillcolor=red]
         "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
         "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
         "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>,
@@ -177,7 +181,7 @@ digraph Platform_services{
     "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
     "disaster-ninja-fe" -> kontur_boundaries[color=red]
     "disaster-ninja-fe" -> OSM_quality_report
-    "disaster-ninja-fe" -> "layers-tiles-api"
+    "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
 
     "disaster-ninja-be" -> "user-profile-api"[color=red]
     "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
@@ -188,7 +192,7 @@ digraph Platform_services{
     graphqlapi -> insightsapi[color=red]
     "disaster-ninja-be" -> kcapi[color=red]
     "disaster-ninja-be" -> eventapi[color=red]
-    "disaster-ninja-be" -> "Layers-API"
+    "disaster-ninja-be" -> "Layers-API"[color=red]
 
     "HOT Slack" -> "disaster-ninja-be"[color=red] // should be to ingress controller, maybe...
 
@@ -198,10 +202,10 @@ digraph Platform_services{
     SwissRe -> geoalertbuildings [style=dashed]
     SwissRe -> eventapiprod [style=dashed]
 
-    "Layers-API" -> "layers-db"
-    "layers-tiles-api" -> "layers-db-database"
+    "Layers-API" -> "layers-db"[color=red]
+    "layers-tiles-api" -> "layers-db-database"[color=red]
     "layers-db" -> "layers-etl"
-    "layers-db" -> "layers-db-database"
+    "layers-db" -> "layers-db-database"[color=red]
     "layers-db-database" -> "layers-etl"
 
     "layers-etl" -> hotactivations
