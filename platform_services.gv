@@ -277,8 +277,8 @@ digraph Platform_services{
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     
-
-    Unfolded -> "Unfolded Data Catalog"[style=filled,fillcolor=red] //updated 2021-10-08
+    "Unfolded Data Catalog"[style=filled,fillcolor=red]
+    Unfolded -> "Unfolded Data Catalog"[color=red] //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
 
     "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
