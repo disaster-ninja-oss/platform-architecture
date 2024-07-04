@@ -367,7 +367,8 @@ digraph Platform_services{
             // Minsk datasets
             //rank=same;
             addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
-            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,
+              shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
             belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
             pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]//Area of interest updated 2024-30-01
         }
