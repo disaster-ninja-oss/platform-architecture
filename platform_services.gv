@@ -214,7 +214,8 @@ digraph Platform_services{
     { // client apps
         rank=same;
         donerkingapp [label="apps.kontur.io/donerking/",group="donerking",shape=ellipse]        
-        eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
+        // deeppink = interactive/outdated?
+        eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,style=filled,fillcolor=deeppink]
         mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse,group="firebrig"]
         konturwebsite [label="kontur.io/",shape=ellipse,group=konturwebsite]
 
@@ -268,7 +269,7 @@ digraph Platform_services{
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
     cartocatalog -> geocint //updated 2021-10-08
 
-    eventapiprod -> eventapi
+    eventapiprod -> eventapi[color=deeppink]
     hotlandingpage -> kcapi //new
     CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>]
     mchs -> CSTAPP[color=purple]
@@ -381,8 +382,8 @@ digraph Platform_services{
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
-    // lets use orange for outdated+interactive
-    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=orange]
+    // lets use deeppink for outdated+interactive
+    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
     eventapi -> gdacs[color=blue]
     eventapi -> firms[color=blue] //new
     eventapi -> noaa[color=blue] //new
