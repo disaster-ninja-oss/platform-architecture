@@ -134,12 +134,13 @@ digraph Platform_services{
         "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
         "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,style=filled,fillcolor=red]
         
+        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,style=filled,fillcolor=red]
+        
         "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
         "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
         "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
         "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,shape=cylinder]
         "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
-        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
         insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
@@ -167,14 +168,14 @@ digraph Platform_services{
     "disaster-ninja-fe" -> "basemap tiles" 
     "basemap tiles" -> geocint
 
-    "disaster-ninja-fe" ->  "disaster-ninja-be"
+    "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
     "disaster-ninja-fe" -> kontur_boundaries[color=red]
-    "disaster-ninja-fe" -> OSM_quality_report 
+    "disaster-ninja-fe" -> OSM_quality_report
     "disaster-ninja-fe" -> "layers-tiles-api"
 
     "disaster-ninja-be" -> "user-profile-api"
-    "disaster-ninja-be" -> "event-preview-image-generator"
-    "event-preview-image-generator" -> "disaster-ninja-fe"
+    "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
+    "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
     "disaster-ninja-be" -> insightsapi 
     "disaster-ninja-fe" -> insightsapi
     "disaster-ninja-be" -> "insights-llm-api"
