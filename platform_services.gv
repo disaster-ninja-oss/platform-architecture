@@ -263,7 +263,7 @@ digraph Platform_services{
     DonkorLabs -> smartcity -> disasterninja
     DonkorLabs -> roadqualityapp -> keycloak[color=red]
 
-    roadqualityapp -> "layers-db"
+    roadqualityapp -> "layers-db"[color=red]
     solarfarm -> disasterninja
 
 
