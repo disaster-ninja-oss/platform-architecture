@@ -305,7 +305,7 @@ digraph Platform_services{
     isochroneapi -> insightsapi[color=red] //new
 
     eventapi -> insightsapi[color=red] //new
-    isochroneapi -> osmroadsegments
+    isochroneapi -> osmroadsegments[color=red]
     osmroadsegments -> geocint
     buildingsminsk -> geocint
     osmcontributorstiles -> geocint
@@ -356,7 +356,7 @@ digraph Platform_services{
             // Global datasets
             //rank=same;
         
-            osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
             konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
             kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,
                                     shape=rectangle,style=filled,fillcolor=lightskyblue,color=red,fontcolor=red]
