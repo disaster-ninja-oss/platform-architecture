@@ -152,7 +152,8 @@ digraph Platform_services{
         "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,shape=cylinder]
         "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
         "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
-        "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
+        "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>,
+                                    style=filled,fillcolor=red]
         eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,group=eventapidata,style=filled,fillcolor=red]
         keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
         "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
@@ -180,7 +181,7 @@ digraph Platform_services{
     "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
     "disaster-ninja-be" -> insightsapi 
     "disaster-ninja-fe" -> insightsapi
-    "disaster-ninja-be" -> "insights-llm-api"
+    "disaster-ninja-be" -> "insights-llm-api"[color=red]
     graphqlapi -> insightsapi
     "disaster-ninja-be" -> kcapi[color=red]
     "disaster-ninja-be" -> eventapi[color=red]
@@ -283,9 +284,9 @@ digraph Platform_services{
     citysplit -> isochroneapi
     insightsapi -> "insightsapi-database"
     "insights-db" -> "insightsapi-database"
-    "insights-llm-api" -> "insightsapi-database"
-    "insights-llm-api" -> "user-profile-api"
-    "insights-llm-api" -> insightsapi
+    "insights-llm-api" -> "insightsapi-database"[color=red]
+    "insights-llm-api" -> "user-profile-api"[color=red]
+    "insights-llm-api" -> insightsapi[color=red]
     
     konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi //new
