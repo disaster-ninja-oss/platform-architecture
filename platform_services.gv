@@ -287,14 +287,14 @@ digraph Platform_services{
 
     eventapiprod -> eventapi[color=deeppink]
     hotlandingpage -> kcapi //new
-    CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>]
+    CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>,style=filled,fillcolor=red]
     mchs -> CSTAPP[color=purple]
     DonerKing -> CSTAPP [color=purple]
-    citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>]
+    citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
 
-    CSTAPP -> citysplit
-    isochroneapi 
-    citysplit -> isochroneapi
+    CSTAPP -> citysplit[color=red]
+    isochroneapi[style=filled,fillcolor=red]
+    citysplit -> isochroneapi[color=red]
     insightsapi -> "insightsapi-database"[color=red]
     "insights-db" -> "insightsapi-database"
     "insights-llm-api" -> "insightsapi-database"[color=red]
@@ -394,7 +394,7 @@ digraph Platform_services{
     osmboundaries
     osmboundaries -> geocint
 
-    kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
+    kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
@@ -408,8 +408,8 @@ digraph Platform_services{
     eventapi -> kcapi[color=red]
 
     // donerking legacy stack
-    kcdonerkingfe [color=purple,group="donerking"]
-    kcdonerking [color=purple,group="donerking"]
+    kcdonerkingfe [color=purple,group="donerking",style=filled,fillcolor=deeppink]
+    kcdonerking [color=purple,group="donerking",style=filled,fillcolor=deeppink]
 
     DonerKing -> donerkingapp
     donerkingapp -> kcdonerkingfe [color=purple]
@@ -428,8 +428,8 @@ digraph Platform_services{
     kcdataetl -> firehydrants [color=purple]
    
     // firebrig stack  
-    kcfirebrigadefe [color=purple, group="firebrig"]
-    kcfirebrigade [color=purple, group="firebrig"]
+    kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+    kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
     mchs -> mchsapp
     mchsapp -> kcfirebrigadefe [color=purple]
     kcfirebrigadefe -> kcfirebrigade [color=purple]
