@@ -392,7 +392,7 @@ digraph Platform_services{
     "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
-    osmboundaries
+    osmboundaries[style=filled,fillcolor=deeppink]
     osmboundaries -> geocint
 
     kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
