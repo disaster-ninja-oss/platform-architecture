@@ -87,19 +87,25 @@ digraph Platform_services{
     {
         rank=same
         OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-        k2routing [label=<k2routing<BR />proxy request to OSRM>]
-        k2layers
-        k2geocoder
+        k2routing [label=<k2routing<BR />proxy request to OSRM>,style=filled,fillcolor=deeppink]
+        k2layers[style=filled, fillcolor=deeppink]
+        k2geocoder[style=filled,fillcolor=deeppink]
     }
 
     subgraph cluster_legend {
         label="Legend"
         {
             rank=same;
-            "Partners" [color=red]
-            "Data Providers" [color=blue]
+            "Partners/users" [shape=tab,style=filled,fillcolor=red]
+            "Data Providers" [shape=house,style=filled,fillcolor=blue]
             "Will be implemented" [color=orange]
             "Will be removed in the future" [color=purple]
+        }
+
+        {
+            "interactive workload"[style=filled,fillcolor=red] 
+            "obsoleted interactive workload"[style=filled,fillcolor=deeppink] 
+            "interactive workload" -> "obsoleted interactive workload"[color=red]
         }
 
         {
@@ -443,7 +449,7 @@ digraph Platform_services{
     k2layers [color=purple]
     k2layers [color=purple]
     kcapi -> k2layers [color=purple]
-    "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
+    "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder,style=filled,fillcolor=deeppink]
     k2layers -> "kcapi db" [color=purple]
     k2geocoder -> "kcapi db" [color=purple]
     "kcapi db" -> kcdataetl [color=purple]
