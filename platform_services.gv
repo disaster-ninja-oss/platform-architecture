@@ -180,8 +180,8 @@ digraph Platform_services{
     keycloak -> "user-profile-spi-plugin"[color=red]
     eventapi -> keycloak[color=red]
 
-    "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
-    "disaster-ninja-fe" -> "basemap tiles" 
+    "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
+    "disaster-ninja-fe" -> "basemap tiles"[color=red] 
     "basemap tiles" -> geocint
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
@@ -278,8 +278,8 @@ digraph Platform_services{
     Kontur -> embeddeddisaster
     
 
-    Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
-    "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
+    Unfolded -> "Unfolded Data Catalog"[style=filled,fillcolor=red] //updated 2021-10-08
+    "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
 
     "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
@@ -328,7 +328,7 @@ digraph Platform_services{
     osrmdistanceminsk -> belarusosmpbf
     konturpopulation -> geocint
     HDX -> konturpopulation
-    HDX -> kontur_boundaries
+    HDX -> kontur_boundaries[color=red]
     HDX -> embeddedpop
 
 
