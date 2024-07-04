@@ -143,8 +143,10 @@ digraph Platform_services{
         "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
                                       shape=cylinder,style=filled,fillcolor=red]
         "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>,style=filled,fillcolor=red]
-        insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-        graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
+        insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>,
+                              style=filled,color=red]
+        graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>,
+                              style=filled,color=red]
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
         "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
         "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
@@ -156,7 +158,8 @@ digraph Platform_services{
                                     style=filled,fillcolor=red]
         eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,group=eventapidata,style=filled,fillcolor=red]
         keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
-        "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
+        "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,
+                                    shape=cylinder,style=filled,fillcolor=red]
     }
 
     k2geocoder -> osmnominatim [color=purple]
@@ -179,10 +182,10 @@ digraph Platform_services{
     "disaster-ninja-be" -> "user-profile-api"[color=red]
     "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
     "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
-    "disaster-ninja-be" -> insightsapi 
-    "disaster-ninja-fe" -> insightsapi
+    "disaster-ninja-be" -> insightsapi[color=red]
+    "disaster-ninja-fe" -> insightsapi[color=red]
     "disaster-ninja-be" -> "insights-llm-api"[color=red]
-    graphqlapi -> insightsapi
+    graphqlapi -> insightsapi[color=red]
     "disaster-ninja-be" -> kcapi[color=red]
     "disaster-ninja-be" -> eventapi[color=red]
     "disaster-ninja-be" -> "Layers-API"
@@ -260,7 +263,7 @@ digraph Platform_services{
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
     HOT -> oam
-    HOT -> graphqlapi
+    HOT -> graphqlapi[color=red]
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     
@@ -282,7 +285,7 @@ digraph Platform_services{
     CSTAPP -> citysplit
     isochroneapi 
     citysplit -> isochroneapi
-    insightsapi -> "insightsapi-database"
+    insightsapi -> "insightsapi-database"[color=red]
     "insights-db" -> "insightsapi-database"
     "insights-llm-api" -> "insightsapi-database"[color=red]
     "insights-llm-api" -> "user-profile-api"[color=red]
@@ -291,7 +294,7 @@ digraph Platform_services{
     konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi //new
 
-    eventapi -> insightsapi //new
+    eventapi -> insightsapi[color=red] //new
     isochroneapi -> osmroadsegments
     osmroadsegments -> geocint
     buildingsminsk -> geocint
