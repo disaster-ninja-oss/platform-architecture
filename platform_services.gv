@@ -138,9 +138,11 @@ digraph Platform_services{
         
         "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
         "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
-        "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
-        "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,shape=cylinder]
-        "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
+        "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>,
+                                      style=filled,fillcolor=red]
+        "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+                                      shape=cylinder,style=filled,fillcolor=red]
+        "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>,style=filled,fillcolor=red]
         insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
         "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
@@ -158,8 +160,8 @@ digraph Platform_services{
 
     k2geocoder -> osmnominatim [color=purple]
 
-    "user-profile-api" -> "user-profile-api-database"    
-    "user-profile-spi-plugin" -> "user-profile-api-database"
+    "user-profile-api" -> "user-profile-api-database"[color=red]
+    "user-profile-spi-plugin" -> "user-profile-api-database"[color=red]
 
     keycloak -> "user-profile-spi-plugin"[color=red]
     eventapi -> keycloak[color=red]
@@ -173,7 +175,7 @@ digraph Platform_services{
     "disaster-ninja-fe" -> OSM_quality_report
     "disaster-ninja-fe" -> "layers-tiles-api"
 
-    "disaster-ninja-be" -> "user-profile-api"
+    "disaster-ninja-be" -> "user-profile-api"[color=red]
     "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
     "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
     "disaster-ninja-be" -> insightsapi 
