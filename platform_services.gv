@@ -96,16 +96,35 @@ digraph Platform_services{
         label="Legend"
         {
             rank=same;
-            "Partners/users" [shape=tab,style=filled,fillcolor=red]
+            "Partners/users" [shape=tab,style=filled,fillcolor=green]
             "Data Providers" [shape=house,style=filled,fillcolor=blue]
             "Will be implemented" [color=orange]
             "Will be removed in the future" [color=purple]
         }
 
         {
-            "interactive workload"[style=filled,fillcolor=red] 
-            "obsoleted interactive workload"[style=filled,fillcolor=deeppink] 
-            "interactive workload" -> "obsoleted interactive workload"[color=red]
+            "user/partner"[shape=tab,style=filled,fillcolor=green]
+            "user application"[shape=ellipse]
+            "interactive service"[style=filled,fillcolor=red] 
+            "interactive backend"[style=filled,fillcolor=red] 
+            "interactive dataset"[shape=rectangle,style=filled,fillcolor=skyblue,fontcolor=red] 
+            "interactive database"[shape=cylinder,style=filled,fillcolor=skyblue,fontcolor=red] 
+            "noninteractive dataset"[shape=rectangle,style=filled,fillcolor=skyblue] 
+            "data provider"[shape=house,style=filled,fillcolor=blue] 
+            "etl service"
+            "obsoleted interactive service"[style=filled,fillcolor=deeppink] 
+            "user/partner"->"user application"
+            "user application" -> "interactive service"
+            "user application" -> "obsoleted interactive service"
+            "interactive service" -> "interactive backend"[color=red]
+            "obsoleted interactive service" -> "interactive backend"[color=red]
+            "interactive backend" -> "interactive dataset"[color=red]
+            "interactive backend" -> "interactive database"[color=red]
+            "interactive backend" -> "data provider"[color=blue]
+            "etl service" -> "interactive dataset"
+            "etl service" -> "interactive database"
+            "etl service" -> "noninteractive dataset"
+
         }
 
         {
