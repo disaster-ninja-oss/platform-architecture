@@ -301,8 +301,8 @@ digraph Platform_services{
     "insights-llm-api" -> "user-profile-api"[color=red]
     "insights-llm-api" -> insightsapi[color=red]
     
-    konturpopulation -> insightsapi // updated 2021-10-08
-    isochroneapi -> insightsapi //new
+    konturpopulation -> insightsapi[color=red] // updated 2021-10-08
+    isochroneapi -> insightsapi[color=red] //new
 
     eventapi -> insightsapi[color=red] //new
     isochroneapi -> osmroadsegments
@@ -327,7 +327,7 @@ digraph Platform_services{
     osrmemergencyminsk -> belarusosmpbf[color=red]
     osrmdistanceminsk -> belarusosmpbf[color=red]
     konturpopulation -> geocint
-    HDX -> konturpopulation
+    HDX -> konturpopulation[color=red]
     HDX -> kontur_boundaries[color=red]
     HDX -> embeddedpop
 
@@ -357,7 +357,7 @@ digraph Platform_services{
             //rank=same;
         
             osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-            konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+            konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
             kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,
                                     shape=rectangle,style=filled,fillcolor=lightskyblue,color=red,fontcolor=red]
             osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
