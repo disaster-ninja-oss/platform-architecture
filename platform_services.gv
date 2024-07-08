@@ -192,15 +192,11 @@ digraph Platform_services{
               "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
               "Layers-API"       [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
               "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
-              "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
-                                    shape=cylinder]
             }
 
             subgraph iw_users {
               node[group=users_components]
               "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
-              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
-                                        shape=cylinder]
 
               "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
               keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
@@ -213,13 +209,22 @@ digraph Platform_services{
               graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
           
               "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
-              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,
-                                        shape=cylinder]
             }
 
             subgraph iw_events {
               node[group=events_components]
               eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
+            }
+
+            subgraph iw_databases {
+              rank=same
+              node[shape=cylinder]
+              "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+                                      group=layers_components]
+              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+                                            group=users_components]
+              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,
+                                            group=insights_components]
             }
 
           }
