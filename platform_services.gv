@@ -236,7 +236,7 @@ digraph Platform_services{
 
           {
               // Global datasets
-              //rank=same;
+              rank=same;
           
               osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
               konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
@@ -247,7 +247,7 @@ digraph Platform_services{
 
           {
               // Minsk datasets
-              //rank=same;
+              rank=same;
               addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
               buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,
                 shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
@@ -259,7 +259,9 @@ digraph Platform_services{
 
     }
 
-    Kontur->prometheus02[style=invis] // prevent prometheus from being considered 'source', popping whole graph up
+    // prevent prometheus from being considered 'source', popping whole graph up
+    "nginx-ingress-controller" -> prometheus02[style=invis]
+    "nginx-ingress-controller" -> graphqlapi[style=invis]
 
     k2geocoder -> osmnominatim [color=purple]
 
