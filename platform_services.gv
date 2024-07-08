@@ -10,7 +10,6 @@ digraph Platform_services{
     node[shape=octagon]
     rankdir=TB // arrows go down
 
-
     // customers
     subgraph customers {
       rank=source // topmost always, the source of graph
@@ -168,11 +167,15 @@ digraph Platform_services{
 
     subgraph kontur_infrastructure {
 
-      //rank = "same"
-
       subgraph cluster_k8s {
           label="k8s cluster"
           style=bold
+
+
+          subgraph observatibility_tools {
+            "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
+            "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
+          }
 
           "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>,style=filled,fillcolor=red]
           "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red,group=ninja]
@@ -193,8 +196,6 @@ digraph Platform_services{
                                 style=filled,color=red]
           graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>,
                                 style=filled,color=red]
-          "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
-          "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
           "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
           "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>,
                                 style=filled,fillcolor=red]
@@ -257,6 +258,8 @@ digraph Platform_services{
       } 
 
     }
+
+    Kontur->prometheus02[style=invis] // prevent prometheus from being considered 'source', popping whole graph up
 
     k2geocoder -> osmnominatim [color=purple]
 
