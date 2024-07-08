@@ -48,50 +48,50 @@ digraph Platform_services{
         rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
-
+        node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
         subgraph data_providers_hot {
-          hotactivations     [label="HOT Projects",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          hotactivationscsv  [label="HOT Activateions CSV",shape=house,style=filled,fillcolor=blue,fontcolor=white]
+          hotactivations     [label="HOT Projects"]
+          hotactivationscsv  [label="HOT Activateions CSV"]
         }
 
         { // Meta
-          facebookpopulation [label="Facebook Population (HRSL)",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          facebookroads      [label="Facebook Roads",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          facebook           [label="Facebook",shape=house,style=filled,fillcolor=blue,fontcolor=white]
+          facebookpopulation [label="Facebook Population (HRSL)"]
+          facebookroads      [label="Facebook Roads"]
+          facebook           [label="Facebook"]
         }
 
         { // OSM
-          osm                [label="OpenStreetMap.org",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          osmlayers          [label="OpenStreetMap Editor Layer Index",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          osmcommunities     [label="OpenStreetMap Communities Index",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          osmnominatim       [label="OSM Nominatim",shape=house,style=filled,fillcolor=blue,fontcolor=white]
+          osm                [label="OpenStreetMap.org"]
+          osmlayers          [label="OpenStreetMap Editor Layer Index"]
+          osmcommunities     [label="OpenStreetMap Communities Index"]
+          osmnominatim       [label="OSM Nominatim"]
         }
 
         { //new
-          taskingmanagerapi [label="Tasking Manager API",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new
-          firms             [label="FIRMS",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new
-          noaa              [label="NOAA",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new
-          emdat             [label="EM-DAT",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new
-          japantornado      [label="Japan Tornado",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new??
-          firehydrants      [label="Fire Hydrants",shape=house,style=filled,fillcolor=blue,fontcolor=white] //new
+          taskingmanagerapi [label="Tasking Manager API"] //new
+          firms             [label="FIRMS"] //new
+          noaa              [label="NOAA"] //new
+          emdat             [label="EM-DAT"] //new
+          japantornado      [label="Japan Tornado"] //new??
+          firehydrants      [label="Fire Hydrants"] //new
         }
 
 
         { // Ukraine
-          unhcrukrainerefugee [label="UNHCR Ukraine Refugee",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          idpestimates [label="Ukraine: IDP Estimates",shape=house,style=filled,fillcolor=blue,fontcolor=white]
+          unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+          idpestimates [label="Ukraine: IDP Estimates"]
         }
 
         { // other
-          msbuildings        [label="Microsoft Buildings",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          geoalertbuildings  [label="GeoAlert Buildings",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          gdacs              [label="GDACS",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          ghs                [label="GHSL Global Human Settlement",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          gadm               [label="gadm.org",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          jrc                [label="European Commission Joint Research Center",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          linz               [label="LINZ (Land Information New Zealand)",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          pdcdisasters       [label="PDC Disaster feed",shape=house,style=filled,fillcolor=blue,fontcolor=white]
-          wikidata           [label="Wikidata",shape=house,style=filled,fillcolor=blue,fontcolor=white]
+          msbuildings        [label="Microsoft Buildings"]
+          geoalertbuildings  [label="GeoAlert Buildings"]
+          gdacs              [label="GDACS"]
+          ghs                [label="GHSL Global Human Settlement"]
+          gadm               [label="gadm.org"]
+          jrc                [label="European Commission Joint Research Center"]
+          linz               [label="LINZ (Land Information New Zealand)"]
+          pdcdisasters       [label="PDC Disaster feed"]
+          wikidata           [label="Wikidata"]
         }
     }
 
