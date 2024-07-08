@@ -318,31 +318,46 @@ digraph Platform_services{
     facebookroads -> facebook
 
 
-    { // client apps
-        rank=same;
-        donerkingapp [label="apps.kontur.io/donerking/",group="donerking",shape=ellipse]        
-        // deeppink = interactive/outdated?
-        eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,style=filled,fillcolor=deeppink]
-        mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse,group="firebrig"]
-        konturwebsite [label="kontur.io/",shape=ellipse,group=konturwebsite]
+    subgraph client_apps {
 
-        {
-          hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse,group="hot"]
-          "HOT Slack" [group="hot"]
-          oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse,group="hot"]
-        }
+        node[shape=ellipse]
 
-        disasterninja [label="disaster.ninja/",shape=ellipse]
+        subgraph same_ranked_client_apps {
+          rank=same;
+
+          {
+            donerkingapp [label="apps.kontur.io/donerking/",group="donerking"]
+            eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,
+                            shape=octagon,style=filled,fillcolor=deeppink]
+            mchsapp [label="apps.kontur.io/firebrigade/minsk/",group="firebrig"]
+          }
+
+          {
+            konturwebsite [label="kontur.io/",group=konturwebsite]
+          }
+
+          {
+            hotlandingpage [label="apps.kontur.io/hot-activations-landing/",group="hot"]
+            "HOT Slack" [group="hot"]
+            oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,group="hot"]
+          }
+
        
-        { 
-          roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse,group="donkor"]
-          smartcity [label=<Smart City App<BR />maps.kontur.io>,shape=ellipse,group="donkor"]
+          {
+            roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
+            smartcity [label=<Smart City App<BR />maps.kontur.io>,group="donkor"]
+          }
+
+          solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+          embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="HDX"]
+          embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
         }
 
-        solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-        embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse,group="HDX"]
-        embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
+        subgraph special_client_app {
+          disasterninja [label="disaster.ninja/"]
+        }
     }
+
     disasterninja -> "nginx-ingress-controller"
     disasterninja -> keycloak[color=red]
     Sunbim -> solarfarm
