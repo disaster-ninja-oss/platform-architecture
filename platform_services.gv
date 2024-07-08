@@ -14,29 +14,31 @@ digraph Platform_services{
     // customers
     subgraph customers {
       rank=source // topmost always, the source of graph
- 
+      node[shape=tab,style=filled,fillcolor=lightgreen]
+
       subgraph customers_active_commercial {
-        HOT           [label="Humanitarian OSM Team",shape=tab,style=filled,fillcolor=lightgreen,group=hot]
-        PDC           [label="Pacific Disaster Center",shape=tab,style=filled,fillcolor=lightgreen]
-        Kontur        [label="Kontur",shape=tab,style=filled,fillcolor=lightgreen,group="kontur"]
+        HOT           [label="Humanitarian OSM Team",group=hot]
+        PDC           [label="Pacific Disaster Center"]
+        Kontur        [label="Kontur",group=kontur]
       }
 
       subgraph customers_active_noncommercial { // active non-commercial engagements
-        DonkorLabs    [label="Donkor Labs",shape=tab,style=filled,fillcolor=lightgreen]
-        HDX           [label="UN OCHA Humanitarian Data Exchange",shape=tab,style=filled,fillcolor=lightgreen,group="HDX"]
-        Unfolded      [label="Unfolded / Foursquare",shape=tab,style=filled,fillcolor=lightgreen]
-        public_event_feed_users [label="Public Event Feed users",shape=tab,style=filled,fillcolor=lightgreen]
+        DonkorLabs    [label="Donkor Labs"]
+        HDX           [label="UN OCHA Humanitarian Data Exchange",group=HDX]
+        Unfolded      [label="Unfolded / Foursquare"]
+        public_event_feed_users [label="Public Event Feed users"]
       }      
 
       subgraph customers_inactive { //inactive
         style="dashed"
-        Tenefit       [label="Tenefit",shape=tab,style=filled,fillcolor=lightgreen]
-        DonerKing     [label="Doner King",shape=tab,style=filled,fillcolor=lightgreen,group="donerking"]
-        mchs          [label="Minsk Emergency Call Center",shape=tab,style=filled,fillcolor=lightgreen]
-        cartocatalog  [label="Carto Catalog",shape=tab,style=filled,fillcolor=lightgreen] //updated 2021-10-08
-        Sunbim                  [label="Sunbim (KREO)",shape=tab,style=filled,fillcolor=lightgreen]
-        //Vianova [label="Vianova",color=red]
-        SwissRe                 [label="Swiss Re",shape=tab,style=filled,fontcolor=white,fillcolor=darkgrey] //,color=red,style=dashed]
+        node[fontcolor=white,fillcolor=darkgrey]
+        Tenefit       [label="Tenefit"]
+        DonerKing     [label="Doner King",group=donerking]
+        mchs          [label="Minsk Emergency Call Center"]
+        cartocatalog  [label="Carto Catalog"] //updated 2021-10-08
+        Sunbim                  [label="Sunbim (KREO)"]
+        //Vianova [label="Vianova"]
+        SwissRe                 [label="Swiss Re"] 
       }
     }
 
