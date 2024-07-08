@@ -44,7 +44,7 @@ digraph Platform_services{
     // user facing
     // external
     { // data providers 
-        //rank=same;
+        rank=sink;
 
         // grouping is just for better clarity, its not architectural
 
@@ -206,6 +206,7 @@ digraph Platform_services{
           keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,style=filled,fillcolor=red]
           "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                       shape=cylinder,style=filled,fillcolor=red]
+
       }
       
       subgraph cluster_geocint {
