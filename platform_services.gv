@@ -44,12 +44,12 @@ digraph Platform_services{
 
     // user facing
     // external
-    { // data providers 
+    subgraph data_providers {
         rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
 
-        { // HOT
+        subgraph data_providers_hot {
           hotactivations     [label="HOT Projects",shape=house,style=filled,fillcolor=blue,fontcolor=white]
           hotactivationscsv  [label="HOT Activateions CSV",shape=house,style=filled,fillcolor=blue,fontcolor=white]
         }
