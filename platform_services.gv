@@ -8,19 +8,20 @@ digraph Platform_services{
     newrank=true
     edge[minlen=1,weight=1]
     node[shape=octagon]
+    rankdir=TB // arrows go down
+
 
     // customers
     {
-     
+      rank=same     
+ 
       { // active commercial engagements
-        rank="same" 
         HOT           [label="Humanitarian OSM Team",shape=tab,style=filled,fillcolor=lightgreen,group=hot]
         PDC           [label="Pacific Disaster Center",shape=tab,style=filled,fillcolor=lightgreen]
         Kontur        [label="Kontur",shape=tab,style=filled,fillcolor=lightgreen,group="kontur"]
       }
 
       { // active non-commercial engagements
-        rank = "same"
         DonkorLabs    [label="Donkor Labs",shape=tab,style=filled,fillcolor=lightgreen]
         HDX           [label="UN OCHA Humanitarian Data Exchange",shape=tab,style=filled,fillcolor=lightgreen,group="HDX"]
         Unfolded      [label="Unfolded / Foursquare",shape=tab,style=filled,fillcolor=lightgreen]
@@ -28,7 +29,6 @@ digraph Platform_services{
       }      
 
       subgraph cluster_inactive { //inactive
-        rank = "same"
         style="dashed"
         Tenefit       [label="Tenefit",shape=tab,style=filled,fillcolor=lightgreen]
         DonerKing     [label="Doner King",shape=tab,style=filled,fillcolor=lightgreen,group="donerking"]
