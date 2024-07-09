@@ -239,9 +239,11 @@ digraph Platform_services{
                                       group=ninja_components]
                 keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
                                       group=users_components]
-                eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
-                                      group=events_components]
               }
+              
+              // unranked due to big number of outedges  
+              eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
+                                      group=events_components]
             }
 
             subgraph iw_ninja { 
