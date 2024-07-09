@@ -255,7 +255,6 @@ digraph Platform_services{
       subgraph cluster_geocint {
           label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
           style=bold
-          //rank=none
 
           "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
           "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
@@ -263,38 +262,35 @@ digraph Platform_services{
           geocint [label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
           isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
 
-          {
-              rank=same;
-              osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
-              osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
+          subgraph geocint_osrm_containers {
+              rank=same
+              node[shape=pentagon,style=filled,fillcolor=red]
+
+              osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
+              osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
+              osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
           }
 
-          
-          {
-              // Global datasets
-              rank=same;
-          
-              osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-              konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-              kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,
-                                      shape=rectangle,style=filled,fillcolor=lightskyblue]
-              osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-          }
+          subgraph geocint_datasets {          
+            rank = same
+            node[shape=rectangle,style=filled,fillcolor=lightskyblue]
 
-          {
-              // Minsk datasets
-              rank=same;
-              addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
-              buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,
-                shape=rectangle,style=filled,fillcolor=lightskyblue]
-              belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-              pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,
-                shape=rectangle,style=filled,fillcolor=lightskyblue]//Area of interest updated 2024-30-01
+            subgraph geocint_datasets_global {
+              osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>]
+              osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+            }
+            subgraph geocint_datasets_minsk {
+              addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>    ]
+              buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>]
+              belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]//Area of interest updated 2024-30-01
+            }
           }
       } 
 
