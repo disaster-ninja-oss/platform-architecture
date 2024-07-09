@@ -68,19 +68,21 @@ digraph Platform_services{
           rank = same
           osm                [label="OpenStreetMap.org"]
           osmlayers          [label="OpenStreetMap Editor Layer Index"]
-          osmcommunities     [label="OpenStreetMap Communities Index"]
           osmnominatim       [label="OSM Nominatim"]
         }
+          
+        osmcommunities     [label="OpenStreetMap Communities Index"]
 
         { 
           rank = same
-          taskingmanagerapi [label="Tasking Manager API"] //new
           firms             [label="FIRMS"] //new
           noaa              [label="NOAA"] //new
           emdat             [label="EM-DAT"] //new
           japantornado      [label="Japan Tornado"] //new??
-          firehydrants      [label="Fire Hydrants"] //new
         }
+          
+        firehydrants      [label="Fire Hydrants"] //new
+        taskingmanagerapi [label="Tasking Manager API"] //new
 
 
         subgraph data_providers_ukraine { // Ukraine
