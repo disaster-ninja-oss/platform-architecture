@@ -177,13 +177,22 @@ digraph Platform_services{
          
             subgraph iw_ingress{
               "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
+
+              {
+                rank = same
+                "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>, 
+                                      group=ninja_components]
+                "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
+                                      group=ninja_components]
+                keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
+                                      group=users_components]
+                eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
+                                      group=events_components]
+              }
             }
 
             subgraph iw_ninja { 
               node[group=ninja_components]
-              "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>]
-              "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>]
-            
               "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
             }
 
@@ -199,7 +208,6 @@ digraph Platform_services{
               "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
 
               "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
-              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
             }
 
             subgraph iw_insights {
@@ -209,11 +217,6 @@ digraph Platform_services{
               graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
           
               "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
-            }
-
-            subgraph iw_events {
-              node[group=events_components]
-              eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
             }
 
             subgraph iw_databases {
@@ -232,19 +235,16 @@ digraph Platform_services{
           subgraph noninteractive_workloads {
             subgraph nw_observability {
               node[group=observability_components]
+              rank=same
               "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
               "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
               "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
             }
 
-            subgraph nw_layers {
-              node[group=layers_components]
-              "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
-            }
-            subgraph nw_insignts {
-              node[group=insights_components]
-              "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
-            }
+            "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>, 
+                          group=layers_components]
+            "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>,
+                          group=insights_components]
           }
 
           
@@ -299,9 +299,11 @@ digraph Platform_services{
 
     }
 
-    // prevent prometheus from being considered 'source', popping whole graph up
-    "nginx-ingress-controller" -> prometheus02[style=invis]
-    "nginx-ingress-controller" -> graphqlapi[style=invis]
+    // prevent observability group from being considered 'source', popping whole graph up
+    "layers-etl" -> "fluent-bit"[style=invis]
+    "insightsapi" -> "fluent-bit"[style=invis]
+    
+    //"nginx-ingress-controller" -> graphqlapi[style=invis]
 
     k2geocoder -> osmnominatim [color=purple]
 
