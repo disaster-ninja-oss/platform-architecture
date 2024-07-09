@@ -212,10 +212,7 @@ digraph Platform_services{
 
             subgraph iw_insights {
               node[group=insights_components]
-
               insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-              graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-          
               "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
             }
 
@@ -241,6 +238,8 @@ digraph Platform_services{
               "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
             }
 
+            graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>, 
+                          style=dashed, group=insights_components]
             "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>, 
                           group=layers_components]
             "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>,
@@ -328,7 +327,7 @@ digraph Platform_services{
     "disaster-ninja-be" -> insightsapi[color=red]
     "disaster-ninja-fe" -> insightsapi[color=red]
     "disaster-ninja-be" -> "insights-llm-api"[color=red]
-    graphqlapi -> insightsapi[color=red]
+    graphqlapi -> insightsapi[style=dashed]
     "disaster-ninja-be" -> kcapi[color=red]
     "disaster-ninja-be" -> eventapi[color=red]
     "disaster-ninja-be" -> "Layers-API"[color=red]
