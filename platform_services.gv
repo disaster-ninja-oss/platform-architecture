@@ -1,5 +1,6 @@
 digraph Platform_services{
-    ratio=0.5625
+    ratio=1
+    #ratio=0.5625
     #ratio=0.7
     #ratio=1.0407 // 1993:1915
     #ratio=1.42
@@ -273,14 +274,15 @@ digraph Platform_services{
               osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon,style=filled,fillcolor=red]
           }
 
+          
           {
               // Global datasets
               rank=same;
           
-              osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
-              konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
+              osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
+              konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
               kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,
-                                      shape=rectangle,style=filled,fillcolor=lightskyblue,color=red,fontcolor=red]
+                                      shape=rectangle,style=filled,fillcolor=lightskyblue]
               osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
           }
 
@@ -289,10 +291,10 @@ digraph Platform_services{
               rank=same;
               addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue    ]
               buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,
-                shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
-              belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]
+                shape=rectangle,style=filled,fillcolor=lightskyblue]
+              belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
               pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,
-                shape=rectangle,style=filled,fillcolor=lightskyblue,fontcolor=red]//Area of interest updated 2024-30-01
+                shape=rectangle,style=filled,fillcolor=lightskyblue]//Area of interest updated 2024-30-01
           }
       } 
 
