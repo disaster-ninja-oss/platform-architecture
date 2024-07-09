@@ -106,28 +106,49 @@ digraph Platform_services{
     "layers-db" -> taskingmanagerapi
     "kcdataetl" -> taskingmanagerapi
 
-    subgraph cluster_kc {
-        label = "KC legacy stack" 
+    subgraph cluster_legacy {
+        label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
         style=dashed
         node[style=filled,fillcolor=deeppink,group=kclegacy]
         
-        kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
-        k2routing [label=<k2routing<BR />proxy request to OSRM>]
-        k2geocoder
-        "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
-        kcdataetl [color=purple]
-        k2etl [color=purple]
-        k2layers[color=purple]
-    
-        // firebrigade legacy stack
-        kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
-        kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
-    
-        // donerking legacy stack
-        kcdonerkingfe [color=purple,group="donerking",style=filled,fillcolor=deeppink]
-        kcdonerking [color=purple,group="donerking",style=filled,fillcolor=deeppink]
-    
+        {
+          node[group=kc]
+          kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
+          "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
+          kcdataetl [color=purple]
+        }
+
+        "Unfolded Data Catalog"[style=filled,fillcolor=red]
+        "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
         osmboundaries[style=filled,fillcolor=deeppink]
+
+        { 
+          node[group=k2] 
+          k2frontend[color=purple]
+          k2routing [label=<k2routing<BR />proxy request to OSRM>]
+          k2geocoder
+          k2etl [color=purple]
+          k2layers[color=purple]
+        }
+
+        {
+          node[group=firebrig]
+          kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+          kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+        }
+
+        { 
+          node[group=donerking]
+          kcdonerkingfe [color=purple,style=filled,fillcolor=deeppink]
+          kcdonerking [color=purple,style=filled,fillcolor=deeppink]
+        }
+
+    
+        { 
+          node[group=citysplit]
+          kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
+          citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
+        }
     }
         
     OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
@@ -335,7 +356,6 @@ digraph Platform_services{
     keycloak -> "user-profile-spi-plugin"[color=red]
     eventapi -> keycloak[color=red]
 
-    "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
     "disaster-ninja-fe" -> "basemap tiles"[color=red] 
     "basemap tiles" -> geocint
 
@@ -447,7 +467,6 @@ digraph Platform_services{
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     
-    "Unfolded Data Catalog"[style=filled,fillcolor=red]
     Unfolded -> "Unfolded Data Catalog"[color=red] //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
 
@@ -460,7 +479,6 @@ digraph Platform_services{
     CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>,style=filled,fillcolor=red]
     mchs -> CSTAPP[color=purple]
     DonerKing -> CSTAPP [color=purple]
-    citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
 
     CSTAPP -> citysplit[color=red]
     isochroneapi[style=filled,fillcolor=red]
@@ -523,7 +541,6 @@ digraph Platform_services{
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
     osmboundaries -> geocint
 
-    kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
@@ -584,7 +601,6 @@ digraph Platform_services{
     kcapi -> k2geocoder [color=purple]
     k2geocoder -> osm [color=purple]
     k2geocoder -> kcdataetl [color=purple]
-    k2frontend [color=purple]
     kcdonerkingfe -> k2frontend [color=purple]
     kcfirebrigadefe -> k2frontend [color=purple]
     kccitysplitfe -> k2frontend [color=purple]
