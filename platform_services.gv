@@ -52,47 +52,47 @@ digraph Platform_services{
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
         
         subgraph data_providers_hot {
-          rank = same
+          //rank = same
           hotactivations     [label="HOT Projects"]
           hotactivationscsv  [label="HOT Activateions CSV"]
         }
 
         subgraph data_providers_meta { 
-          rank = same
+          //rank = same
           facebookpopulation [label="Facebook Population (HRSL)"]
           facebookroads      [label="Facebook Roads"]
           facebook           [label="Facebook"]
         }
 
         subgraph data_providers_osm { 
-          rank = same
+          //rank = same
           osm                [label="OpenStreetMap.org"]
           osmlayers          [label="OpenStreetMap Editor Layer Index"]
           osmnominatim       [label="OSM Nominatim"]
+          osmcommunities     [label="OpenStreetMap Communities Index"]
         }
           
-        osmcommunities     [label="OpenStreetMap Communities Index"]
 
         { 
-          rank = same
+          //rank = same
           firms             [label="FIRMS"] //new
           noaa              [label="NOAA"] //new
           emdat             [label="EM-DAT"] //new
           japantornado      [label="Japan Tornado"] //new??
+          firehydrants      [label="Fire Hydrants"] //new
+          taskingmanagerapi [label="Tasking Manager API"] //new
         }
           
-        firehydrants      [label="Fire Hydrants"] //new
-        taskingmanagerapi [label="Tasking Manager API"] //new
 
 
         subgraph data_providers_ukraine { // Ukraine
-          rank = same
+          // rank = same
           unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
           idpestimates [label="Ukraine: IDP Estimates"]
         }
 
         { // other
-          rank = same
+          // rank = same
           msbuildings        [label="Microsoft Buildings"]
           geoalertbuildings  [label="GeoAlert Buildings"]
           gdacs              [label="GDACS"]
