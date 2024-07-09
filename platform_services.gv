@@ -106,13 +106,31 @@ digraph Platform_services{
     "layers-db" -> taskingmanagerapi
     "kcdataetl" -> taskingmanagerapi
 
-    {
-        rank=same
-        OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-        k2routing [label=<k2routing<BR />proxy request to OSRM>,style=filled,fillcolor=deeppink]
-        k2layers[style=filled, fillcolor=deeppink]
-        k2geocoder[style=filled,fillcolor=deeppink]
+    subgraph cluster_kc {
+        label = "KC legacy stack" 
+        style=dashed
+        node[style=filled,fillcolor=deeppink,group=kclegacy]
+        
+        kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
+        k2routing [label=<k2routing<BR />proxy request to OSRM>]
+        k2geocoder
+        "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
+        kcdataetl [color=purple]
+        k2etl [color=purple]
+        k2layers[color=purple]
+    
+        // firebrigade legacy stack
+        kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+        kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+    
+        // donerking legacy stack
+        kcdonerkingfe [color=purple,group="donerking",style=filled,fillcolor=deeppink]
+        kcdonerking [color=purple,group="donerking",style=filled,fillcolor=deeppink]
+    
+        osmboundaries[style=filled,fillcolor=deeppink]
     }
+        
+    OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
 
     subgraph cluster_legend {
         label="Legend"
@@ -503,15 +521,14 @@ digraph Platform_services{
     "insightsapi-database" -> geocint
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
-    osmboundaries[style=filled,fillcolor=deeppink]
     osmboundaries -> geocint
 
     kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
+
     // lets use deeppink for outdated+interactive
-    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
     eventapi -> gdacs[color=blue]
     eventapi -> firms[color=blue] //new
     eventapi -> noaa[color=blue] //new
@@ -519,10 +536,7 @@ digraph Platform_services{
     eventapi -> japantornado[color=blue] //new
     eventapi -> kcapi[color=red]
 
-    // donerking legacy stack
-    kcdonerkingfe [color=purple,group="donerking",style=filled,fillcolor=deeppink]
-    kcdonerking [color=purple,group="donerking",style=filled,fillcolor=deeppink]
-
+  
     DonerKing -> donerkingapp
     donerkingapp -> kcdonerkingfe [color=purple]
     kcdonerkingfe -> kcdonerking [color=purple]
@@ -530,7 +544,6 @@ digraph Platform_services{
     kcdonerking -> kcdataetl [color=purple]
 
 
-    kcdataetl [color=purple]
     kcdataetl -> hotactivations [color=purple]
     kcdataetl -> hotactivationscsv [color=purple]
     kcdataetl -> osmcommunities [color=purple]
@@ -539,9 +552,6 @@ digraph Platform_services{
     kcdataetl -> osmboundaries [color=purple]
     kcdataetl -> firehydrants [color=purple]
    
-    // firebrig stack  
-    kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
-    kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
     mchs -> mchsapp
     mchsapp -> kcfirebrigadefe [color=purple]
     kcfirebrigadefe -> kcfirebrigade [color=purple]
@@ -557,11 +567,7 @@ digraph Platform_services{
     eventapi -> pdcmapservices -> pdcdisasters
 
 
-    k2etl [color=purple]
-    k2layers [color=purple]
-    k2layers [color=purple]
     kcapi -> k2layers [color=purple]
-    "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder,style=filled,fillcolor=deeppink]
     k2layers -> "kcapi db" [color=purple]
     k2geocoder -> "kcapi db" [color=purple]
     "kcapi db" -> kcdataetl [color=purple]
