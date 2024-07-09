@@ -333,7 +333,7 @@ digraph Platform_services{
     "disaster-ninja-be" -> eventapi[color=red]
     "disaster-ninja-be" -> "Layers-API"[color=red]
 
-    "HOT Slack" -> "disaster-ninja-be"[color=red] // should be to ingress controller, maybe...
+    "HOT Slack" -> "disaster-ninja-be"[color=red,arrowhead=none,arrowtail=normal] // reversed data flow, push to Slack
 
     "nginx-ingress-controller" -> "disaster-ninja-fe"[color=red] 
     "nginx-ingress-controller" -> "disaster-ninja-be" [color=red]
