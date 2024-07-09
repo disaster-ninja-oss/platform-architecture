@@ -106,6 +106,12 @@ digraph Platform_services{
     "layers-db" -> taskingmanagerapi
     "kcdataetl" -> taskingmanagerapi
 
+    subgraph wilderness {
+      "Unfolded Data Catalog"[style=filled,fillcolor=red]
+      "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
+      osmboundaries[style=filled,fillcolor=deeppink]
+    }
+
     subgraph cluster_legacy {
         label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
         style=dashed
@@ -118,9 +124,6 @@ digraph Platform_services{
           kcdataetl [color=purple]
         }
 
-        "Unfolded Data Catalog"[style=filled,fillcolor=red]
-        "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
-        osmboundaries[style=filled,fillcolor=deeppink]
 
         { 
           node[group=k2] 
