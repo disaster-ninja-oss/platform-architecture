@@ -1,6 +1,6 @@
 digraph Platform_services{
-    ratio=0.5
-    #ratio=0.5625
+    #ratio=auto
+    ratio=0.5625
     #ratio=0.7
     #ratio=1.0407 // 1993:1915
     #ratio=1.42
@@ -46,7 +46,7 @@ digraph Platform_services{
     // user facing
     // external
     subgraph data_providers {
-        //rank=sink; // bottom-most of the graph
+        rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
@@ -322,7 +322,7 @@ digraph Platform_services{
     "basemap tiles" -> geocint
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
-    "disaster-ninja-fe" -> kontur_boundaries[color=red]
+    "disaster-ninja-fe" -> kontur_boundaries
     "disaster-ninja-fe" -> OSM_quality_report
     "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
 
@@ -337,7 +337,7 @@ digraph Platform_services{
     "disaster-ninja-be" -> eventapi[color=red]
     "disaster-ninja-be" -> "Layers-API"[color=red]
 
-    "HOT Slack" -> "disaster-ninja-be"[color=red,arrowhead=none,arrowtail=normal] // reversed data flow, push to Slack
+    "HOT Slack" -> "disaster-ninja-be"[color=red,dir=back] // reversed data flow, push to Slack
 
     "nginx-ingress-controller" -> "disaster-ninja-fe"[color=red] 
     "nginx-ingress-controller" -> "disaster-ninja-be" [color=red]
@@ -453,11 +453,11 @@ digraph Platform_services{
     "insights-llm-api" -> "user-profile-api"[color=red]
     "insights-llm-api" -> insightsapi[color=red]
     
-    konturpopulation -> insightsapi[color=red] // updated 2021-10-08
+    konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi[color=red] //new
 
     eventapi -> insightsapi[color=red] //new
-    isochroneapi -> osmroadsegments[color=red]
+    isochroneapi -> osmroadsegments
     osmroadsegments -> geocint
     buildingsminsk -> geocint
     osmcontributorstiles -> geocint
@@ -465,22 +465,22 @@ digraph Platform_services{
     insightsapi -> geocint
     belarusosmpbf -> geocint
     pdsdataset -> geocint //updated 2021-10-08
-    osrmdocker_foot -> pdsdataset[color=red] //updated 2021-10-08
-    osrmdocker_bicycle -> pdsdataset[color=red] //updated 2021-10-08
-    osrmdocker_car -> pdsdataset[color=red] //updated 2021-10-08
-    osrmdocker_emergency -> pdsdataset[color=red] //updated 2021-10-08
-    osrmdocker_motobike -> pdsdataset[color=red] //updated 2021-10-08
+    osrmdocker_foot -> pdsdataset //updated 2021-10-08
+    osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
+    osrmdocker_car -> pdsdataset //updated 2021-10-08
+    osrmdocker_emergency -> pdsdataset //updated 2021-10-08
+    osrmdocker_motobike -> pdsdataset //updated 2021-10-08
     isochroneapi -> osrmdocker_foot[color=red]  //updated 2021-10-08
     isochroneapi -> osrmdocker_bicycle[color=red] //updated 2021-10-08
     isochroneapi -> osrmdocker_car[color=red] //updated 2021-10-08
     isochroneapi -> osrmdocker_emergency[color=red] //updated 2021-10-08
     isochroneapi -> osrmdocker_motobike[color=red]   //updated 2021-10-08
 
-    osrmemergencyminsk -> belarusosmpbf[color=red]
-    osrmdistanceminsk -> belarusosmpbf[color=red]
+    osrmemergencyminsk -> belarusosmpbf
+    osrmdistanceminsk -> belarusosmpbf
     konturpopulation -> geocint
-    HDX -> konturpopulation[color=red]
-    HDX -> kontur_boundaries[color=red]
+    HDX -> konturpopulation
+    HDX -> kontur_boundaries
     HDX -> embeddedpop
 
 
@@ -526,7 +526,7 @@ digraph Platform_services{
     DonerKing -> donerkingapp
     donerkingapp -> kcdonerkingfe [color=purple]
     kcdonerkingfe -> kcdonerking [color=purple]
-    kcdonerking -> buildingsminsk [color=purple]
+    kcdonerking -> buildingsminsk[color=purple]
     kcdonerking -> kcdataetl [color=purple]
 
 
