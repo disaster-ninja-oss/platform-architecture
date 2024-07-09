@@ -317,7 +317,7 @@ digraph Platform_services{
           isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
 
           subgraph geocint_osrm_containers {
-              rank=same
+              // rank=same
               node[shape=pentagon,style=filled,fillcolor=red]
 
               osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
@@ -330,7 +330,7 @@ digraph Platform_services{
           }
 
           subgraph geocint_datasets {          
-            rank = same
+            // rank = same
             node[shape=rectangle,style=filled,fillcolor=lightskyblue]
 
             subgraph geocint_datasets_global {
