@@ -46,22 +46,26 @@ digraph Platform_services{
     // user facing
     // external
     subgraph data_providers {
-        rank=sink; // bottom-most of the graph
+        //rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
+        
         subgraph data_providers_hot {
+          rank=same
           hotactivations     [label="HOT Projects"]
           hotactivationscsv  [label="HOT Activateions CSV"]
         }
 
         { // Meta
+          rank=same
           facebookpopulation [label="Facebook Population (HRSL)"]
           facebookroads      [label="Facebook Roads"]
           facebook           [label="Facebook"]
         }
 
         { // OSM
+          rank=same
           osm                [label="OpenStreetMap.org"]
           osmlayers          [label="OpenStreetMap Editor Layer Index"]
           osmcommunities     [label="OpenStreetMap Communities Index"]
@@ -69,6 +73,7 @@ digraph Platform_services{
         }
 
         { //new
+          rank=same
           taskingmanagerapi [label="Tasking Manager API"] //new
           firms             [label="FIRMS"] //new
           noaa              [label="NOAA"] //new
@@ -79,11 +84,13 @@ digraph Platform_services{
 
 
         { // Ukraine
+          rank=same
           unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
           idpestimates [label="Ukraine: IDP Estimates"]
         }
 
         { // other
+          rank=same
           msbuildings        [label="Microsoft Buildings"]
           geoalertbuildings  [label="GeoAlert Buildings"]
           gdacs              [label="GDACS"]
