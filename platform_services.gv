@@ -46,7 +46,7 @@ digraph Platform_services{
     // user facing
     // external
     subgraph data_providers {
-        rank=sink; // bottom-most of the graph
+        //rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
