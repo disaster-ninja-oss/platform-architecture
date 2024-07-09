@@ -226,7 +226,7 @@ digraph Platform_services{
                                       group=layers_components]
               "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
                                             group=users_components]
-              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,
+              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
             }
 
