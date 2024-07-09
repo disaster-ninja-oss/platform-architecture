@@ -1,5 +1,5 @@
 digraph Platform_services{
-    ratio=1
+    ratio=0.5
     #ratio=0.5625
     #ratio=0.7
     #ratio=1.0407 // 1993:1915
@@ -52,28 +52,28 @@ digraph Platform_services{
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
         
         subgraph data_providers_hot {
-          rank=same
+          rank = same
           hotactivations     [label="HOT Projects"]
           hotactivationscsv  [label="HOT Activateions CSV"]
         }
 
-        { // Meta
-          rank=same
+        subgraph data_providers_meta { 
+          rank = same
           facebookpopulation [label="Facebook Population (HRSL)"]
           facebookroads      [label="Facebook Roads"]
           facebook           [label="Facebook"]
         }
 
-        { // OSM
-          rank=same
+        subgraph data_providers_osm { 
+          rank = same
           osm                [label="OpenStreetMap.org"]
           osmlayers          [label="OpenStreetMap Editor Layer Index"]
           osmcommunities     [label="OpenStreetMap Communities Index"]
           osmnominatim       [label="OSM Nominatim"]
         }
 
-        { //new
-          rank=same
+        { 
+          rank = same
           taskingmanagerapi [label="Tasking Manager API"] //new
           firms             [label="FIRMS"] //new
           noaa              [label="NOAA"] //new
@@ -83,14 +83,14 @@ digraph Platform_services{
         }
 
 
-        { // Ukraine
-          rank=same
+        subgraph data_providers_ukraine { // Ukraine
+          rank = same
           unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
           idpestimates [label="Ukraine: IDP Estimates"]
         }
 
         { // other
-          rank=same
+          rank = same
           msbuildings        [label="Microsoft Buildings"]
           geoalertbuildings  [label="GeoAlert Buildings"]
           gdacs              [label="GDACS"]
