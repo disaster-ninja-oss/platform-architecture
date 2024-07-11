@@ -442,6 +442,9 @@ digraph Platform_services{
 
             {
               konturwebsite [label="kontur.io/",group=konturwebsite]
+
+              atlasapp [label="atlas.kontur.io"]
+              oasisapp [label="oasis.kontur.io"]
             }
 
             {
@@ -481,12 +484,13 @@ digraph Platform_services{
 
     PDC -> "basemap tiles"[color=red] // updated 2024-07-11
 
-    { // to be removed? same apps are edged to 'ingress controller' now?
-      embeddedpop -> disasterninja
-      embeddeddisaster -> disasterninja
-      oam -> disasterninja
-      smartcity -> disasterninja
-      solarfarm -> disasterninja
+    { //// to be removed unless these apps really communicate with disaster.ninja somehow
+      //embeddedpop -> disasterninja
+      //embeddeddisaster -> disasterninja
+      //oam -> disasterninja
+      //smartcity -> disasterninja
+      //solarfarm -> disasterninja
+
     }
 
 
@@ -498,10 +502,13 @@ digraph Platform_services{
       smartcity -> "nginx-ingress-controller"
       solarfarm -> "nginx-ingress-controller"
       disasterninja -> "nginx-ingress-controller"
+      atlasapp -> "nginx-ingress-controller"
+      oasisapp -> "nginx-ingress-controller"
     }
 
     public_event_feed_users -> keycloak[color=red]
     public_event_feed_users -> eventapi[color=red]
+    public_event_feed_users -> atlasapp[color=red]
     HOT -> disasterninja
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
@@ -509,6 +516,8 @@ digraph Platform_services{
     HOT -> graphqlapi
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
+    Kontur -> atlasapp
+    Kontur -> oasisapp
     
     "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
 
