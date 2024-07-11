@@ -291,6 +291,10 @@ digraph Platform_services{
               "keycloak-database-replica"[group=users_components]
             }
 
+            // review: is it correct or more complicated? e.g. is epig involved?
+            "minio-tenant"[fillcolor=white,color=orange]
+            "basemap tiles" -> "minio-tenant"[color=orange]
+
           }
 
           subgraph noninteractive_workloads {
