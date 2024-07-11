@@ -230,16 +230,18 @@ digraph Platform_services{
               "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
 
               {
-                rank = same
-                "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
+                //rank = same
                 "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>, 
-                                      group=ninja_components]
-                "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
                                       group=ninja_components]
                 keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
                                       group=users_components]
               }
               
+
+              "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
+                                    group=ninja_components]
+              "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
+
               // unranked due to big number of outedges  
               eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
                                       group=events_components]
@@ -363,7 +365,7 @@ digraph Platform_services{
     keycloak -> "user-profile-spi-plugin"[color=red]
     eventapi -> keycloak[color=red]
 
-    "disaster-ninja-fe" -> "basemap tiles"[color=red] 
+    "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
     "basemap tiles" -> geocint
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
@@ -411,49 +413,54 @@ digraph Platform_services{
 
     subgraph client_apps {
 
-        node[shape=ellipse]
 
         subgraph same_ranked_client_apps {
           rank=same;
 
           {
-            donerkingapp [label="apps.kontur.io/donerking/",group="donerking"]
+            node[shape=octagon]
             eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,
-                            shape=octagon,style=filled,fillcolor=deeppink]
-            mchsapp [label="apps.kontur.io/firebrigade/minsk/",group="firebrig"]
-          }
+                              style=filled,fillcolor=deeppink]
 
-          {
-            konturwebsite [label="kontur.io/",group=konturwebsite]
-          }
-
-          {
-            hotlandingpage [label="apps.kontur.io/hot-activations-landing/",group="hot"]
-            "HOT Slack" [group="hot"]
-            oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,group="hot"]
-          }
-
-          {
             "Unfolded Data Catalog"[label=<Unfolded Data Catalog/<BR /><FONT POINT-SIZE="10">Third-party, not managed by us</FONT>>,
                                     color="#00000075",
                                     fontcolor="#00000075",
-                                    shape=octagon,
                                     group=Unfolded]
           }
 
-       
           {
-            roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
-            smartcity [label=<Smart City App<BR />maps.kontur.io>,group="donkor"]
-          }
+            node[shape=ellipse]
 
-          solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
-          embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="HDX"]
-          embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
-      
+            {
+              donerkingapp [label="apps.kontur.io/donerking/",group="donerking"]
+              mchsapp [label="apps.kontur.io/firebrigade/minsk/",group="firebrig"]
+            }
+
+            {
+              konturwebsite [label="kontur.io/",group=konturwebsite]
+            }
+
+            {
+              hotlandingpage [label="apps.kontur.io/hot-activations-landing/",group="hot"]
+              "HOT Slack" [group="hot"]
+              oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,group="hot"]
+            }
+
+
+            {
+              roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
+              smartcity [label=<Smart City App<BR />maps.kontur.io>,group="donkor"]
+            }
+
+            solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+            embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="HDX"]
+            embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+
+          }
         }
 
         subgraph special_client_app {
+          node[shape=ellipse]
           disasterninja [label="disaster.ninja/"]
         }
     }
