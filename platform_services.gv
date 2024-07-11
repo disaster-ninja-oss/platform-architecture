@@ -25,7 +25,7 @@ digraph Platform_services{
       subgraph customers_active_noncommercial { // active non-commercial engagements
         DonkorLabs    [label="Donkor Labs"]
         HDX           [label="UN OCHA Humanitarian Data Exchange",group=HDX]
-        Unfolded      [label="Unfolded / Foursquare"]
+        Unfolded      [label="Unfolded / Foursquare",group=Unfolded]
         public_event_feed_users [label="Public Event Feed users"]
       }      
 
@@ -109,8 +109,6 @@ digraph Platform_services{
     "kcdataetl" -> taskingmanagerapi
 
     subgraph wilderness {
-      "Unfolded Data Catalog"[style=filled,fillcolor=red]
-      "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>][style=filled,fillcolor=red]
       osmboundaries[style=filled,fillcolor=deeppink]
     }
 
@@ -231,6 +229,7 @@ digraph Platform_services{
 
               {
                 rank = same
+                "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
                 "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>, 
                                       group=ninja_components]
                 "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
@@ -432,6 +431,14 @@ digraph Platform_services{
             oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,group="hot"]
           }
 
+          {
+            "Unfolded Data Catalog"[label=<Unfolded Data Catalog/<BR /><FONT POINT-SIZE="10">Third-party, not managed by us</FONT>>,
+                                    color="#00000075",
+                                    fontcolor="#00000075",
+                                    shape=octagon,
+                                    group=Unfolded]
+          }
+
        
           {
             roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
@@ -441,6 +448,7 @@ digraph Platform_services{
           solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
           embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="HDX"]
           embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+      
         }
 
         subgraph special_client_app {
@@ -448,7 +456,9 @@ digraph Platform_services{
         }
     }
 
-    disasterninja -> "nginx-ingress-controller"
+    Unfolded -> "Unfolded Data Catalog"[color="#00000075"] //updated 2021-10-08
+
+    disasterninja -> "nginx-ingress-controller"[color=red]
     disasterninja -> keycloak[color=red]
     Sunbim -> solarfarm
 
@@ -462,6 +472,7 @@ digraph Platform_services{
     roadqualityapp -> "layers-db"[color=red]
     solarfarm -> disasterninja
 
+    PDC -> "basemap tiles"[color=red] // updated 2024-07-11
 
     public_event_feed_users -> keycloak[color=red]
     public_event_feed_users -> eventapi[color=red]
@@ -473,7 +484,6 @@ digraph Platform_services{
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     
-    Unfolded -> "Unfolded Data Catalog"[color=red] //updated 2021-10-08
     "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
 
     "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
@@ -614,6 +624,11 @@ digraph Platform_services{
     subgraph cluster_PDC {
         label=<PDC<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>
         style=bold
+        color="#00000075"
+        fontcolor="#00000075"
+
+        node[color="#00000075",fontcolor="#00000075"]
+        edge[color="#00000075"]
 
         pdcrvaeditorfe        
         pdceventbrieffe        
@@ -626,33 +641,40 @@ digraph Platform_services{
         pdccmdp   
         OrgAPI
         JWT
+
     }
-    
-    PDC -> pdcrvaeditorfe
-    PDC -> pdceventbrieffe
+
+    {
+      edge[color="#00000075"]
+      PDC -> pdcrvaeditorfe
+      PDC -> pdceventbrieffe
+      PDC -> pdchazardbrief
+      PDC -> pdcdas
+      PDC -> pdctrafficcams
+      PDC -> UserManagement         // update 2021-10-8
+      PDC -> DisasterAware7 -> JWT -> OrgAPI // update 2021-10-8
+      PDC -> DASv4 // update 2021-10-8
+      PDC -> pdccmdp -> pdctrafficcams
+      pdceventbrieffe -> pdctrafficcams
+      pdceventbrieffe -> pdcrvaeditorfe
+      pdchazardbrief -> pdcdas
+      UserManagement -> OrgAPI // update 2021-10-8
+      UserManagement -> JWT
+    }
+
     pdceventbrieffe -> pdcdisasters
-    pdceventbrieffe -> pdcrvaeditorfe
-    PDC -> pdchazardbrief
-    pdchazardbrief -> pdcdas
     pdchazardbrief -> pdcdisasters
-    PDC -> pdcdas
     pdcdas -> pdcdisasters
-    PDC -> pdctrafficcams
-    pdceventbrieffe -> pdctrafficcams
-    PDC -> pdccmdp -> pdctrafficcams
     Tenefit -> OrgAPI // update 2021-10-8
-    PDC -> UserManagement -> JWT         // update 2021-10-8
-    UserManagement -> OrgAPI // update 2021-10-8
-    PDC -> DisasterAware7 -> JWT -> OrgAPI // update 2021-10-8
-    PDC -> DASv4 // update 2021-10-8
     Tenefit -> DASv4 // update 2021-10-8
     Kontur -> DASv4 // update 2021-10-8
 
-    // konturwebsite stack
-    wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
-    mailchimp [group=konturwebsite]
-    Kontur -> konturwebsite -> wordpress -> mailchimp
-    mailchimp -> keycloak [color=orange]
+    subgraph kontur_website_stack {
+      wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
+      mailchimp [group=konturwebsite]
+      Kontur -> konturwebsite -> wordpress -> mailchimp
+      mailchimp -> keycloak [color=orange]
+    }
 
 
     "prometheus02" -> grafana02
