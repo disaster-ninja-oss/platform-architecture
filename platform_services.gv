@@ -293,11 +293,11 @@ digraph Platform_services{
             subgraph iw_databases {
               rank=same
               node[shape=cylinder]
-              "layers-db-database-replica" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+              "layers-db-database-replica" [label=<Layers-DB database REPLICA<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
-              "user-profile-api-database-replica" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+              "user-profile-api-database-replica" [label=<user-profile-api-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
                                             group=users_components]
-              "insightsapi-database-replica" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
+              "insightsapi-database-replica" [label=<InsightsAPI-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
               "eventapi-database-replica"[group=events_components]
               "keycloak-database-replica"[group=users_components]
