@@ -46,63 +46,73 @@ digraph Platform_services{
     // user facing
     // external
     subgraph data_providers {
-        rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
-        
-        subgraph data_providers_hot {
-          //rank = same
-          hotactivations     [label="HOT Projects"]
-          hotactivationscsv  [label="HOT Activateions CSV"]
-        }
 
-        subgraph data_providers_meta { 
-          //rank = same
-          facebookpopulation [label="Facebook Population (HRSL)"]
-          facebookroads      [label="Facebook Roads"]
-          facebook           [label="Facebook"]
-        }
+        { // floating
 
-        subgraph data_providers_osm { 
-          //rank = same
-          osm                [label="OpenStreetMap.org"]
-          osmlayers          [label="OpenStreetMap Editor Layer Index"]
-          osmnominatim       [label="OSM Nominatim"]
-          osmcommunities     [label="OpenStreetMap Communities Index"]
-        }
-          
+          subgraph eventapi_sources {
+            firms             [label="FIRMS"] //new
+            noaa              [label="NOAA"] //new
+            emdat             [label="EM-DAT"] //new
+            japantornado      [label="Japan Tornado"] //new??
+            gdacs             [label="GDACS"]
+          }
 
-        { 
-          //rank = same
-          firms             [label="FIRMS"] //new
-          noaa              [label="NOAA"] //new
-          emdat             [label="EM-DAT"] //new
-          japantornado      [label="Japan Tornado"] //new??
           firehydrants      [label="Fire Hydrants"] //new
           taskingmanagerapi [label="Tasking Manager API"] //new
+
+          subgraph data_providers_hot {
+            rank = same
+            hotactivations     [label="HOT Projects"]
+            hotactivationscsv  [label="HOT Activateions CSV"]
+          }
         }
-          
+  
+
+        { // sinked, bottom-most of the graph
+          rank=sink; 
 
 
-        subgraph data_providers_ukraine { // Ukraine
-          // rank = same
-          unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
-          idpestimates [label="Ukraine: IDP Estimates"]
-        }
+          subgraph data_providers_meta { 
+            //rank = same
+            facebookpopulation [label="Facebook Population (HRSL)"]
+            facebookroads      [label="Facebook Roads"]
+            facebook           [label="Facebook"]
+          }
 
-        { // other
-          // rank = same
-          msbuildings        [label="Microsoft Buildings"]
-          geoalertbuildings  [label="GeoAlert Buildings"]
-          gdacs              [label="GDACS"]
-          ghs                [label="GHSL Global Human Settlement"]
-          gadm               [label="gadm.org"]
-          jrc                [label="European Commission Joint Research Center"]
-          linz               [label="LINZ (Land Information New Zealand)"]
-          pdcdisasters       [label="PDC Disaster feed"]
-          wikidata           [label="Wikidata"]
-        }
+          subgraph data_providers_osm { 
+            //rank = same
+            osm                [label="OpenStreetMap.org"]
+            osmlayers          [label="OpenStreetMap Editor Layer Index"]
+            osmnominatim       [label="OSM Nominatim"]
+            osmcommunities     [label="OpenStreetMap Communities Index"]
+          }
+            
+
+            
+
+
+          subgraph data_providers_ukraine { // Ukraine
+            // rank = same
+            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+            idpestimates [label="Ukraine: IDP Estimates"]
+          }
+
+          { // other
+            // rank = same
+            msbuildings        [label="Microsoft Buildings"]
+            geoalertbuildings  [label="GeoAlert Buildings"]
+            ghs                [label="GHSL Global Human Settlement"]
+            gadm               [label="gadm.org"]
+            jrc                [label="European Commission Joint Research Center"]
+            linz               [label="LINZ (Land Information New Zealand)"]
+            pdcdisasters       [label="PDC Disaster feed"]
+            wikidata           [label="Wikidata"]
+          }
+
+      }
     }
 
     "layers-db" -> taskingmanagerapi
