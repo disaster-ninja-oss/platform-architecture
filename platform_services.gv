@@ -240,8 +240,14 @@ digraph Platform_services{
 
               "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
                                     group=ninja_components]
-              "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
+ 
+              {
+                rank=same
+                "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
 
+                graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>, 
+                            style=dashed, fillcolor=white, group=insights_components]
+              }
               // unranked due to big number of outedges  
               eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
                                       group=events_components]
@@ -294,8 +300,6 @@ digraph Platform_services{
               "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
             }
 
-            graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>, 
-                          style=dashed, group=insights_components]
             "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>, 
                           group=layers_components]
             "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>,
@@ -489,7 +493,7 @@ digraph Platform_services{
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
     HOT -> oam
-    HOT -> graphqlapi[color=red]
+    HOT -> graphqlapi
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     
