@@ -68,6 +68,23 @@ digraph Platform_services{
             hotactivations     [label="HOT Projects"]
             hotactivationscsv  [label="HOT Activateions CSV"]
           }
+          
+          subgraph data_providers_osm { 
+            //rank = same
+            osm                [label="OpenStreetMap.org"]
+            osmlayers          [label="OpenStreetMap Editor Layer Index"]
+            osmnominatim       [label="OSM Nominatim"]
+            osmcommunities     [label="OpenStreetMap Communities Index"]
+          }
+            
+          subgraph data_providers_ukraine { // Ukraine
+            // rank = same
+            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+            idpestimates [label="Ukraine: IDP Estimates"]
+          }
+            
+          jrc                [label="European Commission Joint Research Center"]
+
         }
   
 
@@ -82,23 +99,9 @@ digraph Platform_services{
             facebook           [label="Facebook"]
           }
 
-          subgraph data_providers_osm { 
-            //rank = same
-            osm                [label="OpenStreetMap.org"]
-            osmlayers          [label="OpenStreetMap Editor Layer Index"]
-            osmnominatim       [label="OSM Nominatim"]
-            osmcommunities     [label="OpenStreetMap Communities Index"]
-          }
-            
-
             
 
 
-          subgraph data_providers_ukraine { // Ukraine
-            // rank = same
-            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
-            idpestimates [label="Ukraine: IDP Estimates"]
-          }
 
           { // other
             // rank = same
@@ -106,7 +109,6 @@ digraph Platform_services{
             geoalertbuildings  [label="GeoAlert Buildings"]
             ghs                [label="GHSL Global Human Settlement"]
             gadm               [label="gadm.org"]
-            jrc                [label="European Commission Joint Research Center"]
             linz               [label="LINZ (Land Information New Zealand)"]
             pdcdisasters       [label="PDC Disaster feed"]
             wikidata           [label="Wikidata"]
@@ -623,14 +625,14 @@ digraph Platform_services{
     "geocint-openstreetmap" -> geocint
     "geocint-kontur" -> geocint
     "Layers-API" -> geocint
-    geocint -> osm
+    geocint -> osm[constraint=false]
     geocint -> facebookpopulation
     facebookpopulation -> gadm
     geocint -> gadm
     geocint -> ghs
     geocint -> facebookroads
     geocint -> msbuildings
-    geocint -> geoalertbuildings
+    geocint -> geoalertbuildings[constraint=false]
     geocint -> wikidata
     geocint -> linz
 
