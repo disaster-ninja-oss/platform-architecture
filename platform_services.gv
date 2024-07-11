@@ -281,12 +281,14 @@ digraph Platform_services{
             subgraph iw_databases {
               rank=same
               node[shape=cylinder]
-              "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+              "layers-db-database-replica" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
-              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+              "user-profile-api-database-replica" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
                                             group=users_components]
-              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
+              "insightsapi-database-replica" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
+              "eventapi-database-replica"[group=events_components]
+              "keycloak-database-replica"[group=users_components]
             }
 
           }
@@ -304,10 +306,32 @@ digraph Platform_services{
                           group=layers_components]
             "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>,
                           group=insights_components]
+            subgraph nw_databases {
+              rank=same
+              node[shape=cylinder]
+              "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+                                      group=layers_components]
+              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+                                            group=users_components]
+              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
+                                            group=insights_components]
+              "eventapi-database"[group=events_components]
+              "keycloak-database"[group=users_components]
+  
+            }
           }
 
           
-          
+         keycloak -> "keycloak-database-replica"[color=red] // is it really aware of replica?
+         keycloak -> "keycloak-database"
+         eventapi -> "eventapi-database-replica"[color=red] // is it really aware of replica?
+         eventapi -> "eventapi-database"
+
+         "layers-db-database-replica" -> "layers-db-database"
+         "user-profile-api-database-replica" -> "user-profile-api-database"
+         "insightsapi-database-replica" -> "insightsapi-database"
+         "eventapi-database-replica" -> "eventapi-database"
+         "keycloak-database-replica" -> "keycloak-database"          
 
       }
       
@@ -363,14 +387,18 @@ digraph Platform_services{
 
     k2geocoder -> osmnominatim [color=purple]
 
-    "user-profile-api" -> "user-profile-api-database"[color=red]
-    "user-profile-spi-plugin" -> "user-profile-api-database"[color=red]
+    "user-profile-api" -> "user-profile-api-database-replica"[color=red]
+    "user-profile-api" -> "user-profile-api-database"
+    "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=red]
+    "user-profile-spi-plugin" -> "user-profile-api-database"
 
     keycloak -> "user-profile-spi-plugin"[color=red]
     eventapi -> keycloak[color=red]
 
     "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
     "basemap tiles" -> geocint
+
+    previewapp -> "event-preview-image-generator"[color=red]
 
     "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
     "disaster-ninja-fe" -> kontur_boundaries
@@ -397,9 +425,11 @@ digraph Platform_services{
     SwissRe -> eventapiprod [style=dashed]
 
     "Layers-API" -> "layers-db"[color=red]
-    "layers-tiles-api" -> "layers-db-database"[color=red]
+    "layers-tiles-api" -> "layers-db-database-replica"[color=red] 
+    "layers-tiles-api" -> "layers-db-database"
     "layers-db" -> "layers-etl"
-    "layers-db" -> "layers-db-database"[color=red]
+    "layers-db" -> "layers-db-database-replica"[color=red]  
+    "layers-db" -> "layers-db-database"  
     "layers-db-database" -> "layers-etl"
 
     "layers-etl" -> hotactivations
@@ -445,6 +475,7 @@ digraph Platform_services{
 
               atlasapp [label="atlas.kontur.io"]
               oasisapp [label="oasis.kontur.io"]
+              previewapp[label="Preview"]
             }
 
             {
@@ -534,9 +565,11 @@ digraph Platform_services{
     CSTAPP -> citysplit[color=red]
     isochroneapi[style=filled,fillcolor=red]
     citysplit -> isochroneapi[color=red]
-    insightsapi -> "insightsapi-database"[color=red]
+    insightsapi -> "insightsapi-database-replica"[color=red]
+    insightsapi -> "insightsapi-database" // does it perform writes?
     "insightsapi-database" -> "insights-db"
-    "insights-llm-api" -> "insightsapi-database"[color=red]
+    "insights-llm-api" -> "insightsapi-database-replica"[color=red]
+    "insights-llm-api" -> "insightsapi-database"
     "insights-llm-api" -> "user-profile-api"[color=red]
     "insights-llm-api" -> insightsapi[color=red]
     
