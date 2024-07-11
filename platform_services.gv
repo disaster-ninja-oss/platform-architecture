@@ -509,7 +509,7 @@ digraph Platform_services{
     isochroneapi[style=filled,fillcolor=red]
     citysplit -> isochroneapi[color=red]
     insightsapi -> "insightsapi-database"[color=red]
-    "insights-db" -> "insightsapi-database"
+    "insightsapi-database" -> "insights-db"
     "insights-llm-api" -> "insightsapi-database"[color=red]
     "insights-llm-api" -> "user-profile-api"[color=red]
     "insights-llm-api" -> insightsapi[color=red]
