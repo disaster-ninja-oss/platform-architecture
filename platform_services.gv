@@ -471,21 +471,34 @@ digraph Platform_services{
 
     Unfolded -> "Unfolded Data Catalog"[color="#00000075"] //updated 2021-10-08
 
-    disasterninja -> "nginx-ingress-controller"[color=red]
     disasterninja -> keycloak[color=red]
     Sunbim -> solarfarm
 
-    embeddedpop -> disasterninja
-    embeddeddisaster -> disasterninja
-    oam -> disasterninja
-
-    DonkorLabs -> smartcity -> disasterninja
+    DonkorLabs -> smartcity
     DonkorLabs -> roadqualityapp -> keycloak[color=red]
 
     roadqualityapp -> "layers-db"[color=red]
-    solarfarm -> disasterninja
 
     PDC -> "basemap tiles"[color=red] // updated 2024-07-11
+
+    { // to be removed? same apps are edged to 'ingress controller' now?
+      embeddedpop -> disasterninja
+      embeddeddisaster -> disasterninja
+      oam -> disasterninja
+      smartcity -> disasterninja
+      solarfarm -> disasterninja
+    }
+
+
+    {
+      edge[color=red]
+      embeddedpop -> "nginx-ingress-controller"
+      embeddeddisaster -> "nginx-ingress-controller"
+      oam -> "nginx-ingress-controller"
+      smartcity -> "nginx-ingress-controller"
+      solarfarm -> "nginx-ingress-controller"
+      disasterninja -> "nginx-ingress-controller"
+    }
 
     public_event_feed_users -> keycloak[color=red]
     public_event_feed_users -> eventapi[color=red]
