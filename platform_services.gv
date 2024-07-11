@@ -46,7 +46,7 @@ digraph Platform_services{
     // user facing
     // external
     subgraph data_providers {
-        //rank=sink; // bottom-most of the graph
+        rank=sink; // bottom-most of the graph
 
         // grouping is just for better clarity, its not architectural
         node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
@@ -170,6 +170,7 @@ digraph Platform_services{
         {
             "user/partner"[shape=tab,style=filled,fillcolor=green]
             "user application"[shape=ellipse]
+            "third-party service"[color="#00000075",fontcolor="#00000075"]
             "interactive service"[style=filled,fillcolor=red] 
             "interactive backend"[style=filled,fillcolor=red] 
             "interactive database"[shape=cylinder,style=filled,fillcolor=skyblue,fontcolor=red] 
@@ -179,6 +180,7 @@ digraph Platform_services{
             "obsoleted interactive service"[style=filled,fillcolor=deeppink] 
             "user/partner"->"user application"
             "user application" -> "interactive service"
+            "third-party service" -> "interactive service"
             "user application" -> "obsoleted interactive service"
             "interactive service" -> "interactive backend"[color=red]
             "obsoleted interactive service" -> "interactive backend"[color=red]
