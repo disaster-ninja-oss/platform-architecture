@@ -649,7 +649,7 @@ digraph Platform_services{
     eventapi -> noaa[color=blue] //new
     eventapi -> emdat[color=blue] //new
     eventapi -> japantornado[color=blue] //new
-    eventapi -> kcapi[color=red]
+    eventapi -> kcapi[color=red,constraint=false]
 
   
     DonerKing -> donerkingapp
