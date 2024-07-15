@@ -688,7 +688,7 @@ digraph Platform_services{
     k2layers -> "kcapi db" [color=purple]
     k2geocoder -> "kcapi db" [color=purple]
     "kcapi db" -> kcdataetl [color=purple]
-    minskfiredemo 
+    // minskfiredemo <- is no more as of 2024/07/15, kept for reference, could be removed eventually 
     k2routing [color=purple]
     kcapi -> k2routing [color=purple]
     k2routing -> osm [color=purple]
