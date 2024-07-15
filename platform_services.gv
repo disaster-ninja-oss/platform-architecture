@@ -273,7 +273,7 @@ digraph Platform_services{
             subgraph iw_layers {
               node[group=layers_components]
               "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
-              "Layers-API"       [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
+              "layers-api"       [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
               "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
             }
 
@@ -430,7 +430,7 @@ digraph Platform_services{
     graphqlapi -> insightsapi[style=dashed]
     "disaster-ninja-be" -> kcapi[color=red]
     "disaster-ninja-be" -> eventapi[color=red]
-    "disaster-ninja-be" -> "Layers-API"[color=red]
+    "disaster-ninja-be" -> "layers-api"[color=red]
 
     "HOT Slack" -> "disaster-ninja-be"[color=red,dir=back] // reversed data flow, push to Slack
 
@@ -440,7 +440,7 @@ digraph Platform_services{
     SwissRe -> geoalertbuildings [style=dashed]
     SwissRe -> eventapiprod [style=dashed]
 
-    "Layers-API" -> "layers-db"[color=red]
+    "layers-api" -> "layers-db"[color=red]
     "layers-tiles-api" -> "layers-db-database-replica"[color=red] 
     "layers-tiles-api" -> "layers-db-database"
     "layers-db" -> "layers-etl"
@@ -624,7 +624,7 @@ digraph Platform_services{
     "geocint-runner" -> geocint
     "geocint-openstreetmap" -> geocint
     "geocint-kontur" -> geocint
-    "Layers-API" -> geocint
+    "layers-api" -> geocint
     geocint -> osm[constraint=false]
     geocint -> facebookpopulation
     facebookpopulation -> gadm
