@@ -64,6 +64,7 @@ digraph Platform_services{
 
 
           jrc                [label="European Commission Joint Research Center"]
+          pdcdisasters       [label="PDC Disaster feed"]
 
         }
 
@@ -109,7 +110,6 @@ digraph Platform_services{
             ghs                [label="GHSL Global Human Settlement"]
             gadm               [label="gadm.org"]
             linz               [label="LINZ (Land Information New Zealand)"]
-            pdcdisasters       [label="PDC Disaster feed"]
             wikidata           [label="Wikidata"]
           }
 
@@ -743,9 +743,12 @@ digraph Platform_services{
     kcfirebrigade -> kcapi [color=purple]
 
     pdcsqs [label=<PDC SQS Feed<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Simple Queue Service</FONT>>]
-    
-    eventapi -> pdcsqs -> pdcdisasters
-    eventapi -> pdcmapservices -> pdcdisasters
+    pdcmapservices 
+ 
+    eventapi -> pdcsqs
+    eventapi -> pdcmapservices
+    pdcsqs -> pdcdisasters[constraint=false]
+    pdcmapservices-> pdcdisasters[constraint=false]
 
 
     kcapi -> k2layers [color=purple]
