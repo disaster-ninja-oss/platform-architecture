@@ -445,31 +445,45 @@ digraph Platform_services{
     k2geocoder -> osmnominatim [color=purple]
 
 
-    "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
     "basemap tiles" -> geocint
 
-    previewapp -> "event-preview-image-generator"[color=red]
 
-    "disaster-ninja-fe" ->  "disaster-ninja-be"[color=red]
-    "disaster-ninja-fe" -> kontur_boundaries
-    "disaster-ninja-fe" -> OSM_quality_report
-    "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
+    subgraph dn_connections {
+    
+     subgraph dn_ingress {
+      "nginx-ingress-controller" -> "disaster-ninja-fe"[color=red] 
+      "nginx-ingress-controller" -> "disaster-ninja-be" [color=red]
+     }
 
-    "disaster-ninja-be" -> "user-profile-api"[color=red]
-    "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
-    "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
-    "disaster-ninja-be" -> insightsapi[color=red]
-    "disaster-ninja-fe" -> insightsapi[color=red]
-    "disaster-ninja-be" -> "insights-llm-api"[color=red]
-    graphqlapi -> insightsapi[style=dashed]
-    "disaster-ninja-be" -> kcapi[color=red]
-    "disaster-ninja-be" -> eventapi[color=red]
-    "disaster-ninja-be" -> "layers-api"[color=red]
+     subgraph dn_fe_connections {
+      "disaster-ninja-fe" -> "disaster-ninja-be"[color=red]
+      "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
+      "disaster-ninja-fe" -> insightsapi[color=red]
+      "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
+      "disaster-ninja-fe" -> kontur_boundaries
+      "disaster-ninja-fe" -> OSM_quality_report
+     }
 
-    "HOT Slack" -> "disaster-ninja-be"[color=red,dir=back] // reversed data flow, push to Slack
+     subgraph dn_be_connections {
+      "disaster-ninja-be" -> "user-profile-api"[color=red]
+      "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
+      "disaster-ninja-be" -> insightsapi[color=red]
+      "disaster-ninja-be" -> "insights-llm-api"[color=red]
+      "disaster-ninja-be" -> kcapi[color=red]
+      "disaster-ninja-be" -> eventapi[color=red]
+      "disaster-ninja-be" -> "layers-api"[color=red]
+     }
 
-    "nginx-ingress-controller" -> "disaster-ninja-fe"[color=red] 
-    "nginx-ingress-controller" -> "disaster-ninja-be" [color=red]
+     "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
+      graphqlapi -> insightsapi[style=dashed]
+      previewapp -> "event-preview-image-generator"[color=red]
+    
+      "HOT Slack" -> "disaster-ninja-be"[color=red,dir=back] // reversed data flow, push to Slack
+    
+    }
+  
+
+
 
     SwissRe -> geoalertbuildings [style=dashed]
     SwissRe -> eventapiprod [style=dashed]
