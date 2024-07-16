@@ -474,7 +474,6 @@ digraph Platform_services{
     SwissRe -> eventapiprod [style=dashed]
 
 
-
     "layers-db" -> hotactivations
     "layers-db" -> osmcontributorstiles
     "layers-db" -> unhcrukrainerefugee
@@ -613,12 +612,19 @@ digraph Platform_services{
     isochroneapi -> insightsapi[color=red] //new
     eventapi -> insightsapi[color=red] //new
 
+    subgraph geocint_insights_data_push {
+      // updated 2024-07-16
+      // edges mark dependency, data flow is reversed
+      edge[dir=back,decorate=true]
+      "insightsapi-database" -> geocint[label="prod: push db dump" ]
+      insightsapi -> geocint[label="dev/test: data push via API"]
+    }
+
     isochroneapi -> osmroadsegments
     osmroadsegments -> geocint
     buildingsminsk -> geocint
     osmcontributorstiles -> geocint
     addressesminsk -> geocint
-    insightsapi -> geocint
     belarusosmpbf -> geocint
     pdsdataset -> geocint //updated 2021-10-08
     osrmdocker_foot -> pdsdataset //updated 2021-10-08
@@ -656,7 +662,6 @@ digraph Platform_services{
     geocint -> wikidata
     geocint -> linz
 
-    "insights-db" -> geocint // updated 2024-07-16 -- was coming from insightsapi-database, was it a mistake?
     kontur_boundaries -> geocint //updates 2021-10-08
     OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
     osmboundaries -> geocint
