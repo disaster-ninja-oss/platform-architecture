@@ -374,6 +374,7 @@ digraph Platform_services{
            "layers-api" -> "layers-db-database-replica"[color=red]
            "layers-tiles-api" -> "layers-db-database-replica"[color=red]
            "layers-db-database" -> "layers-db"[dir=back]
+           "disaster-ninja-be" -> "layers-db" // add changes from smartcity and roadapp
          }
 
          subgraph insights_flow {
@@ -553,7 +554,7 @@ digraph Platform_services{
     DonkorLabs -> smartcity
     DonkorLabs -> roadqualityapp -> keycloak[color=red]
 
-    roadqualityapp -> "layers-db"[color=red]
+    // includes pushing data for layers database through disaster-ninja-be
 
     PDC -> "basemap tiles"[color=red] // updated 2024-07-11
 
@@ -577,6 +578,9 @@ digraph Platform_services{
       disasterninja -> "nginx-ingress-controller"
       atlasapp -> "nginx-ingress-controller"
       oasisapp -> "nginx-ingress-controller"
+      roadqualityapp -> "nginx-ingress-controller"
+
+      // roadquality and smartcity are pushing data for layers through disaster-ninja-be
     }
 
     public_event_feed_users -> keycloak[color=red]
