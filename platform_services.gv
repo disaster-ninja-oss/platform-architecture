@@ -240,12 +240,12 @@ digraph Platform_services{
             node[style=filled,fillcolor=red]
          
             subgraph iw_ingress{
-              "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
+              "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
 
               "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>, 
                                     group=ninja_components]
 
-              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
+              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
                                       group=users_components]
               
 
