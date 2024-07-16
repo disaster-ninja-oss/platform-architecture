@@ -119,16 +119,17 @@ digraph Platform_services{
     "layers-db" -> taskingmanagerapi
     "kcdataetl" -> taskingmanagerapi
 
-    subgraph wilderness {
-      osmboundaries[style=filled,fillcolor=deeppink]
-    }
 
     subgraph cluster_legacy {
         //label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
         //style=dashed
+   
 
         node[style=filled,fillcolor=deeppink,group=kclegacy]
-        
+       
+        // it belongs here logically 
+        osmboundaries[style=filled,fillcolor=deeppink]
+
         {
           node[group=kc]
           kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
