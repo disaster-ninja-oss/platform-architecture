@@ -72,6 +72,13 @@ digraph Platform_services{
             osmcommunities     [label="OpenStreetMap Communities Index"]
             osmnominatim       [label="OSM Nominatim"]
           }
+          
+          subgraph data_providers_ukraine { // Ukraine
+            // rank = same
+            node[group=layers_components]
+            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+            idpestimates [label="Ukraine: IDP Estimates"]
+          }
 
         }
 
@@ -100,11 +107,6 @@ digraph Platform_services{
           }
             
 
-          subgraph data_providers_ukraine { // Ukraine
-            // rank = same
-            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
-            idpestimates [label="Ukraine: IDP Estimates"]
-          }
 
 
           { // other
@@ -329,7 +331,8 @@ digraph Platform_services{
               rank=same
               "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S<br/>k8s name: insights-api-db-svc</FONT>>,
                               group=insights_components]
-              "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>]
+              "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>,
+                              group=layers_components]
             }
 
             subgraph nw_databases {
