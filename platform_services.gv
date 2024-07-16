@@ -243,7 +243,7 @@ digraph Platform_services{
               "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
 
               "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>, 
-                                    group=ninja_components]
+                                   group=ninja_components]
 
               keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
                                       group=users_components]
@@ -259,11 +259,14 @@ digraph Platform_services{
 
               eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
                                       group=events_components]
+              "epig" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,
+                      group=epig]
             }
 
-            subgraph iw_ninja { 
-              node[group=ninja_components]
-              "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
+            subgraph iw_epig { 
+              node[group=epig_components]
+              "epig-chrome"
+              "epig-redis"
             }
 
             subgraph iw_apis {
@@ -466,7 +469,6 @@ digraph Platform_services{
 
      subgraph dn_be_connections {
       "disaster-ninja-be" -> "user-profile-api"[color=red]
-      "disaster-ninja-be" -> "event-preview-image-generator"[color=red]
       "disaster-ninja-be" -> insightsapi[color=red]
       "disaster-ninja-be" -> "insights-llm-api"[color=red]
       "disaster-ninja-be" -> kcapi[color=red]
@@ -474,12 +476,18 @@ digraph Platform_services{
       "disaster-ninja-be" -> "layers-api"[color=red]
      }
 
-     "event-preview-image-generator" -> "disaster-ninja-fe"[color=red]
       graphqlapi -> insightsapi[style=dashed]
-      previewapp -> "event-preview-image-generator"[color=red]
     
-      "HOT Slack" -> "disaster-ninja-be"[color=red,dir=back] // reversed data flow, push to Slack
     
+    }
+
+    subgraph epig_flow {
+      edge[color=red]
+      "HOT Slack" -> "disaster-ninja-be"[color=black,dir=back] // push to Slack
+      "HOT Slack" -> "disaster-ninja-fe"                       // get epig link
+      "HOT Slack" -> "epig"                                    // preview request
+      "epig" -> "epig-chrome" -> previewapp
+      "epig" -> "epig-redis"
     }
   
 
@@ -582,17 +590,24 @@ digraph Platform_services{
     }
 
 
-    {
+    subgraph apps_to_ingress {
       edge[color=red]
+
+      // TBD: eliminate ingress-controller and draw connections to [fe,be,keycloak]?
+
       embeddedpop -> "nginx-ingress-controller"
       embeddeddisaster -> "nginx-ingress-controller"
       oam -> "nginx-ingress-controller"
+
+      roadqualityapp -> "nginx-ingress-controller"
       smartcity -> "nginx-ingress-controller"
+
       solarfarm -> "nginx-ingress-controller"
       disasterninja -> "nginx-ingress-controller"
+
       atlasapp -> "nginx-ingress-controller"
       oasisapp -> "nginx-ingress-controller"
-      roadqualityapp -> "nginx-ingress-controller"
+      previewapp -> "nginx-ingress-controller"
 
       // roadquality and smartcity are pushing data for layers through disaster-ninja-be
     }
@@ -604,7 +619,7 @@ digraph Platform_services{
     HOT -> hotlandingpage //new
     HOT -> "HOT Slack"
     HOT -> oam
-    HOT -> graphqlapi
+    HOT -> graphqlapi // pull data for their ETL
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
     Kontur -> atlasapp
