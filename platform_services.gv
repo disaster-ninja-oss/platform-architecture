@@ -55,6 +55,7 @@ digraph Platform_services{
           taskingmanagerapi [label="Tasking Manager API"] //new
 
           subgraph eventapi_sources {
+            node[group=events_components]
             firms             [label="FIRMS"] //new
             noaa              [label="NOAA"] //new
             emdat             [label="EM-DAT"] //new
@@ -62,8 +63,8 @@ digraph Platform_services{
             gdacs             [label="GDACS"]
           }
 
+          jrc               [label="European Commission Joint Research Center"]
 
-          jrc                [label="European Commission Joint Research Center"]
 
           subgraph kc_sources {
             node[group=kcetl]
@@ -521,7 +522,7 @@ digraph Platform_services{
     "layers-db" -> osmlayers
     
 
-    gdacs -> jrc
+    gdacs -> jrc[constraint=false]
     ghs -> jrc
     facebookpopulation -> facebook
     facebookroads -> facebook
