@@ -370,7 +370,6 @@ digraph Platform_services{
            "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=red]
            "user-profile-spi-plugin" -> "user-profile-api-database"
 
-           eventapi -> keycloak[color=red]
          }
 
          subgraph layers_flow {
@@ -490,6 +489,17 @@ digraph Platform_services{
       "epig" -> "epig-redis"
     }
   
+    subgraph keycloak_client_connections {
+      edge[color=red]
+      //roadqualityapp -> keycloak[color=red]
+      //disasterninja -> keycloak[color=red]
+      "nginx-ingress-controller" -> keycloak // in fact, all client apps
+
+      public_event_feed_users -> keycloak    // keycloak for public access?
+
+      eventapi -> keycloak[constraint=false]
+      mailchimp -> keycloak[color=orange,constraint=false] // TBD
+    }
 
 
 
@@ -570,13 +580,10 @@ digraph Platform_services{
 
     Unfolded -> "Unfolded Data Catalog"[color="#00000075"] //updated 2021-10-08
 
-    disasterninja -> keycloak[color=red]
     Sunbim -> solarfarm
 
     DonkorLabs -> smartcity
-    DonkorLabs -> roadqualityapp -> keycloak[color=red]
-
-    // includes pushing data for layers database through disaster-ninja-be
+    DonkorLabs -> roadqualityapp
 
     PDC -> "basemap tiles"[color=red] // updated 2024-07-11
 
@@ -599,6 +606,7 @@ digraph Platform_services{
       embeddeddisaster -> "nginx-ingress-controller"
       oam -> "nginx-ingress-controller"
 
+      // includes pushing data for layers database through disaster-ninja-be
       roadqualityapp -> "nginx-ingress-controller"
       smartcity -> "nginx-ingress-controller"
 
@@ -612,7 +620,6 @@ digraph Platform_services{
       // roadquality and smartcity are pushing data for layers through disaster-ninja-be
     }
 
-    public_event_feed_users -> keycloak[color=red]
     public_event_feed_users -> eventapi[color=red]
     public_event_feed_users -> atlasapp[color=red]
     HOT -> disasterninja
@@ -815,7 +822,6 @@ digraph Platform_services{
       wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
       mailchimp [group=konturwebsite]
       Kontur -> konturwebsite -> wordpress -> mailchimp
-      mailchimp -> keycloak [color=orange]
     }
 
 
