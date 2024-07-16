@@ -124,7 +124,7 @@ digraph Platform_services{
       osmboundaries[style=filled,fillcolor=deeppink]
     }
 
-    subgraph legacy {
+    subgraph cluster_legacy {
         //label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
         //style=dashed
 
@@ -163,10 +163,10 @@ digraph Platform_services{
         { 
           node[group=citysplit]
           kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
-          citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
         }
     }
         
+    citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
     OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
 
     subgraph cluster_legend {
