@@ -272,9 +272,9 @@ digraph Platform_services{
 
             subgraph iw_layers {
               node[group=layers_components]
+              rank=same
               "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
               "layers-api"       [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
-              "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
             }
 
             subgraph iw_users {
@@ -286,6 +286,7 @@ digraph Platform_services{
 
             subgraph iw_insights {
               node[group=insights_components]
+              rank=same
               insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
               "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
             }
@@ -307,7 +308,7 @@ digraph Platform_services{
             "minio-tenant"[fillcolor=white,color=orange]
             "basemap tiles" -> "minio-tenant"[color=orange]
 
-          }
+          } // interactive workloads
 
           subgraph noninteractive_workloads {
             subgraph nw_observability {
@@ -318,10 +319,13 @@ digraph Platform_services{
               "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
             }
 
-            "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>, 
-                          group=layers_components]
-            "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>,
-                          group=insights_components]
+            subgraph nw_etl {
+              rank=same
+              "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S<br/>k8s name: insights-api-db-svc</FONT>>,
+                              group=insights_components]
+              "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>]
+            }
+
             subgraph nw_databases {
               rank=same
               node[shape=cylinder]
@@ -331,26 +335,63 @@ digraph Platform_services{
                                             group=users_components]
               "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
-              "eventapi-database"[group=events_components]
-              "keycloak-database"[group=users_components]
+              "eventapi-database"[group=events_components,style=filled,fillcolor=red]
+              "keycloak-database"[group=users_components,style=filled,fillcolor=red]
   
             }
           }
 
           
-         keycloak -> "keycloak-database-replica"[color=red] // is it really aware of replica?
-         keycloak -> "keycloak-database"
-         eventapi -> "eventapi-database-replica"[color=red] // is it really aware of replica?
-         eventapi -> "eventapi-database"
 
-         "layers-db-database-replica" -> "layers-db-database"
-         "user-profile-api-database-replica" -> "user-profile-api-database"
-         "insightsapi-database-replica" -> "insightsapi-database"
-         "eventapi-database-replica" -> "eventapi-database"
-         "keycloak-database-replica" -> "keycloak-database"          
+
+         subgraph db_replication {
+            edge[dir=back]
+            "layers-db-database-replica" -> "layers-db-database"
+            "user-profile-api-database-replica" -> "user-profile-api-database"
+            "insightsapi-database-replica" -> "insightsapi-database"
+            "eventapi-database-replica" -> "eventapi-database"
+            "keycloak-database-replica" -> "keycloak-database"
+         }
+
+         subgraph events_flow {
+           eventapi -> "eventapi-database-replica"[color=orange]
+           eventapi -> "eventapi-database"[color=red]
+         }
+
+         subgraph users_flow {
+           keycloak -> "keycloak-database-replica"[color=orange]
+           keycloak -> "keycloak-database"[color=red]
+
+           keycloak -> "user-profile-spi-plugin"[color=red]
+           "user-profile-api" -> "user-profile-api-database-replica"[color=red]
+           "user-profile-api" -> "user-profile-api-database"
+           "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=red]
+           "user-profile-spi-plugin" -> "user-profile-api-database"
+
+           eventapi -> keycloak[color=red]
+         }
+
+         subgraph layers_flow {
+           "layers-api" -> "layers-db-database-replica"[color=red]
+           "layers-tiles-api" -> "layers-db-database-replica"[color=red]
+           "layers-db-database" -> "layers-db"[dir=back]
+         }
+
+         subgraph insights_flow {
+
+          insightsapi -> "insightsapi-database-replica"[color=red]
+          insightsapi -> "insightsapi-database" // does it perform writes?
+          "insights-llm-api" -> "insightsapi-database-replica"[color=red]
+          "insights-llm-api" -> "insightsapi-database"
+          "insights-llm-api" -> "user-profile-api"[color=red]
+          "insights-llm-api" -> insightsapi[color=red]
+          "insightsapi-database" -> "insights-db"[dir=back]
+          "insights-db" -> "layers-db"[dir=back]
+
+         }
 
       }
-      
+
       subgraph cluster_geocint {
           label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
           style=bold
@@ -396,20 +437,13 @@ digraph Platform_services{
     }
 
     // prevent observability group from being considered 'source', popping whole graph up
-    "layers-etl" -> "fluent-bit"[style=invis]
-    "insightsapi" -> "fluent-bit"[style=invis]
+    "layers-db" -> "fluent-bit"[style=invis]
+    "insights-db" -> "fluent-bit"[style=invis]
     
     //"nginx-ingress-controller" -> graphqlapi[style=invis]
 
     k2geocoder -> osmnominatim [color=purple]
 
-    "user-profile-api" -> "user-profile-api-database-replica"[color=red]
-    "user-profile-api" -> "user-profile-api-database"
-    "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=red]
-    "user-profile-spi-plugin" -> "user-profile-api-database"
-
-    keycloak -> "user-profile-spi-plugin"[color=red]
-    eventapi -> keycloak[color=red]
 
     "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
     "basemap tiles" -> geocint
@@ -440,19 +474,13 @@ digraph Platform_services{
     SwissRe -> geoalertbuildings [style=dashed]
     SwissRe -> eventapiprod [style=dashed]
 
-    "layers-api" -> "layers-db"[color=red]
-    "layers-tiles-api" -> "layers-db-database-replica"[color=red] 
-    "layers-tiles-api" -> "layers-db-database"
-    "layers-db" -> "layers-etl"
-    "layers-db" -> "layers-db-database-replica"[color=red]  
-    "layers-db" -> "layers-db-database"  
-    "layers-db-database" -> "layers-etl"
 
-    "layers-etl" -> hotactivations
-    "layers-etl" -> osmcontributorstiles
-    "layers-etl" -> unhcrukrainerefugee
-    "layers-etl" -> idpestimates
-    "layers-etl" -> osmlayers
+
+    "layers-db" -> hotactivations
+    "layers-db" -> osmcontributorstiles
+    "layers-db" -> unhcrukrainerefugee
+    "layers-db" -> idpestimates
+    "layers-db" -> osmlayers
     
 
     gdacs -> jrc
@@ -581,18 +609,11 @@ digraph Platform_services{
     CSTAPP -> citysplit[color=red]
     isochroneapi[style=filled,fillcolor=red]
     citysplit -> isochroneapi[color=red]
-    insightsapi -> "insightsapi-database-replica"[color=red]
-    insightsapi -> "insightsapi-database" // does it perform writes?
-    "insightsapi-database" -> "insights-db"
-    "insights-llm-api" -> "insightsapi-database-replica"[color=red]
-    "insights-llm-api" -> "insightsapi-database"
-    "insights-llm-api" -> "user-profile-api"[color=red]
-    "insights-llm-api" -> insightsapi[color=red]
     
     konturpopulation -> insightsapi // updated 2021-10-08
     isochroneapi -> insightsapi[color=red] //new
-
     eventapi -> insightsapi[color=red] //new
+
     isochroneapi -> osmroadsegments
     osmroadsegments -> geocint
     buildingsminsk -> geocint
