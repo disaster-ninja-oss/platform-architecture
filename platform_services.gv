@@ -66,6 +66,7 @@ digraph Platform_services{
           jrc                [label="European Commission Joint Research Center"]
 
           subgraph kc_sources {
+            node[group=kcetl]
             firehydrants      [label="Fire Hydrants"] //new
             hotactivationscsv  [label="HOT Activateions CSV"]
             osmcommunities     [label="OpenStreetMap Communities Index"]
@@ -137,7 +138,7 @@ digraph Platform_services{
           node[group=kc]
           kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
           "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
-          kcdataetl [color=purple]
+          kcdataetl [color=purple,group=kcetl]
         }
 
 
