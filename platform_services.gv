@@ -64,7 +64,13 @@ digraph Platform_services{
 
 
           jrc                [label="European Commission Joint Research Center"]
-          pdcdisasters       [label="PDC Disaster feed"]
+
+          subgraph kc_sources {
+            firehydrants      [label="Fire Hydrants"] //new
+            hotactivationscsv  [label="HOT Activateions CSV"]
+            osmcommunities     [label="OpenStreetMap Communities Index"]
+            osmnominatim       [label="OSM Nominatim"]
+          }
 
         }
 
@@ -72,7 +78,7 @@ digraph Platform_services{
         { // sinked, bottom-most of the graph
           rank=sink;
 
-          firehydrants      [label="Fire Hydrants"] //new
+          pdcdisasters       [label="PDC Disaster feed"]
 
           subgraph data_providers_meta {
             //rank = same
@@ -84,15 +90,12 @@ digraph Platform_services{
           subgraph data_providers_hot {
             //rank = same
             hotactivations     [label="HOT Projects"]
-            hotactivationscsv  [label="HOT Activateions CSV"]
           }
           
           subgraph data_providers_osm { 
             //rank = same
             osm                [label="OpenStreetMap.org"]
             osmlayers          [label="OpenStreetMap Editor Layer Index"]
-            osmnominatim       [label="OSM Nominatim"]
-            osmcommunities     [label="OpenStreetMap Communities Index"]
           }
             
 
@@ -746,10 +749,10 @@ digraph Platform_services{
     pdcsqs [label=<PDC SQS Feed<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Simple Queue Service</FONT>>]
     pdcmapservices 
  
-    eventapi -> pdcsqs
-    eventapi -> pdcmapservices
-    pdcsqs -> pdcdisasters[constraint=false]
-    pdcmapservices-> pdcdisasters[constraint=false]
+    eventapi -> pdcsqs[constraint=false]
+    eventapi -> pdcmapservices[constraint=false]
+    pdcsqs -> pdcdisasters
+    pdcmapservices-> pdcdisasters
 
 
     kcapi -> k2layers [color=purple]
