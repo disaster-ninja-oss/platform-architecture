@@ -173,10 +173,10 @@ digraph Platform_services{
         label="Legend"
         {
             //rank=same;
-            "Partners/users" [shape=tab,style=filled,fillcolor=green]
-            "Data Providers" [shape=house,style=filled,fillcolor=blue]
+            //"Partners/users" [shape=tab,style=filled,fillcolor=green]
+            //"Data Providers" [shape=house,style=filled,fillcolor=blue]
             "Will be implemented" [color=orange]
-            "Will be removed in the future" [color=purple]
+            //"Will be removed in the future" [style=filled,fillcolor=purple]
         }
 
         {
@@ -219,6 +219,7 @@ digraph Platform_services{
             "Existing entity" -> container
             ellipse [label=<application>,shape=ellipse,color=black]
             "Existing entity" -> ellipse
+            service -> "Will be implemented"[color=orange]
         }
 
         {
