@@ -172,7 +172,7 @@ digraph Platform_services{
     subgraph cluster_legend {
         label="Legend"
         {
-            rank=same;
+            //rank=same;
             "Partners/users" [shape=tab,style=filled,fillcolor=green]
             "Data Providers" [shape=house,style=filled,fillcolor=blue]
             "Will be implemented" [color=orange]
@@ -205,7 +205,7 @@ digraph Platform_services{
         }
 
         {
-            rank=same;
+            //rank=same;
             "Existing entity" [color=black]
             database [label=<Database>,shape=cylinder,color=black]
             "Existing entity" -> database
