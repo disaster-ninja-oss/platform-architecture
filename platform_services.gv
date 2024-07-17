@@ -63,7 +63,6 @@ digraph Platform_services{
             gdacs             [label="GDACS"]
           }
 
-          jrc               [label="European Commission Joint Research Center"]
 
 
           subgraph kc_sources {
@@ -101,6 +100,7 @@ digraph Platform_services{
           rank=sink;
 
           pdcdisasters       [label="PDC Disaster feed"]
+          jrc               [label="European Commission Joint Research Center"]
 
           subgraph data_providers_meta {
             //rank = same
