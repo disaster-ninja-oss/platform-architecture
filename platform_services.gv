@@ -68,11 +68,13 @@ digraph Platform_services{
 
           subgraph kc_sources {
             node[group=kcetl]
+            rank=same
             firehydrants      [label="Fire Hydrants"] //new
             hotactivationscsv  [label="HOT Activateions CSV"]
             osmcommunities     [label="OpenStreetMap Communities Index"]
-            osmnominatim       [label="OSM Nominatim"]
           }
+         
+          osmnominatim       [label="OSM Nominatim"]
           
           subgraph data_providers_ukraine { // Ukraine
             // rank = same
@@ -448,9 +450,10 @@ digraph Platform_services{
     }
 
     // prevent observability group from being considered 'source', popping whole graph up
-    "layers-db" -> "fluent-bit"[style=invis]
-    "insights-db" -> "fluent-bit"[style=invis]
-    
+    "layers-db-database" -> "fluent-bit"[style=invis]
+    "insightsapi-database" -> "fluent-bit"[style=invis]
+    "k2etl"->firehydrants[style=invis]
+ 
     //"nginx-ingress-controller" -> graphqlapi[style=invis]
 
     k2geocoder -> osmnominatim [color=purple]
