@@ -846,7 +846,7 @@ digraph Platform_services{
    
     eventapi -> kibana//updated 2021-10-08
     isochroneapi -> kibana//updated 2021-10-08
-    "fluent-bit" -> kibana
+    "fluent-bit" -> kibana[constraint=false]
     
 
 }
