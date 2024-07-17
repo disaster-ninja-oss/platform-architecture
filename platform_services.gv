@@ -177,7 +177,6 @@ digraph Platform_services{
     }
         
     citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
-    OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle,style=filled,fillcolor=lightskyblue]
 
     subgraph cluster_legend {
         label="Legend"
@@ -409,29 +408,38 @@ digraph Platform_services{
           label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
           style=bold
 
-          "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
-          "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
-          "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
-          geocint [label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
+          {
+            rank=same
+            node[group=geocint_components]
+            "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
+            "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
+            "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
+            geocint [label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
+          }
+
           isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
 
           subgraph geocint_osrm_containers {
-              // rank=same
+              //rank=same
               node[shape=pentagon,style=filled,fillcolor=red]
 
               osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
               osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
-              osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
-              osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
-              osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
-              osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
-              osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+
+              {
+                osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              }
           }
 
           subgraph geocint_datasets {          
-            // rank = same
+            rank = same
             node[shape=rectangle,style=filled,fillcolor=lightskyblue]
 
+            OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>]
             subgraph geocint_datasets_global {
               osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
               konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
@@ -673,35 +681,58 @@ digraph Platform_services{
     }
 
     isochroneapi -> osmroadsegments
-    osmroadsegments -> geocint
-    buildingsminsk -> geocint
-    osmcontributorstiles -> geocint
-    addressesminsk -> geocint
-    belarusosmpbf -> geocint
-    pdsdataset -> geocint //updated 2021-10-08
-    osrmdocker_foot -> pdsdataset //updated 2021-10-08
-    osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
-    osrmdocker_car -> pdsdataset //updated 2021-10-08
-    osrmdocker_emergency -> pdsdataset //updated 2021-10-08
-    osrmdocker_motobike -> pdsdataset //updated 2021-10-08
-    isochroneapi -> osrmdocker_foot[color=red]  //updated 2021-10-08
-    isochroneapi -> osrmdocker_bicycle[color=red] //updated 2021-10-08
-    isochroneapi -> osrmdocker_car[color=red] //updated 2021-10-08
-    isochroneapi -> osrmdocker_emergency[color=red] //updated 2021-10-08
-    isochroneapi -> osrmdocker_motobike[color=red]   //updated 2021-10-08
+
+    subgraph geocint_datasets_generation {
+      edge[dir=back]
+      osmroadsegments -> geocint
+      buildingsminsk -> geocint
+      osmcontributorstiles -> geocint
+      addressesminsk -> geocint
+      belarusosmpbf -> geocint
+      pdsdataset -> geocint //updated 2021-10-08
+      kontur_boundaries -> geocint //updates 2021-10-08
+      OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
+      konturpopulation -> geocint
+    }
+
+    { 
+      edge[constraint=false]
+      osrmdocker_foot -> pdsdataset //updated 2021-10-08
+      osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
+      osrmdocker_car -> pdsdataset //updated 2021-10-08
+      osrmdocker_emergency -> pdsdataset //updated 2021-10-08
+      osrmdocker_motobike -> pdsdataset //updated 2021-10-08
+    }
+  
+    {
+      //edge[constraint=false]
+      isochroneapi -> osrmdocker_foot[color=red]  //updated 2021-10-08
+      isochroneapi -> osrmdocker_bicycle[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_car[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_emergency[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_motobike[color=red]   //updated 2021-10-08
+    }
 
     osrmemergencyminsk -> belarusosmpbf
     osrmdistanceminsk -> belarusosmpbf
-    konturpopulation -> geocint
-    HDX -> konturpopulation
+    HDX -> konturpopulation[constraint=false]
     HDX -> kontur_boundaries
     HDX -> embeddedpop
 
 
 
-    "geocint-runner" -> geocint
-    "geocint-openstreetmap" -> geocint
-    "geocint-kontur" -> geocint
+    {
+
+      // edges intentionally inverted to move nodes out of main dependencies paths
+
+      "geocint-runner" -> geocint
+      "geocint-openstreetmap" -> geocint
+      "geocint-kontur" -> geocint
+      //geocint -> "geocint-runner"[dir=back]
+      //geocint -> "geocint-openstreetmap"[dir=back]
+      //geocint -> "geocint-kontur"[dir=back]
+    }
+
     "layers-api" -> geocint
     geocint -> osm[constraint=false]
     geocint -> facebookpopulation
@@ -714,8 +745,6 @@ digraph Platform_services{
     geocint -> wikidata
     geocint -> linz
 
-    kontur_boundaries -> geocint //updates 2021-10-08
-    OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
     osmboundaries -> geocint
 
     kccitysplitfe -> isochroneapi [color=purple]
@@ -734,7 +763,7 @@ digraph Platform_services{
     DonerKing -> donerkingapp
     donerkingapp -> kcdonerkingfe [color=purple]
     kcdonerkingfe -> kcdonerking [color=purple]
-    kcdonerking -> buildingsminsk[color=purple]
+    kcdonerking -> buildingsminsk[color=purple,constraint=false]
     kcdonerking -> kcdataetl [color=purple]
 
 
