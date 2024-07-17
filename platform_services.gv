@@ -660,7 +660,7 @@ digraph Platform_services{
     isochroneapi[style=filled,fillcolor=red]
     citysplit -> isochroneapi[color=red]
     
-    konturpopulation -> insightsapi // updated 2021-10-08
+    konturpopulation -> insightsapi[constraint=false] // updated 2021-10-08
     isochroneapi -> insightsapi[color=red] //new
     eventapi -> insightsapi[color=red] //new
 
