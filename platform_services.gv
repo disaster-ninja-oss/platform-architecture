@@ -80,6 +80,17 @@ digraph Platform_services{
             unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
             idpestimates [label="Ukraine: IDP Estimates"]
           }
+          
+          subgraph data_providers_hot {
+            //rank = same
+            hotactivations     [label="HOT Projects"]
+          }
+          
+          subgraph data_providers_osm { 
+            //rank = same
+            osm                [label="OpenStreetMap.org"]
+            osmlayers          [label="OpenStreetMap Editor Layer Index"]
+          }
 
         }
 
@@ -96,16 +107,6 @@ digraph Platform_services{
             facebook           [label="Facebook"]
           }
 
-          subgraph data_providers_hot {
-            //rank = same
-            hotactivations     [label="HOT Projects"]
-          }
-          
-          subgraph data_providers_osm { 
-            //rank = same
-            osm                [label="OpenStreetMap.org"]
-            osmlayers          [label="OpenStreetMap Editor Layer Index"]
-          }
             
 
 
@@ -734,10 +735,10 @@ digraph Platform_services{
     kcdonerking -> kcdataetl [color=purple]
 
 
-    kcdataetl -> hotactivations [color=purple]
+    kcdataetl -> hotactivations [color=purple,constraint=false]
     kcdataetl -> hotactivationscsv [color=purple]
     kcdataetl -> osmcommunities [color=purple]
-    kcdataetl -> osmlayers [color=purple]
+    kcdataetl -> osmlayers [color=purple,constraint=false]
     kcdataetl -> k2etl [color=purple]
     kcdataetl -> osmboundaries [color=purple]
     kcdataetl -> firehydrants [color=purple]
