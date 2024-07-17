@@ -52,7 +52,6 @@ digraph Platform_services{
 
         { // floating
 
-          taskingmanagerapi [label="Tasking Manager API"] //new
 
           subgraph eventapi_sources {
             node[group=events_components]
@@ -60,7 +59,10 @@ digraph Platform_services{
             noaa              [label="NOAA"] //new
             emdat             [label="EM-DAT"] //new
             japantornado      [label="Japan Tornado"] //new??
-            gdacs             [label="GDACS"]
+            { 
+              rank=sink
+              gdacs             [label="GDACS"]
+            }
           }
 
 
@@ -101,6 +103,7 @@ digraph Platform_services{
 
           pdcdisasters       [label="PDC Disaster feed"]
           jrc               [label="European Commission Joint Research Center"]
+          taskingmanagerapi [label="Tasking Manager API"] //new
 
           subgraph data_providers_meta {
             //rank = same
@@ -126,9 +129,11 @@ digraph Platform_services{
       }
     }
 
-    "layers-db" -> taskingmanagerapi
-    "kcdataetl" -> taskingmanagerapi
-
+    {
+      edge[constraint=false]
+      "layers-db" -> taskingmanagerapi
+      "kcdataetl" -> taskingmanagerapi
+    }
 
     subgraph cluster_legacy {
         //label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
@@ -878,10 +883,11 @@ digraph Platform_services{
     // for clarity we suppress Kontur-kibana/grafana links. Its kind of obvious we use them 
     Kontur -> grafana02[style=invis]
     Kontur -> kibana[style=invis] //updated 2021-10-08
-   
-    eventapi -> kibana[constraint=false]//updated 2021-10-08
-    isochroneapi -> kibana[constraint=false]//updated 2021-10-08
-    "fluent-bit" -> kibana[constraint=false]
-    
+    {
+      edge[constraint=false,color=green] 
+      eventapi -> kibana[constraint=false]//updated 2021-10-08
+      isochroneapi -> kibana[constraint=false]//updated 2021-10-08
+      "fluent-bit" -> kibana[constraint=false]
+    }
 
 }
