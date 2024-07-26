@@ -1,0 +1,244 @@
+digraph {
+
+  ratio=0.7
+  newrank=true
+
+  // intensive operations: db restore (test,dev)
+  //                       basemap (any)
+
+  subgraph apps {
+    node[shape=ellipse]
+
+    subgraph cluster_insights {
+      
+      style=dashed
+      label="insights"
+    
+      subgraph insights_prod {
+        insights_prod_api[color=red]
+        insights_prod_llm[color=red]
+        insights_prod_db[shape=cylinder]
+        insights_prod_etl[shape=diamond]
+      }
+      subgraph insights_test {
+        insights_test_api
+        insights_test_llm
+        insights_test_db[shape=cylinder]
+        insights_test_etl[shape=diamond]
+      }
+      subgraph insights_dev {
+        insights_dev_api
+        insights_dev_llm
+        insights_dev_db[shape=cylinder]
+        insights_dev_etl[shape=diamond]
+      }
+    }
+
+    subgraph cluster_eventapi {
+      style=dashed
+      label="events"
+
+      subgraph events_prod {
+        events_prod_api[color=red]
+        events_prod_db[shape=cylinder]
+      }
+      subgraph events_test {
+        events_test_api
+        events_test_db[shape=cylinder]
+      }
+      subgraph events_dev {
+        events_dev_api
+        events_dev_db[shape=cylinder]
+      }
+    }
+
+    subgraph cluster_layersapi {
+      style=dashed
+      label="layers"
+      subgraph layers_prod {
+        layers_prod_api[color=red]
+        layers_prod_tiles[color=red]
+        layers_prod_db[shape=cylinder]
+        layers_prod_etl[shape=diamond]
+      }
+      subgraph layers_test {
+        layers_test_api
+        layers_test_tiles
+        layers_test_db[shape=cylinder]
+        layers_test_etl[shape=diamond]
+      }
+      subgraph layers_dev {
+        layers_dev_api
+        layers_dev_tiles
+        layers_dev_db[shape=cylinder]
+        layers_dev_etl[shape=diamond]
+      }
+
+    }
+
+    subgraph basemaps { 
+      style=dashed
+      label=basemaps
+
+      subgraph basemaps_prod {
+        basemaps_prod_tileserver[color=red]
+        basemaps_prod_generator[shape=diamond]
+      }
+      subgraph basemaps_test {
+        basemaps_test_tileserver
+        basemaps_test_generator[shape=diamond]
+      }
+      subgraph basemaps_dev {
+        basemaps_dev_tileserver
+        basemaps_dev_generator[shape=diamond]
+      }
+    }
+  }
+
+
+  subgraph k8s {
+    node[shape=rectangle]
+    rank=same
+
+    hwn01
+    hwn02
+    hwn03
+    hwn04
+
+  }
+  
+  // tiering 1
+  subgraph preferred_placement {
+    edge[color=green,penwidth=3]
+    
+    subgraph preferred_placement_interactive_prod {    
+      insights_prod_api -> hwn01
+      insights_prod_llm -> hwn01
+      insights_prod_db  -> hwn01
+      
+      events_prod_api -> hwn01
+      events_prod_db -> hwn01
+        
+      layers_prod_api -> hwn01
+      layers_prod_tiles -> hwn01
+      layers_prod_db -> hwn01
+        
+      basemaps_prod_tileserver -> hwn01
+    }
+    
+    subgraph preferred_placement_interactive_test {    
+      insights_test_api -> hwn02
+      insights_test_llm -> hwn02
+      insights_test_db  -> hwn02
+      
+      events_test_api -> hwn02
+      events_test_db -> hwn02
+        
+      layers_test_api -> hwn02
+      layers_test_tiles -> hwn02
+      layers_test_db -> hwn02
+        
+      basemaps_test_tileserver -> hwn02
+    }
+    
+    subgraph preferred_placement_interactive_dev {    
+      insights_dev_api -> hwn02
+      insights_dev_llm -> hwn02
+      insights_dev_db  -> hwn02
+      
+      events_dev_api -> hwn02
+      events_dev_db -> hwn02
+        
+      layers_dev_api -> hwn02
+      layers_dev_tiles -> hwn02
+      layers_dev_db -> hwn02
+        
+      basemaps_dev_tileserver -> hwn02
+    }
+   
+    subgraph preferred_placement_hpc_prod {
+      insights_prod_etl -> hwn03
+      layers_prod_etl -> hwn03
+      basemaps_prod_generator -> hwn03
+    }
+
+    subgraph preferred_placement_hpc_test {
+      insights_test_etl -> hwn04
+      layers_test_etl -> hwn04
+      basemaps_test_generator -> hwn04
+    } 
+
+    subgraph preferred_placement_hpc_dev {
+      insights_dev_etl -> hwn04
+      layers_dev_etl -> hwn04
+      basemaps_dev_generator -> hwn04
+    } 
+  }
+
+  subgraph secondary_placement {
+    // let interactives utilize free ETL capacity, if any
+    subgraph secondary_placement_interactive_prod {    
+      insights_prod_api -> hwn03
+      insights_prod_llm -> hwn03
+      insights_prod_db  -> hwn03
+      
+      events_prod_api -> hwn03
+      events_prod_db -> hwn03
+        
+      layers_prod_api -> hwn03
+      layers_prod_tiles -> hwn03
+      layers_prod_db -> hwn03
+        
+      basemaps_prod_tileserver -> hwn03
+    }
+    
+    subgraph secondary_placement_interactive_test {    
+      insights_test_api -> hwn04
+      insights_test_llm -> hwn04
+      insights_test_db  -> hwn04
+      
+      events_test_api -> hwn04
+      events_test_db -> hwn04
+        
+      layers_test_api -> hwn04
+      layers_test_tiles -> hwn04
+      layers_test_db -> hwn04
+        
+      basemaps_test_tileserver -> hwn04
+    }
+    
+    subgraph secondary_placement_interactive_dev {    
+      insights_dev_api -> hwn04
+      insights_dev_llm -> hwn04
+      insights_dev_db  -> hwn04
+      
+      events_dev_api -> hwn04
+      events_dev_db -> hwn04
+        
+      layers_dev_api -> hwn04
+      layers_dev_tiles -> hwn04
+      layers_dev_db -> hwn04
+        
+      basemaps_dev_tileserver -> hwn04
+    }
+    
+    subgraph secondary_placement_hpc_prod {
+      insights_prod_etl -> hwn02
+      layers_prod_etl -> hwn02
+      basemaps_prod_generator -> hwn02
+    }
+
+  }
+
+  subgraph cluster_legend {
+    label = Legend
+
+    app[shape=ellipse]
+    node_preferred[label="preferred node", shape=rectangle]
+    node_allowed[label="allowed node", shape=rectangle]
+
+    app -> node_1[color=green,penwidth=3]
+    app -> node_2
+  }
+
+}
