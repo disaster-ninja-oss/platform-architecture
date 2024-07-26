@@ -230,6 +230,7 @@ digraph {
 
   }
 
+  /*
   subgraph cluster_legend {
     label = Legend
 
@@ -243,5 +244,6 @@ digraph {
     database[shape=cylinder]
     etl[shape=diamond]
   }
+  */
 
 }
