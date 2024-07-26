@@ -97,13 +97,13 @@ digraph {
 
 
   subgraph k8s {
-    node[shape=rectangle]
+    node[shape=record]
     rank=same
 
-    hwn01
-    hwn02
-    hwn03
-    hwn04
+    hwn01[label="hwn01|INT prod"]
+    hwn02[label="hwn02|HPC prod|allows INT prod"]
+    hwn03[label="hwn03|INT dev|allows HPC prod"]
+    hwn04[label="hwn04|HPC dev|allows INT dev"]
 
   }
   
@@ -127,39 +127,39 @@ digraph {
     }
     
     subgraph preferred_placement_interactive_test {    
-      insights_test_api -> hwn02
-      insights_test_llm -> hwn02
-      insights_test_db  -> hwn02
+      insights_test_api -> hwn03
+      insights_test_llm -> hwn03
+      insights_test_db  -> hwn03
       
-      events_test_api -> hwn02
-      events_test_db -> hwn02
+      events_test_api -> hwn03
+      events_test_db -> hwn03
         
-      layers_test_api -> hwn02
-      layers_test_tiles -> hwn02
-      layers_test_db -> hwn02
+      layers_test_api -> hwn03
+      layers_test_tiles -> hwn03
+      layers_test_db -> hwn03
         
-      basemaps_test_tileserver -> hwn02
+      basemaps_test_tileserver -> hwn03
     }
     
     subgraph preferred_placement_interactive_dev {    
-      insights_dev_api -> hwn02
-      insights_dev_llm -> hwn02
-      insights_dev_db  -> hwn02
+      insights_dev_api -> hwn03
+      insights_dev_llm -> hwn03
+      insights_dev_db  -> hwn03
       
-      events_dev_api -> hwn02
-      events_dev_db -> hwn02
+      events_dev_api -> hwn03
+      events_dev_db -> hwn03
         
-      layers_dev_api -> hwn02
-      layers_dev_tiles -> hwn02
-      layers_dev_db -> hwn02
+      layers_dev_api -> hwn03
+      layers_dev_tiles -> hwn03
+      layers_dev_db -> hwn03
         
-      basemaps_dev_tileserver -> hwn02
+      basemaps_dev_tileserver -> hwn03
     }
    
     subgraph preferred_placement_hpc_prod {
-      insights_prod_etl -> hwn03
-      layers_prod_etl -> hwn03
-      basemaps_prod_generator -> hwn03
+      insights_prod_etl -> hwn02
+      layers_prod_etl -> hwn02
+      basemaps_prod_generator -> hwn02
     }
 
     subgraph preferred_placement_hpc_test {
@@ -178,18 +178,18 @@ digraph {
   subgraph secondary_placement {
     // let interactives utilize free ETL capacity, if any
     subgraph secondary_placement_interactive_prod {    
-      insights_prod_api -> hwn03
-      insights_prod_llm -> hwn03
-      insights_prod_db  -> hwn03
+      insights_prod_api -> hwn02
+      insights_prod_llm -> hwn02
+      insights_prod_db  -> hwn02
       
-      events_prod_api -> hwn03
-      events_prod_db -> hwn03
+      events_prod_api -> hwn02
+      events_prod_db -> hwn02
         
-      layers_prod_api -> hwn03
-      layers_prod_tiles -> hwn03
-      layers_prod_db -> hwn03
+      layers_prod_api -> hwn02
+      layers_prod_tiles -> hwn02
+      layers_prod_db -> hwn02
         
-      basemaps_prod_tileserver -> hwn03
+      basemaps_prod_tileserver -> hwn02
     }
     
     subgraph secondary_placement_interactive_test {    
@@ -223,9 +223,9 @@ digraph {
     }
     
     subgraph secondary_placement_hpc_prod {
-      insights_prod_etl -> hwn02
-      layers_prod_etl -> hwn02
-      basemaps_prod_generator -> hwn02
+      insights_prod_etl -> hwn03
+      layers_prod_etl -> hwn03
+      basemaps_prod_generator -> hwn03
     }
 
   }
@@ -237,8 +237,8 @@ digraph {
     node_preferred[label="preferred node", shape=rectangle]
     node_allowed[label="allowed node", shape=rectangle]
 
-    app -> node_1[color=green,penwidth=3]
-    app -> node_2
+    app -> node_preferred[color=green,penwidth=3]
+    app -> node_allowed
 
     database[shape=cylinder]
     etl[shape=diamond]
