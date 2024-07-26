@@ -323,7 +323,7 @@ digraph Platform_services{
             // review: is it correct or more complicated? e.g. is epig involved?
             "minio-tenant"[fillcolor=white,color=orange,group=basemap]
             basemap_tileserver -> "minio-tenant"[color=orange]
-            "minio-tenant" -> basemap_generator[dir=back,color=orange]
+            "minio-tenant" -> basemap_generator[dir=back,color=orange,constraint=false]
 
           } // interactive workloads
 
