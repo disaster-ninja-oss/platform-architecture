@@ -266,7 +266,7 @@ digraph Platform_services{
               "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
                                     group=ninja_components]
  
-              "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>] // updated 2024-07-11
+              basemap_tileserver  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>, group=basemap] // updated 2024-07-11
 
               graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>, 
                             style=dashed, fillcolor=white, group=insights_components]
@@ -321,8 +321,9 @@ digraph Platform_services{
             }
 
             // review: is it correct or more complicated? e.g. is epig involved?
-            "minio-tenant"[fillcolor=white,color=orange]
-            "basemap tiles" -> "minio-tenant"[color=orange]
+            "minio-tenant"[fillcolor=white,color=orange,group=basemap]
+            basemap_tileserver -> "minio-tenant"[color=orange]
+            "minio-tenant" -> basemap_generator[dir=back,color=orange]
 
           } // interactive workloads
 
@@ -341,6 +342,7 @@ digraph Platform_services{
                               group=insights_components]
               "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>,
                               group=layers_components]
+              basemap_generator[label=<basemap<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,group=basemap]
             }
 
             subgraph nw_databases {
@@ -407,6 +409,7 @@ digraph Platform_services{
 
          }
 
+    
       }
 
       subgraph cluster_geocint {
@@ -472,7 +475,7 @@ digraph Platform_services{
     k2geocoder -> osmnominatim [color=purple]
 
 
-    "basemap tiles" -> geocint
+    basemap_generator -> geocint
 
 
     subgraph dn_connections {
@@ -486,7 +489,7 @@ digraph Platform_services{
       "disaster-ninja-fe" -> "disaster-ninja-be"[color=red]
       "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
       "disaster-ninja-fe" -> insightsapi[color=red]
-      "disaster-ninja-fe" -> "basemap tiles"[color=red,constraint=false]
+      "disaster-ninja-fe" -> basemap_tileserver[color=red,constraint=false]
       "disaster-ninja-fe" -> kontur_boundaries
       "disaster-ninja-fe" -> OSM_quality_report
      }
@@ -610,7 +613,7 @@ digraph Platform_services{
     DonkorLabs -> smartcity
     DonkorLabs -> roadqualityapp
 
-    PDC -> "basemap tiles"[color=red] // updated 2024-07-11
+    PDC -> basemap_tileserver[color=red] // updated 2024-07-11
 
     { //// to be removed unless these apps really communicate with disaster.ninja somehow
       //embeddedpop -> disasterninja
@@ -657,7 +660,7 @@ digraph Platform_services{
     Kontur -> atlasapp
     Kontur -> oasisapp
     
-    "Unfolded Data Catalog" -> "basemap tiles"[color=red] //updated 2021-10-08
+    "Unfolded Data Catalog" -> basemap_tileserver[color=red] //updated 2021-10-08
 
     "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
