@@ -9,10 +9,10 @@ digraph {
   subgraph apps {
     node[shape=ellipse]
 
-    subgraph cluster_insights {
+    subgraph insights {
       
-      style=dashed
-      label="insights"
+      //style=dashed
+      //label="insights"
     
       subgraph insights_prod {
         insights_prod_api[color=red]
@@ -34,9 +34,9 @@ digraph {
       }
     }
 
-    subgraph cluster_eventapi {
-      style=dashed
-      label="events"
+    subgraph eventapi {
+      //style=dashed
+      //label="events"
 
       subgraph events_prod {
         events_prod_api[color=red]
@@ -52,9 +52,9 @@ digraph {
       }
     }
 
-    subgraph cluster_layersapi {
-      style=dashed
-      label="layers"
+    subgraph layersapi {
+      //style=dashed
+      //label="layers"
       subgraph layers_prod {
         layers_prod_api[color=red]
         layers_prod_tiles[color=red]
@@ -77,8 +77,8 @@ digraph {
     }
 
     subgraph basemaps { 
-      style=dashed
-      label=basemaps
+      // style=dashed
+      // label=basemaps
 
       subgraph basemaps_prod {
         basemaps_prod_tileserver[color=red]
@@ -239,6 +239,9 @@ digraph {
 
     app -> node_1[color=green,penwidth=3]
     app -> node_2
+
+    database[shape=cylinder]
+    etl[shape=diamond]
   }
 
 }
