@@ -271,6 +271,7 @@ strict digraph Platform_services{
 
             subgraph iw_databases {
               node[shape=cylinder]
+              node[fillcolor=orange] // until RO/RW split
               rank=same;
               "layers-db-database-replica" [label=<Layers-DB database REPLICA<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
@@ -305,12 +306,15 @@ strict digraph Platform_services{
                               group=insights_components]
               "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>,
                               group=layers_components]
+
+              // why basemap generator is rendered in red???
               basemap_generator[label=<basemap<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,group=basemap]
             }
 
             subgraph nw_databases {
               rank=same
               node[shape=cylinder]
+              node[style=filled,fillcolor=red] // until RO/RW are split
               "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
               "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
@@ -341,30 +345,32 @@ strict digraph Platform_services{
          }
 
          subgraph users_flow {
-           keycloak -> "keycloak-database-replica"[color=orange]
-           keycloak -> "keycloak-database"[color=red]
+           keycloak -> "keycloak-database-replica"[color=orange] // not really needed in case of keycloak...
+           keycloak -> "keycloak-database"[color=red] 
 
            keycloak -> "user-profile-spi-plugin"[color=red,weight=1000]
-           "user-profile-api" -> "user-profile-api-database-replica"[color=red]
-           "user-profile-api" -> "user-profile-api-database"
-           "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=red]
-           "user-profile-spi-plugin" -> "user-profile-api-database"
+           "user-profile-api" -> "user-profile-api-database-replica"[color=orange]
+           "user-profile-api" -> "user-profile-api-database"[color=red]
+           "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=orange]
+           "user-profile-spi-plugin" -> "user-profile-api-database"[color=red]
 
          }
 
          subgraph layers_flow {
-           "layers-api" -> "layers-db-database-replica"[color=red]
-           "layers-tiles-api" -> "layers-db-database-replica"[color=red]
+           "layers-api" -> "layers-db-database-replica"[color=orange]
+           "layers-tiles-api" -> "layers-db-database-replica"[color=orange]
+           "layers-api" -> "layers-db-database"[color=red]        
+           "layers-tiles-api" -> "layers-db-database"[color=red]
            "layers-db-database" -> "layers-db"[dir=back]
            "disaster-ninja-be" -> "layers-db" // add changes from smartcity and roadapp
          }
 
          subgraph insights_flow {
 
-          insightsapi -> "insightsapi-database-replica"[color=red]
-          insightsapi -> "insightsapi-database" // does it perform writes?
-          "insights-llm-api" -> "insightsapi-database-replica"[color=red]
-          "insights-llm-api" -> "insightsapi-database"
+          insightsapi -> "insightsapi-database-replica"[color=orange]
+          insightsapi -> "insightsapi-database"[color=red] 
+          "insights-llm-api" -> "insightsapi-database-replica"[color=orange]
+          "insights-llm-api" -> "insightsapi-database"[color=red]
           "insights-llm-api" -> "user-profile-api"[color=red]
           "insights-llm-api" -> insightsapi[color=red]
           "insightsapi-database" -> "insights-db"[dir=back]
