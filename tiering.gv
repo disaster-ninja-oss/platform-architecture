@@ -101,10 +101,18 @@ digraph {
     rank=same
 
     hwn01[label="hwn01|INT prod"]
-    hwn02[label="hwn02|HPC prod|allows INT prod"]
-    hwn03[label="hwn03|INT dev|allows HPC prod"]
-    hwn04[label="hwn04|HPC dev|allows INT dev"]
+    hwn02[label="hwn02|HPC prod"]
+    hwn03[label="hwn03|INT dev|allows INT prod"]
+    hwn04[label="hwn04|HPC dev|allows HPC prod"]
 
+    subgraph k8s_future {
+      rank=sink
+      node[shape=rectangle,style=dashed,color="#00000080"]
+      
+      geocint[label="geocint|GPU"]
+      geocint2[label="geocint2|HPC dev|allows HPC prod|geocint-in-k8s"]
+      mustang[label="geocint2|HPC dev|allows HPC prod|geocint-in-k8s"]
+    }
   }
   
   // tiering 1
@@ -176,22 +184,22 @@ digraph {
   }
 
   subgraph secondary_placement {
-    // let interactives utilize free ETL capacity, if any
     subgraph secondary_placement_interactive_prod {    
-      insights_prod_api -> hwn02
-      insights_prod_llm -> hwn02
-      insights_prod_db  -> hwn02
+      insights_prod_api -> hwn03
+      insights_prod_llm -> hwn03
+      insights_prod_db  -> hwn03
       
-      events_prod_api -> hwn02
-      events_prod_db -> hwn02
+      events_prod_api -> hwn03
+      events_prod_db -> hwn03
         
-      layers_prod_api -> hwn02
-      layers_prod_tiles -> hwn02
-      layers_prod_db -> hwn02
+      layers_prod_api -> hwn03
+      layers_prod_tiles -> hwn03
+      layers_prod_db -> hwn03
         
-      basemaps_prod_tileserver -> hwn02
+      basemaps_prod_tileserver -> hwn03
     }
-    
+
+  /*
     subgraph secondary_placement_interactive_test {    
       insights_test_api -> hwn04
       insights_test_llm -> hwn04
@@ -221,11 +229,13 @@ digraph {
         
       basemaps_dev_tileserver -> hwn04
     }
+
+    */
     
     subgraph secondary_placement_hpc_prod {
-      insights_prod_etl -> hwn03
-      layers_prod_etl -> hwn03
-      basemaps_prod_generator -> hwn03
+      insights_prod_etl -> hwn04
+      layers_prod_etl -> hwn04
+      basemaps_prod_generator -> hwn04
     }
 
   }
