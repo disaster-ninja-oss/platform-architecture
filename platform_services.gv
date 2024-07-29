@@ -1,89 +1,196 @@
-digraph Platform_services{
+strict digraph Platform_services{
+    //ratio=auto
     ratio=0.5625
-    #ratio=0.7
-    #ratio=1.0407 // 1993:1915
-    #ratio=1.42
+    //ratio=0.7
+    //ratio=1.0407 //1993:1915
+    //ratio=1.42
+
     maxiter=10000
-    #compound=true;
+    //compound=true
+    //concentrate=true
     newrank=true
     edge[minlen=1,weight=1]
     node[shape=octagon]
+    rankdir=TB // arrows go down
+    //TBbalance=max
+
     // customers
-    {
-        rank=same;
-        HOT [label="Humanitarian OSM Team",color=red]
-        PDC [label="Pacific Disaster Center",color=red]
-        Tenefit [label="Tenefit",color=red]
-        //Vianova [label="Vianova",color=red]
-        SwissRe [label="Swiss Re",color=red,style=dashed]
-        DonerKing [label="Doner King",color=red]
-        mchs [label="Minsk Emergency Call Center",color=red]
-        HDX [label="UN OCHA Humanitarian Data Exchange",color=red]
-        Kontur [label="Kontur",color=red]
-        Unfolded [label="Unfolded / Foursquare",color=red]
-        cartocatalog [label="Carto Catalog", color=red] //updated 2021-10-08
-        DonkorLabs [label="Donkor Labs",color=red]
-        Sunbim [label="Sunbim (KREO)",color=red]
-        public_event_feed_users [label="Public Event Feed users",color=red]
+    subgraph customers {
+      rank=source // topmost always, the source of graph
+      node[shape=tab,style=filled,fillcolor=lightgreen]
+
+      subgraph customers_active_commercial {
+        HOT           [label="Humanitarian OSM Team",group=hot]
+        PDC           [label="Pacific Disaster Center"]
+        Kontur        [label="Kontur",group=kontur]
+      }
+
+      subgraph customers_active_noncommercial { // active non-commercial engagements
+        DonkorLabs    [label="Donkor Labs"]
+        HDX           [label="UN OCHA Humanitarian Data Exchange",group=HDX]
+        Unfolded      [label="Unfolded / Foursquare",group=Unfolded]
+        public_event_feed_users [label="Public Event Feed users"]
+      }
+
+      subgraph customers_inactive { //inactive
+        style="dashed"
+        node[fontcolor=white,fillcolor=darkgrey]
+        Tenefit       [label="Tenefit"]
+        DonerKing     [label="Doner King",group=donerking]
+        mchs          [label="Minsk Emergency Call Center"]
+        cartocatalog  [label="Carto Catalog"]
+        Sunbim                  [label="Sunbim (KREO)"]
+        //Vianova [label="Vianova"]
+        SwissRe                 [label="Swiss Re"]
+      }
     }
+
+
     // user facing
     // external
-    {
-        rank=same;
-        osm [label="OpenStreetMap.org",color=blue,shape=rectangle]
-        facebookpopulation [label="Facebook Population (HRSL)",color=blue,shape=rectangle]
-        facebookroads [label="Facebook Roads",color=blue,shape=rectangle]
-        msbuildings [label="Microsoft Buildings",color=blue,shape=rectangle]
-        geoalertbuildings [label="GeoAlert Buildings",color=blue,shape=rectangle]
-        gdacs [label="GDACS", color=blue,shape=rectangle]
-        ghs [label="GHSL Global Human Settlement",color=blue,shape=rectangle]
-        gadm [label="gadm.org",color=blue,shape=rectangle]
-        hotactivations [label="HOT Projects",color=blue,shape=rectangle]
-        hotactivationscsv [label="HOT Activateions CSV",color=blue,shape=rectangle]
-        wikidata [label="Wikidata",color=blue,shape=rectangle]
-        linz [label="LINZ (Land Information New Zealand)",color=blue,shape=rectangle]
+    subgraph data_providers {
 
-        osmlayers [label="OpenStreetMap Editor Layer Index",color=blue,shape=rectangle]
-        osmcommunities [label="OpenStreetMap Communities Index",color=blue,shape=rectangle]
-        pdcdisasters [label="PDC Disaster feed",color=blue,shape=rectangle]
-        taskingmanagerapi [label="Tasking Manager API",color=blue] //new
-        firms [label="FIRMS", color=blue,shape=rectangle] //new
-        noaa [label="NOAA", color=blue,shape=rectangle] //new
-        emdat [label="EM-DAT", color=blue,shape=rectangle] //new
-        japantornado [label="Japan Tornado", color=blue,shape=rectangle] //new??
-        firehydrants [label="Fire Hydrants", color=blue,shape=rectangle] //new
-        osmnominatim [label="OSM Nominatim", color=blue,shape=rectangle]
-        unhcrukrainerefugee [label="UNHCR Ukraine Refugee", color=blue,shape=rectangle]
-        idpestimates [label="Ukraine: IDP Estimates", color=blue,shape=rectangle]
+        // grouping is just for better clarity, its not architectural
+        node[shape=house,style=filled,fillcolor=blue,fontcolor=white]
+
+        { // floating
+          subgraph eventapi_sources {
+            node[group=events_components]
+            firms             [label="FIRMS"]
+            noaa              [label="NOAA"]
+            emdat             [label="EM-DAT"]
+            japantornado      [label="Japan Tornado"]
+            gdacs             [label="GDACS"]
+          }
+
+          subgraph kc_sources {
+            node[group=kcetl]
+            firehydrants      [label="Fire Hydrants"]
+            hotactivationscsv  [label="HOT Activations CSV"]
+            osmcommunities     [label="OpenStreetMap Communities Index"]
+          }
+
+          osmnominatim       [label="OSM Nominatim"]
+
+          subgraph data_providers_ukraine { // Ukraine
+            node[group=layers_components]
+            unhcrukrainerefugee [label="UNHCR Ukraine Refugee"]
+            idpestimates [label="Ukraine: IDP Estimates"]
+          }
+
+          subgraph data_providers_hot {
+            hotprojects     [label="HOT TM Projects"]
+          }
+
+          subgraph data_providers_osm {
+            osm                [label="OpenStreetMap.org"]
+            osmlayers          [label="OpenStreetMap Editor Layer Index"]
+          }
+        }
+
+
+        { // sinked, bottom-most of the graph
+          jrc               [label="European Commission Joint Research Center"]
+
+          subgraph data_providers_meta {
+            facebookpopulation [label="Facebook Population (HRSL)"]
+            facebookroads      [label="Facebook Roads"]
+            facebook           [label="Facebook"]
+          }
+
+          { // other
+            msbuildings        [label="Microsoft Buildings"]
+            geoalertbuildings  [label="GeoAlert Buildings"]
+            ghs                [label="GHSL Global Human Settlement"]
+            gadm               [label="gadm.org"]
+            linz               [label="LINZ (Land Information New Zealand)"]
+            wikidata           [label="Wikidata"]
+          }
+
+      }
     }
 
-    "layers-db" -> taskingmanagerapi
-    "kcdataetl" -> taskingmanagerapi
+    subgraph cluster_legacy {
+        //label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
 
-    {
-        rank=same
-        OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>,shape=rectangle]
-        k2routing [label=<k2routing<BR />proxy request to OSRM>]
-        k2layers
-        k2geocoder
+	node[style=filled,fillcolor=deeppink,group=kclegacy]
+
+        // it belongs here logically
+        osmboundaries[style=filled,fillcolor=deeppink]
+
+        {
+          node[group=kc]
+          kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
+          "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
+          kcdataetl [color=purple,group=kcetl]
+        }
+
+        {
+          node[group=k2]
+          k2frontend[color=purple]
+          k2routing [label=<k2routing<BR />proxy request to OSRM>]
+          k2geocoder
+          k2etl [color=purple]
+          k2layers[color=purple]
+        }
+
+        {
+          node[group=firebrig]
+          kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+          kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
+        }
+
+        {
+          node[group=donerking]
+          kcdonerkingfe [color=purple,style=filled,fillcolor=deeppink]
+          kcdonerking [color=purple,style=filled,fillcolor=deeppink]
+        }
+
+        {
+          node[group=citysplit]
+          kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
+        }
     }
 
     subgraph cluster_legend {
         label="Legend"
         {
-            rank=same;
-            "Partners" [color=red]
-            "Data Providers" [color=blue]
+            //"Partners/users" [shape=tab,style=filled,fillcolor=green]
+            //"Data Providers" [shape=house,style=filled,fillcolor=blue]
             "Will be implemented" [color=orange]
-            "Will be removed in the future" [color=purple]
+            //"Will be removed in the future" [style=filled,fillcolor=purple]
         }
 
         {
-            rank=same;
+            "user/partner"[shape=tab,style=filled,fillcolor=green]
+            "user application"[shape=ellipse]
+            "third-party service"[color="#00000075",fontcolor="#00000075"]
+            "interactive service"[style=filled,fillcolor=red]
+            "interactive backend"[style=filled,fillcolor=red]
+            "interactive database"[shape=cylinder,style=filled,fillcolor=skyblue,fontcolor=red]
+            "some dataset"[shape=rectangle,style=filled,fillcolor=skyblue]
+            "data provider"[shape=house,style=filled,fillcolor=blue]
+            "etl service"
+            "obsoleted interactive service"[style=filled,fillcolor=deeppink]
+            "user/partner"->"user application"
+            "user application" -> "interactive service"
+            "third-party service" -> "interactive service"
+            "user application" -> "obsoleted interactive service"
+            "interactive service" -> "interactive backend"[color=red]
+            "obsoleted interactive service" -> "interactive backend"[color=red]
+            "interactive backend" -> "some dataset"[color=red]
+            "interactive backend" -> "interactive database"[color=red]
+            "interactive backend" -> "data provider"[color=blue]
+            "etl service" -> "some dataset"
+            "etl service" -> "interactive database"
+
+        }
+
+        {
             "Existing entity" [color=black]
             database [label=<Database>,shape=cylinder,color=black]
             "Existing entity" -> database
-            dataset [label=<Dataset>,shape=rectangle,color=black]
+            dataset [label=<Dataset>,shape=rectangle,style=filled,fillcolor=lightskyblue,color=black]
             "Existing entity" -> dataset
             service [label=<Service>,shape=octagon,color=black]
             "Existing entity" -> service
@@ -93,239 +200,475 @@ digraph Platform_services{
             "Existing entity" -> container
             ellipse [label=<application>,shape=ellipse,color=black]
             "Existing entity" -> ellipse
+            service -> "Will be implemented"[color=orange]
         }
 
         {
-            outdated [label=<Outdated entity<BR /><FONT POINT-SIZE="10">Keeped for history reasons</FONT>>,style=dashed]
+            outdated [label=<Outdated entity<BR /><FONT POINT-SIZE="10">Kept for history reasons</FONT>>,style=dashed]
             another_entity [shape=octagon]
             outdated -> another_entity [label="outdated edge",style=dashed]
-        }        
+        }
     }
 
-    subgraph cluster_k8s {
-        label="k8s cluster"
-        style=bold
-        "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
-        "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
-        "Layers-API" [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
-        "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>]
-        "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>]
-        "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
-        "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,shape=cylinder]
-        "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
-        "event-preview-image-generator" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>]
-        insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-        graphqlapi [label=<GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
-        "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
-        "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
-        "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
-        "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />serve layers for applications<BR />K8S</FONT>>]
-        "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,shape=cylinder]
-        "layers-etl" [label=<Layers-DB ETL<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />prepare data for layers from Layers DB</FONT>>]
-        "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S</FONT>>]
-        "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
-        eventapi [label=<eventapi<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>]
-        keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>]
-        "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Andrei Valasiuk<BR />store hexagonized datasets<BR />K8S</FONT>>,shape=cylinder]
+    subgraph kontur_infrastructure {
+
+      subgraph cluster_k8s {
+          label="k8s cluster"
+          style=bold
+
+          subgraph interactive_workloads {
+
+            node[style=filled,fillcolor=red]
+
+            subgraph iw_ingress{
+              "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
+
+              "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,
+                                   group=ninja_components]
+
+              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
+                                      group=users_components]
+
+
+              "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
+                                    group=ninja_components]
+
+              basemap_tileserver  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>, group=basemap] // updated 2024-07-11
+
+              eventapi [label=<event-api<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
+                                      group=events_components]
+              "epig" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,
+                      group=epig]
+            }
+
+            subgraph iw_epig {
+              node[group=epig_components]
+              "epig-chrome"
+              "epig-redis"
+            }
+
+            subgraph iw_apis {
+              subgraph iw_layers {
+                node[group=layers_components]
+                "layers-tiles-api" [label=<Layers Tiles API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />tiles API of Layers-DB<BR />K8S</FONT>>]
+                "layers-api"       [label=<Layers API<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OGC-API of Layers-DB<BR />K8S</FONT>>]
+              }
+
+              subgraph iw_users {
+                node[group=users_components]
+                "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
+
+                "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
+              }
+
+              subgraph iw_insights {
+                node[group=insights_components]
+                insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
+                "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
+              }
+
+           }
+
+            subgraph iw_databases {
+              node[shape=cylinder]
+              node[fillcolor=orange] // until RO/RW split
+              rank=same;
+              "layers-db-database-replica" [label=<Layers-DB database REPLICA<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+                                      group=layers_components]
+              "user-profile-api-database-replica" [label=<user-profile-api-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+                                            group=users_components]
+              "insightsapi-database-replica" [label=<InsightsAPI-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
+                                            group=insights_components]
+              "eventapi-database-replica"[group=events_components]
+              "keycloak-database-replica"[group=users_components]
+            }
+
+            // review: is it correct or more complicated? e.g. is epig involved?
+            "minio-tenant"[fillcolor=white,color=orange,group=basemap]
+            basemap_tileserver -> "minio-tenant"[color=orange]
+            "minio-tenant" -> basemap_generator[dir=back,color=orange]
+
+          } // interactive workloads
+
+          subgraph noninteractive_workloads {
+            subgraph cluster_nw_observability {
+              node[group=observability_components]
+              label="Observability"
+              rank=same
+              "prometheus02" [label=<prometheus02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />collects cluster/app metrics in K8S<BR />K8S</FONT>>]
+              "grafana02" [label=<grafana02<BR /><FONT POINT-SIZE="10">ask: Eugene Karpach<BR />main monitoring solution in K8S<BR />K8S</FONT>>]
+              "fluent-bit" [label=<fluent-bit<FONT POINT-SIZE="10"><BR />ask: Eugene Karpach<BR />collects all logs in K8S<BR />K8S</FONT>>]
+            }
+
+            subgraph nw_etl {
+              rank=same
+              "insights-db" [label=<insights-db<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />Insights API orchestrator<BR />K8S<br/>k8s name: insights-api-db-svc</FONT>>,
+                              group=insights_components]
+              "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>,
+                              group=layers_components]
+
+              // why basemap generator is rendered in red???
+              basemap_generator[label=<basemap<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,group=basemap]
+            }
+
+            subgraph nw_databases {
+              rank=same
+              node[shape=cylinder]
+              node[style=filled,fillcolor=red] // until RO/RW are split
+              "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
+                                      group=layers_components]
+              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+                                            group=users_components]
+              "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
+                                            group=insights_components]
+              "eventapi-database"[group=events_components,style=filled,fillcolor=red]
+              "keycloak-database"[group=users_components,style=filled,fillcolor=red]
+
+            }
+          }
+
+
+
+
+         subgraph db_replication {
+            edge[dir=back]
+            "layers-db-database-replica" -> "layers-db-database"
+            "user-profile-api-database-replica" -> "user-profile-api-database"
+            "insightsapi-database-replica" -> "insightsapi-database"
+            "eventapi-database-replica" -> "eventapi-database"
+            "keycloak-database-replica" -> "keycloak-database"
+         }
+
+         subgraph events_flow {
+           eventapi -> "eventapi-database-replica"[color=orange]
+           eventapi -> "eventapi-database"[color=red]
+         }
+
+         subgraph users_flow {
+           keycloak -> "keycloak-database-replica"[color=orange] // not really needed in case of keycloak...
+           keycloak -> "keycloak-database"[color=red] 
+
+           keycloak -> "user-profile-spi-plugin"[color=red,weight=1000]
+           "user-profile-api" -> "user-profile-api-database-replica"[color=orange]
+           "user-profile-api" -> "user-profile-api-database"[color=red]
+           "user-profile-spi-plugin" -> "user-profile-api-database-replica"[color=orange]
+           "user-profile-spi-plugin" -> "user-profile-api-database"[color=red]
+
+         }
+
+         subgraph layers_flow {
+           "layers-api" -> "layers-db-database-replica"[color=orange]
+           "layers-tiles-api" -> "layers-db-database-replica"[color=orange]
+           "layers-api" -> "layers-db-database"[color=red]        
+           "layers-tiles-api" -> "layers-db-database"[color=red]
+           "layers-db-database" -> "layers-db"[dir=back]
+           "disaster-ninja-be" -> "layers-db" // add changes from smartcity and roadapp
+         }
+
+         subgraph insights_flow {
+
+          insightsapi -> "insightsapi-database-replica"[color=orange]
+          insightsapi -> "insightsapi-database"[color=red] 
+          "insights-llm-api" -> "insightsapi-database-replica"[color=orange]
+          "insights-llm-api" -> "insightsapi-database"[color=red]
+          "insights-llm-api" -> "user-profile-api"[color=red]
+          "insights-llm-api" -> insightsapi[color=red]
+          "insightsapi-database" -> "insights-db"[dir=back]
+          "insights-db" -> "layers-db"[dir=back]
+         }
+      }
+
+      subgraph cluster_geocint {
+          label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
+          style=bold
+
+         citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>][style=filled,fillcolor=red]
+
+         geocint [label=<
+            <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+              <TR><TD COLSPAN="2">Geocint Pipeline</TD></TR>
+              <TR><TD>geocint-runner</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT></TD></TR>
+              <TR><TD>geocint-openstreetmap</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT></TD></TR>
+              <TR><TD>geocint-kontur</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT></TD></TR>
+          </TABLE>>,shape=plain]
+
+          isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+
+          subgraph geocint_osrm_containers {
+              node[shape=pentagon,style=filled,fillcolor=red]
+
+              osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
+              osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>]
+
+              {
+                osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+                osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>]
+              }
+          }
+
+          subgraph geocint_datasets {
+            //rank = same
+            node[shape=rectangle,style=filled,fillcolor=lightskyblue]
+
+            OSM_quality_report [label=<OSM Quality Report<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />quality reports on DN2</FONT>>]
+            subgraph geocint_datasets_global {
+              osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>]
+              osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+            }
+            subgraph geocint_datasets_minsk {
+              addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>    ]
+              buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>]
+              belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]//Area of interest updated 2024-30-01
+            }
+          }
+      }
+
     }
 
     k2geocoder -> osmnominatim [color=purple]
 
-    "user-profile-api" -> "user-profile-api-database"    
-    "user-profile-spi-plugin" -> "user-profile-api-database"
 
-    keycloak -> "user-profile-spi-plugin"
-    eventapi -> keycloak
-    mailchimp -> keycloak [color=orange]
+    basemap_generator -> geocint
 
-    "basemap tiles"  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>]
-    "disaster-ninja-fe" -> "basemap tiles" 
-    "basemap tiles" -> geocint
 
-    "disaster-ninja-fe" ->  "disaster-ninja-be"
-    "disaster-ninja-fe" -> kontur_boundaries 
-    "disaster-ninja-fe" -> OSM_quality_report 
-    "disaster-ninja-fe" -> "layers-tiles-api"
+    subgraph dn_connections {
 
-    "disaster-ninja-be" -> "user-profile-api"
-    "disaster-ninja-be" -> "event-preview-image-generator"
-    "event-preview-image-generator" -> "disaster-ninja-fe"
-    "disaster-ninja-be" -> insightsapi 
-    "disaster-ninja-fe" -> insightsapi
-    "disaster-ninja-be" -> "insights-llm-api"
-    graphqlapi -> insightsapi
-    "disaster-ninja-be" -> kcapi 
-    "disaster-ninja-be" -> eventapi 
-    "disaster-ninja-be" -> "Layers-API"
+     subgraph dn_ingress {
+      "nginx-ingress-controller" -> "disaster-ninja-fe"[color=red]
+      "nginx-ingress-controller" -> "disaster-ninja-be" [color=red]
+      "nginx-ingress-controller" -> "basemap_tileserver" [color=red]
+     }
 
-    "HOT Slack" -> "disaster-ninja-be" 
+     subgraph dn_fe_connections {
+      "disaster-ninja-fe" -> "disaster-ninja-be"[color=red]
+      "disaster-ninja-fe" -> "layers-tiles-api"[color=red]
+      "disaster-ninja-fe" -> insightsapi[color=red]
+      "disaster-ninja-fe" -> kontur_boundaries
+      "disaster-ninja-fe" -> OSM_quality_report
+     }
 
-    "nginx-ingress-controller" -> "disaster-ninja-fe" 
-    "nginx-ingress-controller" -> "disaster-ninja-be" 
+     subgraph dn_be_connections {
+      "disaster-ninja-be" -> "user-profile-api"[color=red]
+      "disaster-ninja-be" -> insightsapi[color=red]
+      "disaster-ninja-be" -> "insights-llm-api"[color=red]
+      "disaster-ninja-be" -> kcapi[color=red]
+      "disaster-ninja-be" -> eventapi[color=red]
+      "disaster-ninja-be" -> "layers-api"[color=red]
+      "disaster-ninja-be" -> "epig"[color=red]
+     }
+
+      graphqlapi -> insightsapi[color=red]
+
+    }
+
+    subgraph epig_flow {
+      edge[color=red]
+      "HOT Slack" -> "disaster-ninja-be"[color=black,dir=back] // push to Slack
+      "HOT Slack" -> "disaster-ninja-fe"                       // get epig link
+      "HOT Slack" -> "epig"                                    // preview request
+      "epig" -> "epig-chrome"
+      "epig-chrome" -> previewapp [constraint=false]
+      "epig" -> "epig-redis"
+    }
+
+    subgraph keycloak_client_connections {
+      edge[color=red]
+      //roadqualityapp -> keycloak[color=red]
+      //disasterninja -> keycloak[color=red]
+      "nginx-ingress-controller" -> keycloak // in fact, all client apps
+      public_event_feed_users -> keycloak
+      eventapi -> keycloak
+    }
+
+
 
     SwissRe -> geoalertbuildings [style=dashed]
     SwissRe -> eventapiprod [style=dashed]
 
-    "Layers-API" -> "layers-db"
-    "layers-tiles-api" -> "layers-db-database"
-    "layers-db" -> "layers-etl"
-    "layers-db" -> "layers-db-database"
-    "layers-db-database" -> "layers-etl"
 
-    "layers-etl" -> hotactivations
-    "layers-etl" -> osmcontributorstiles
-    "layers-etl" -> unhcrukrainerefugee
-    "layers-etl" -> idpestimates
-    "layers-etl" -> osmlayers
-    
+    "layers-db" -> hotprojects
+    "layers-db" -> osmcontributorstiles
+    "layers-db" -> unhcrukrainerefugee
+    "layers-db" -> idpestimates
+    "layers-db" -> osmlayers
+
 
     gdacs -> jrc
     ghs -> jrc
     facebookpopulation -> facebook
     facebookroads -> facebook
-    jrc [label="European Commission Joint Research Center",color=blue]
-    facebook [label="Facebook",color=blue]
-    {
-        rank=same;
-        donerkingapp [label="apps.kontur.io/donerking/",shape=ellipse]        
-        disasterninja [label="disaster.ninja/",shape=ellipse]
-        eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>]
-        mchsapp [label="apps.kontur.io/firebrigade/minsk/",shape=ellipse]
-        konturwebsite [label="kontur.io/",shape=ellipse]
-        hotlandingpage [label="apps.kontur.io/hot-activations-landing/",shape=ellipse]   
-        roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-        "HOT Slack"      
+
+
+    subgraph client_apps {
+	rank=same
+        subgraph cluster_platform_web_apps {
+              label="Platform Web Apps"
+              node[shape=ellipse]
+              rank=same
+
+              atlasapp [label="atlas.kontur.io"]
+              oasisapp [label="oasis.kontur.io"]
+              previewapp [label="Preview"]
+              oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,group="hot"]
+              smartcity [label=<Smart City App<BR />maps.kontur.io>,group="donkor"]
+              solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="HDX"]
+              embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
+              disasterninja [label="disaster.ninja/"]
+        }
+
+        subgraph same_ranked_client_apps {
+          rank=same;
+
+          {
+            node[shape=octagon]
+            eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,
+                              style=filled,fillcolor=deeppink]
+
+            "Unfolded Data Catalog"[label=<Unfolded Data Catalog/<BR /><FONT POINT-SIZE="10">Third-party, not managed by us</FONT>>,
+                                    color="#00000075",
+                                    fontcolor="#00000075",
+                                    group=Unfolded]
+          }
+
+          {
+            node[shape=ellipse]
+
+            {
+              donerkingapp [label="apps.kontur.io/donerking/",group="donerking"]
+              mchsapp [label="apps.kontur.io/firebrigade/minsk/",group="firebrig"]
+            }
+
+
+            konturwebsite [label="kontur.io/",group=konturwebsite]
+            hotlandingpage [label="apps.kontur.io/hot-activations-landing/",group="hot"]
+            "HOT Slack" [group="hot"]
+            graphqlapi [label=<Insights GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Used for statistics in HOT's exports to HDX</FONT>>]
+            roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
+          }
+        }
     }
-    
-    {
-        rank=same;
-        smartcity [label=<Smart City App<BR />maps.kontur.io>,shape=ellipse]
-        oam [label=<new.openaerialmap.org/<BR /><FONT POINT-SIZE="10">Demo application of OAM new version</FONT>>,shape=ellipse]
-        solarfarm [label=<Solar Farms marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-        embeddedpop [label=<Kontur Population marketing App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-        embeddeddisaster [label=<Embedded disaster App<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=ellipse]
-    }
-    disasterninja -> "nginx-ingress-controller"
-    disasterninja -> keycloak
+
+    Unfolded -> "Unfolded Data Catalog"[color="#00000075"] //updated 2021-10-08
+
     Sunbim -> solarfarm
-    embeddedpop -> disasterninja
-    embeddeddisaster -> disasterninja
-    oam -> disasterninja
-    DonkorLabs -> smartcity -> disasterninja
-    DonkorLabs -> roadqualityapp -> keycloak
-    roadqualityapp -> "layers-db"
-    solarfarm -> disasterninja
+
+    DonkorLabs -> smartcity
+    DonkorLabs -> roadqualityapp
+
+    PDC -> basemap_tileserver[color=red,weight=1000] // updated 2024-07-11
 
 
-    public_event_feed_users -> keycloak
-    public_event_feed_users -> eventapi
-    HOT -> disasterninja
-    HOT -> hotlandingpage //new
-    HOT -> "HOT Slack"
+    subgraph apps_to_ingress {
+      edge[color=red]
+
+      // TBD: eliminate ingress-controller and draw connections to [fe,be,keycloak]?
+
+      embeddedpop -> "nginx-ingress-controller" [weight=1000]
+      embeddeddisaster -> "nginx-ingress-controller"
+      oam -> "nginx-ingress-controller"
+
+      // includes pushing data for layers database through disaster-ninja-be
+      roadqualityapp -> "nginx-ingress-controller" [weight=1000]
+      smartcity -> "nginx-ingress-controller"
+
+      solarfarm -> "nginx-ingress-controller"
+      disasterninja -> "nginx-ingress-controller" [weight=1000]
+
+      atlasapp -> "nginx-ingress-controller" [weight=1000]
+      oasisapp -> "nginx-ingress-controller"
+      previewapp -> "nginx-ingress-controller" [weight=1000]
+
+      // roadquality and smartcity are pushing data for layers through disaster-ninja-be
+    }
+
+    public_event_feed_users -> eventapi[color=red]
+    public_event_feed_users -> disasterninja[color=red]
+    HOT -> disasterninja [weight=1000]
+    HOT -> hotlandingpage [weight=1000]
+    HOT -> "HOT Slack" [weight=10000]
     HOT -> oam
-    HOT -> graphqlapi
+    HOT -> graphqlapi [weight=1000] // pull data for their ETL
     Kontur -> solarfarm
     Kontur -> embeddeddisaster
-    
+    Kontur -> atlasapp [weight=1000]
+    Kontur -> oasisapp
 
-    Unfolded -> "Unfolded Data Catalog" //updated 2021-10-08
-    "Unfolded Data Catalog" -> "basemap tiles" //updated 2021-10-08
+    "Unfolded Data Catalog" -> basemap_tileserver[color=red] //updated 2021-10-08
 
-    "13 months of Fires" [label=<13 months of Fires>,shape=rectangle]
+    "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
     cartocatalog -> "13 months of Fires"//updated 2021-10-08
     cartocatalog -> geocint //updated 2021-10-08
 
-    eventapiprod -> eventapi
+    eventapiprod -> eventapi[color=deeppink]
     hotlandingpage -> kcapi //new
-    CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>]
+    CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>,style=filled,fillcolor=red]
     mchs -> CSTAPP[color=purple]
     DonerKing -> CSTAPP [color=purple]
-    citysplit [label="platform/city-split"][label=<platform/city-split<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>]
 
-    CSTAPP -> citysplit
-    isochroneapi 
-    citysplit -> isochroneapi
-    insightsapi -> "insightsapi-database"
-    "insights-db" -> "insightsapi-database"
-    "insights-llm-api" -> "insightsapi-database"
-    "insights-llm-api" -> "user-profile-api"
-    "insights-llm-api" -> insightsapi
-    
-    konturpopulation -> insightsapi // updated 2021-10-08
-    isochroneapi -> insightsapi //new
+    CSTAPP -> citysplit[color=red]
+    isochroneapi[style=filled,fillcolor=red]
+    citysplit -> isochroneapi[color=red]
 
-    eventapi -> insightsapi //new
+    insightsapi -> konturpopulation
+    isochroneapi -> insightsapi[color=red]
+    eventapi -> insightsapi[color=red]
+
+    subgraph geocint_insights_data_push {
+      // updated 2024-07-16
+      // edges mark dependency, data flow is reversed
+      edge[dir=back,decorate=true]
+      "insightsapi-database" -> geocint[label="prod: push db dump" ]
+      insightsapi -> geocint[label="dev/test: data push via API"]
+    }
+
     isochroneapi -> osmroadsegments
-    osmroadsegments -> geocint
-    buildingsminsk -> geocint
-    osmcontributorstiles -> geocint
-    addressesminsk -> geocint
-    insightsapi -> geocint
-    belarusosmpbf -> geocint
-    pdsdataset -> geocint //updated 2021-10-08
-    osrmdocker_foot -> pdsdataset //updated 2021-10-08
-    osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
-    osrmdocker_car -> pdsdataset //updated 2021-10-08
-    osrmdocker_emergency -> pdsdataset //updated 2021-10-08
-    osrmdocker_motobike -> pdsdataset //updated 2021-10-08
-    isochroneapi -> osrmdocker_foot  //updated 2021-10-08
-    isochroneapi -> osrmdocker_bicycle //updated 2021-10-08
-    isochroneapi -> osrmdocker_car //updated 2021-10-08
-    isochroneapi -> osrmdocker_emergency //updated 2021-10-08
-    isochroneapi -> osrmdocker_motobike   //updated 2021-10-08
+
+    subgraph geocint_datasets_generation {
+      edge[dir=back]
+      osmroadsegments -> geocint
+      buildingsminsk -> geocint
+      osmcontributorstiles -> geocint
+      addressesminsk -> geocint
+      belarusosmpbf -> geocint
+      pdsdataset -> geocint //updated 2021-10-08
+      kontur_boundaries -> geocint //updates 2021-10-08
+      OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
+      konturpopulation -> geocint
+    }
+
+    {
+//      edge[constraint=false]
+      osrmdocker_foot -> pdsdataset //updated 2021-10-08
+      osrmdocker_bicycle -> pdsdataset //updated 2021-10-08
+      osrmdocker_car -> pdsdataset //updated 2021-10-08
+      osrmdocker_emergency -> pdsdataset //updated 2021-10-08
+      osrmdocker_motobike -> pdsdataset //updated 2021-10-08
+    }
+
+    {
+      //edge[constraint=false]
+      isochroneapi -> osrmdocker_foot[color=red]  //updated 2021-10-08
+      isochroneapi -> osrmdocker_bicycle[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_car[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_emergency[color=red] //updated 2021-10-08
+      isochroneapi -> osrmdocker_motobike[color=red]   //updated 2021-10-08
+    }
 
     osrmemergencyminsk -> belarusosmpbf
     osrmdistanceminsk -> belarusosmpbf
-    konturpopulation -> geocint
     HDX -> konturpopulation
     HDX -> kontur_boundaries
     HDX -> embeddedpop
 
 
-    subgraph cluster_geocint {
-        label=<Geocint ETL pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>
-        style=bold
-
-        "geocint-runner" [label=<geocint-runner<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT>>]
-        "geocint-openstreetmap" [label=<geocint-openstreetmap<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT>>]
-        "geocint-kontur" [label=<geocint-kontur<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT>>]
-        geocint [label=<Geocint Pipeline<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's data pipeline</FONT>>]
-        isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
-
-        {
-            rank=same;
-            osrmemergencyminsk [label=<osrmemergencyminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-            osrmdistanceminsk [label=<osrmdistanceminsks<BR /><FONT POINT-SIZE="10">ask: Darafei Praliakouski</FONT>>,shape=pentagon]
-            osrmdocker_motobike [label=<osrmdocker_motobike<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_foot [label=<osrmdocker_foot<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_emergency [label=<osrmdocker_emergency<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_bicycle [label=<osrmdocker_bicycle<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-            osrmdocker_car [label=<osrmdocker_car<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />geocint-based osrm backend</FONT>>,shape=pentagon]
-        }
-        {
-            // Global datasets
-            //rank=same;
-        
-            osmroadsegments [label=<OSM Road Segments<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            konturpopulation [label=<Kontur Population<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            kontur_boundaries [label=<Kontur Boundaries<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />global boundary dataset</FONT>>,shape=rectangle]
-            osmcontributorstiles [label=<OSM Active Contributors<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-        }
-
-        {
-            // Minsk datasets
-            //rank=same;
-            addressesminsk [label=<OSM Addresses Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Adresses for Minskfire routing</FONT>>,shape=rectangle    ]
-            buildingsminsk [label=<OSM Buildings Minsk<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Buildings for Minskfire routing</FONT>>,shape=rectangle]
-            belarusosmpbf [label=<OSM Belarus extract<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]
-            pdsdataset  [label=<OSM_extract_Belarus_Kosovo_UAE_USA<BR />Geocint-based OSRM backend<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,shape=rectangle]//Area of interest updated 2024-30-01
-        }
-    } 
-
-    "geocint-runner" -> geocint
-    "geocint-openstreetmap" -> geocint
-    "geocint-kontur" -> geocint
-    "Layers-API" -> geocint
+    "layers-api" -> geocint
     geocint -> osm
     geocint -> facebookpopulation
     facebookpopulation -> gadm
@@ -336,74 +679,68 @@ digraph Platform_services{
     geocint -> geoalertbuildings
     geocint -> wikidata
     geocint -> linz
-    "insightsapi-database" -> geocint
-    kontur_boundaries -> geocint //updates 2021-10-08
-    OSM_quality_report -> geocint //updated 2021-10-08 Sasha Petrov
-    osmboundaries
+
     osmboundaries -> geocint
 
-    kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
     kccitysplitfe -> isochroneapi [color=purple]
     CSTAPP -> kccitysplitfe [color=purple]
 
-    kcapi [label=<kcapi<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple]
-    eventapi -> gdacs
-    eventapi -> firms //new
-    eventapi -> noaa //new
-    eventapi -> emdat //new
-    eventapi -> japantornado //new
+
+    // lets use deeppink for outdated+interactive
+    eventapi -> gdacs[color=blue]
+    eventapi -> firms[color=blue]
+    eventapi -> noaa[color=blue]
+    eventapi -> emdat[color=blue]
+    eventapi -> japantornado[color=blue]
+    eventapi -> kcapi[color=red]
+
+
     DonerKing -> donerkingapp
-    eventapi -> kcapi
-    kcdonerkingfe [color=purple]
     donerkingapp -> kcdonerkingfe [color=purple]
-    kcdonerking [color=purple]
     kcdonerkingfe -> kcdonerking [color=purple]
-    kcdonerking -> buildingsminsk [color=purple]
-    kcdataetl [color=purple]
+    kcdonerking -> buildingsminsk[color=purple]
     kcdonerking -> kcdataetl [color=purple]
-    kcfirebrigade -> kcdataetl [color=purple]
-    kcdataetl -> hotactivations [color=purple]
+
+
+    kcdataetl -> hotprojects [color=purple]
     kcdataetl -> hotactivationscsv [color=purple]
     kcdataetl -> osmcommunities [color=purple]
     kcdataetl -> osmlayers [color=purple]
     kcdataetl -> k2etl [color=purple]
     kcdataetl -> osmboundaries [color=purple]
     kcdataetl -> firehydrants [color=purple]
+
     mchs -> mchsapp
-    kcfirebrigadefe [color=purple]
     mchsapp -> kcfirebrigadefe [color=purple]
-    kcfirebrigade [color=purple]
     kcfirebrigadefe -> kcfirebrigade [color=purple]
+    kcfirebrigade -> kcdataetl [color=purple]
+
     kcapi [color=purple]
     kcdonerking -> kcapi [color=purple]
     kcfirebrigade -> kcapi [color=purple]
-    pdcsqs [label=<PDC SQS Feed<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Simple Queue Service</FONT>>]
+
     eventapi -> pdcsqs
-    pdcsqs -> pdcdisasters
     eventapi -> pdcmapservices
-    pdcmapservices -> pdcdisasters
-    k2etl [color=purple]
-    k2layers [color=purple]
-    k2layers [color=purple]
+    pdcsqs -> pdcdisasters
+    pdcmapservices-> pdcdisasters
+
     kcapi -> k2layers [color=purple]
-    "kcapi db" [label=<kcapi db<BR /><FONT POINT-SIZE="10">Internal db that stores layers, geocoder</FONT>>,color=purple,shape=cylinder]
     k2layers -> "kcapi db" [color=purple]
     k2geocoder -> "kcapi db" [color=purple]
     "kcapi db" -> kcdataetl [color=purple]
-    minskfiredemo 
+    // minskfiredemo <- is no more as of 2024/07/15, kept for reference, could be removed eventually
     k2routing [color=purple]
     kcapi -> k2routing [color=purple]
     k2routing -> osm [color=purple]
     k2routing -> osrmemergencyminsk [color=purple]
     k2routing -> osmboundaries [color=purple] // accoring to A.Kalenik
-    osrmemergencyminsk -> osm
+    osrmemergencyminsk -> osm[color=blue]
     k2routing -> osrmdistanceminsk [color=purple]
-    osrmdistanceminsk -> osm
+    osrmdistanceminsk -> osm[color=blue]
     k2geocoder [color=purple]
     kcapi -> k2geocoder [color=purple]
     k2geocoder -> osm [color=purple]
     k2geocoder -> kcdataetl [color=purple]
-    k2frontend [color=purple]
     kcdonerkingfe -> k2frontend [color=purple]
     kcfirebrigadefe -> k2frontend [color=purple]
     kccitysplitfe -> k2frontend [color=purple]
@@ -411,49 +748,64 @@ digraph Platform_services{
     subgraph cluster_PDC {
         label=<PDC<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich</FONT>>
         style=bold
+        color="#00000075"
+        fontcolor="#00000075"
 
-        pdcrvaeditorfe        
-        pdceventbrieffe        
-        pdchazardbrief        
-        pdcdas        
-        pdctrafficcams 
-        DASv4          
+        node[color="#00000075",fontcolor="#00000075"]
+        edge[color="#00000075"]
+
+        pdcsqs [label=<PDC SQS Feed<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Simple Queue Service</FONT>>]
+        pdcmapservices
+        pdcrvaeditorfe
+        pdceventbrieffe
+        pdchazardbrief
+        pdcdas
+        pdctrafficcams
+        DASv4
         UserManagement
         DisasterAware7
-        pdccmdp   
+        pdccmdp
         OrgAPI
         JWT
-    }
-    
-    PDC -> pdcrvaeditorfe
-    PDC -> pdceventbrieffe
-    pdceventbrieffe -> pdcdisasters
-    pdceventbrieffe -> pdcrvaeditorfe
-    PDC -> pdchazardbrief
-    pdchazardbrief -> pdcdas
-    pdchazardbrief -> pdcdisasters
-    PDC -> pdcdas
-    pdcdas -> pdcdisasters
-    PDC -> pdctrafficcams
-    pdceventbrieffe -> pdctrafficcams
-    PDC -> pdccmdp -> pdctrafficcams
-    Tenefit -> OrgAPI // update 2021-10-8
-    PDC -> UserManagement -> JWT         // update 2021-10-8
-    UserManagement -> OrgAPI // update 2021-10-8
-    PDC -> DisasterAware7 -> JWT -> OrgAPI // update 2021-10-8
-    PDC -> DASv4 // update 2021-10-8
-    Tenefit -> DASv4 // update 2021-10-8
-    Kontur -> DASv4 // update 2021-10-8
-    Kontur -> konturwebsite
-    wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>]
-    konturwebsite -> wordpress
-    wordpress -> mailchimp
-    "prometheus02" -> grafana02
-    "fluent-bit" -> kibana
-    kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich<BR />Data visualization dashboard for Elasticsearch</FONT>>]
-    Kontur -> kibana //updated 2021-10-08
-    Kontur -> grafana02
-    eventapi -> kibana//updated 2021-10-08
-    isochroneapi -> kibana//updated 2021-10-08
+        pdcdisasters      [label="PDC Disaster feed"]
 
+    }
+
+    {
+      edge[color="#00000075"]
+      PDC -> pdcrvaeditorfe
+      PDC -> pdceventbrieffe
+      PDC -> pdchazardbrief
+      PDC -> pdcdas
+      PDC -> pdctrafficcams
+      PDC -> UserManagement
+      PDC -> DisasterAware7 -> JWT -> OrgAPI
+      PDC -> DASv4
+      PDC -> pdccmdp -> pdctrafficcams
+      pdceventbrieffe -> pdctrafficcams
+      pdceventbrieffe -> pdcrvaeditorfe
+      pdchazardbrief -> pdcdas
+      UserManagement -> OrgAPI
+      UserManagement -> JWT
+    }
+
+    pdceventbrieffe -> pdcdisasters
+    pdchazardbrief -> pdcdisasters
+    pdcdas -> pdcdisasters
+    Tenefit -> OrgAPI
+    Tenefit -> DASv4
+    Kontur -> DASv4
+
+    subgraph kontur_website_stack {
+      wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
+      mailchimp [group=konturwebsite]
+      Kontur -> konturwebsite -> wordpress -> mailchimp
+    }
+
+    "prometheus02" -> grafana02
+    kibana [label=<Kibana/ElasticCloud<BR /><FONT POINT-SIZE="10">ask: Anastasia Artyukevich<BR />Data visualization dashboard for Elasticsearch</FONT>>]
+    edge[color=green]
+    eventapi -> kibana
+    isochroneapi -> kibana
+    "fluent-bit" -> kibana
 }
