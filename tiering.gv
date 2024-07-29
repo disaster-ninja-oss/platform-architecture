@@ -93,6 +93,49 @@ digraph {
         basemaps_dev_generator[shape=diamond]
       }
     }
+
+    subgraph levelling {
+
+      subgraph dev_etl { 
+        rank=same
+        insights_dev_etl 
+        layers_dev_etl
+        basemaps_dev_generator
+      }
+      subgraph test_etl {
+        rank=same
+        insights_test_etl 
+        layers_test_etl
+        basemaps_test_generator
+      }
+      subgraph dev_int {
+        rank=same
+        basemaps_dev_tileserver
+        layers_dev_api
+        layers_dev_tiles
+        layers_dev_db
+        insights_dev_api
+        insights_dev_llm
+        insights_dev_db
+        events_dev_api
+        events_dev_db
+      }
+      subgraph test_int {
+        rank=same
+        basemaps_test_tileserver
+        layers_test_api
+        layers_test_tiles
+        layers_test_db
+        insights_test_api
+        insights_test_llm
+        insights_test_db
+        events_test_api
+        events_test_db 
+      }
+
+      basemaps_dev_generator -> basemaps_test_generator[style=invis]
+      layers_dev_api -> layers_test_api[style=invis]
+    }
   }
 
 
