@@ -457,7 +457,6 @@ strict digraph Platform_services{
       "disaster-ninja-be" -> "user-profile-api"[color=red]
       "disaster-ninja-be" -> insightsapi[color=red]
       "disaster-ninja-be" -> "insights-llm-api"[color=red]
-      "disaster-ninja-be" -> kcapi[color=red]
       "disaster-ninja-be" -> eventapi[color=red]
       "disaster-ninja-be" -> "layers-api"[color=red]
       "disaster-ninja-be" -> "epig"[color=red]
@@ -692,7 +691,7 @@ strict digraph Platform_services{
     eventapi -> noaa[color=blue]
     eventapi -> emdat[color=blue]
     eventapi -> japantornado[color=blue]
-    eventapi -> kcapi[color=red]
+    eventapi -> "layers-api"[color=red]
 
 
     DonerKing -> donerkingapp
