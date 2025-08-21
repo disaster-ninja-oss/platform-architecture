@@ -21,27 +21,12 @@ strict digraph Platform_services{
 
       subgraph customers_active_commercial {
         HOT           [label="Humanitarian OSM Team",group=hot]
-        PDC           [label="Pacific Disaster Center"]
         Kontur        [label="Kontur",group=kontur]
       }
 
       subgraph customers_active_noncommercial { // active non-commercial engagements
-        DonkorLabs    [label="Donkor Labs"]
         HDX           [label="UN OCHA Humanitarian Data Exchange",group=HDX]
-        Unfolded      [label="Unfolded / Foursquare",group=Unfolded]
         public_event_feed_users [label="Public Event Feed users"]
-      }
-
-      subgraph customers_inactive { //inactive
-        style="dashed"
-        node[fontcolor=white,fillcolor=darkgrey]
-        Tenefit       [label="Tenefit"]
-        DonerKing     [label="Doner King",group=donerking]
-        mchs          [label="Minsk Emergency Call Center"]
-        cartocatalog  [label="Carto Catalog"]
-        Sunbim                  [label="Sunbim (KREO)"]
-        //Vianova [label="Vianova"]
-        SwissRe                 [label="Swiss Re"]
       }
     }
 
@@ -113,7 +98,7 @@ strict digraph Platform_services{
     subgraph cluster_legacy {
         //label = "KC legacy stack / wilderness"  // not exactly legacy  -- rather everything not in k8s?
 
-	node[style=filled,fillcolor=deeppink,group=kclegacy]
+        node[style=filled,fillcolor=deeppink,group=kclegacy]
 
         // it belongs here logically
         osmboundaries[style=filled,fillcolor=deeppink]
@@ -132,23 +117,6 @@ strict digraph Platform_services{
           k2geocoder
           k2etl [color=purple]
           k2layers[color=purple]
-        }
-
-        {
-          node[group=firebrig]
-          kcfirebrigadefe [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
-          kcfirebrigade [color=purple, group="firebrig",style=filled,fillcolor=deeppink]
-        }
-
-        {
-          node[group=donerking]
-          kcdonerkingfe [color=purple,style=filled,fillcolor=deeppink]
-          kcdonerking [color=purple,style=filled,fillcolor=deeppink]
-        }
-
-        {
-          node[group=citysplit]
-          kccitysplitfe [label=<kccitysplitfe<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,color=purple,style=filled,fillcolor=deeppink]
         }
     }
 
@@ -221,21 +189,21 @@ strict digraph Platform_services{
             node[style=filled,fillcolor=red]
 
             subgraph iw_ingress{
-              "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />reverse proxy and load balancer<br/>K8S</FONT>>]
+              "nginx-ingress-controller" [label=<nginx-ingress-controller<BR /><FONT POINT-SIZE="10">reverse proxy and load balancer<br/>K8S</FONT>>]
 
-              "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />ask: Palina Krukovich<BR />Open Source<BR />K8S</FONT>>,
+              "disaster-ninja-be" [label=<disaster-ninja-be<BR /><FONT POINT-SIZE="10">Platform backend<BR />K8S</FONT>>,
                                    group=ninja_components]
 
-              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">ask: Aliaksandr Kolesen<BR />Identity and access management<BR />Open Source<BR />K8S</FONT>>,
+              keycloak [label=<keykloak<BR /><FONT POINT-SIZE="10">Identity and access management<BR />K8S</FONT>>,
                                       group=users_components]
 
 
-              "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S<BR />Open Source</FONT>>,
+              "disaster-ninja-fe" [label=<disaster-ninja-fe<BR /><FONT POINT-SIZE="10">ask: Viachaslau Kozel<BR />K8S</FONT>>,
                                     group=ninja_components]
 
               basemap_tileserver  [label=<basemap tiles<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>, group=basemap] // updated 2024-07-11
 
-              eventapi [label=<event-api<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />disasters events API</FONT>>,
+              eventapi [label=<event-api<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />disasters events API</FONT>>,
                                       group=events_components]
               "epig" [label=<event-preview-image-generator<BR /><FONT POINT-SIZE="10">Preview generator for platform links integration<BR />K8S</FONT>>,
                       group=epig]
@@ -256,14 +224,14 @@ strict digraph Platform_services{
 
               subgraph iw_users {
                 node[group=users_components]
-                "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />user management service API<BR />K8S</FONT>>]
+                "user-profile-api" [label=<user-profile-api<FONT POINT-SIZE="10"><BR />user management service API<BR />K8S</FONT>>]
 
-                "user-profile-spi-plugin" [label=<user-profile-spi-plugin<FONT POINT-SIZE="10"><BR />ask: Aliaksandr Kolesen<BR />K8S</FONT>>]
+                "user-profile-spi-plugin" [label=<user-profile-spi-plugin<BR /><FONT POINT-SIZE="10">K8S</FONT>>]
               }
 
               subgraph iw_insights {
                 node[group=insights_components]
-                insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
+                insightsapi [label=<Insights API<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service to calculate analytics for geometry<BR />K8S</FONT>>]
                 "insights-llm-api" [label=<insights-llm-api<BR /><FONT POINT-SIZE="10">ask: Nadzeya Laptsik<BR />service providing analytics from LLM<BR />K8S</FONT>>]
               }
 
@@ -275,7 +243,7 @@ strict digraph Platform_services{
               rank=same;
               "layers-db-database-replica" [label=<Layers-DB database REPLICA<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
-              "user-profile-api-database-replica" [label=<user-profile-api-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+              "user-profile-api-database-replica" [label=<user-profile-api-database REPLICA<FONT POINT-SIZE="10"><BR />store application settings for users<BR />K8S</FONT>>,
                                             group=users_components]
               "insightsapi-database-replica" [label=<InsightsAPI-database REPLICA<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
@@ -307,7 +275,6 @@ strict digraph Platform_services{
               "layers-db" [label=<Layers-DB<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />(ETL) prepare layers data for applications<BR />K8S</FONT>>,
                               group=layers_components]
 
-              // why basemap generator is rendered in red???
               basemap_generator[label=<basemap<BR /><FONT POINT-SIZE="10">ask: Darafei Praliaskouski</FONT>>,group=basemap]
             }
 
@@ -317,7 +284,7 @@ strict digraph Platform_services{
               node[style=filled,fillcolor=red] // until RO/RW are split
               "layers-db-database" [label=<Layers-DB database<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />store layers for web-applications<BR />K8S</FONT>>,
                                       group=layers_components]
-              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Palina Krukovich<BR />store application settings for users<BR />K8S</FONT>>,
+              "user-profile-api-database" [label=<user-profile-api-database<FONT POINT-SIZE="10"><BR />ask: Alesia Hil<BR />store application settings for users<BR />K8S</FONT>>,
                                             group=users_components]
               "insightsapi-database" [label=<InsightsAPI-database<FONT POINT-SIZE="10"><BR />ask: Nadzeya Laptsik<BR />store hexagonized datasets<BR />K8S</FONT>>,
                                             group=insights_components]
@@ -326,9 +293,6 @@ strict digraph Platform_services{
 
             }
           }
-
-
-
 
          subgraph db_replication {
             edge[dir=back]
@@ -346,7 +310,7 @@ strict digraph Platform_services{
 
          subgraph users_flow {
            keycloak -> "keycloak-database-replica"[color=orange] // not really needed in case of keycloak...
-           keycloak -> "keycloak-database"[color=red] 
+           keycloak -> "keycloak-database"[color=red]
 
            keycloak -> "user-profile-spi-plugin"[color=red,weight=1000]
            "user-profile-api" -> "user-profile-api-database-replica"[color=orange]
@@ -359,7 +323,7 @@ strict digraph Platform_services{
          subgraph layers_flow {
            "layers-api" -> "layers-db-database-replica"[color=orange]
            "layers-tiles-api" -> "layers-db-database-replica"[color=orange]
-           "layers-api" -> "layers-db-database"[color=red]        
+           "layers-api" -> "layers-db-database"[color=red]
            "layers-tiles-api" -> "layers-db-database"[color=red]
            "layers-db-database" -> "layers-db"[dir=back]
            "disaster-ninja-be" -> "layers-db" // add changes from smartcity and roadapp
@@ -368,7 +332,7 @@ strict digraph Platform_services{
          subgraph insights_flow {
 
           insightsapi -> "insightsapi-database-replica"[color=orange]
-          insightsapi -> "insightsapi-database"[color=red] 
+          insightsapi -> "insightsapi-database"[color=red]
           "insights-llm-api" -> "insightsapi-database-replica"[color=orange]
           "insights-llm-api" -> "insightsapi-database"[color=red]
           "insights-llm-api" -> "user-profile-api"[color=red]
@@ -387,9 +351,9 @@ strict digraph Platform_services{
          geocint [label=<
             <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
               <TR><TD COLSPAN="2">Geocint Pipeline</TD></TR>
-              <TR><TD>geocint-runner</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part<BR />open source</FONT></TD></TR>
-              <TR><TD>geocint-openstreetmap</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets<BR />open source</FONT></TD></TR>
-              <TR><TD>geocint-kontur</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />Kontur's private part</FONT></TD></TR>
+              <TR><TD>geocint-runner</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />core part</FONT></TD></TR>
+              <TR><TD>geocint-openstreetmap</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk<BR />OSM-related targets</FONT></TD></TR>
+              <TR><TD>geocint-kontur</TD><TD><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT></TD></TR>
           </TABLE>>,shape=plain]
 
           isochroneapi [label=<IsochroneAPI<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>]
@@ -486,11 +450,6 @@ strict digraph Platform_services{
     }
 
 
-
-    SwissRe -> geoalertbuildings [style=dashed]
-    SwissRe -> eventapiprod [style=dashed]
-
-
     "layers-db" -> hotprojects
     "layers-db" -> osmcontributorstiles
     "layers-db" -> unhcrukrainerefugee
@@ -527,13 +486,8 @@ strict digraph Platform_services{
 
           {
             node[shape=octagon]
-            eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events<BR />ask: Palina Krukovich</FONT>>,
+            eventapiprod [label=<apps.kontur.io/events/<BR /><FONT POINT-SIZE="10">API endpoint with events</FONT>>,
                               style=filled,fillcolor=deeppink]
-
-            "Unfolded Data Catalog"[label=<Unfolded Data Catalog/<BR /><FONT POINT-SIZE="10">Third-party, not managed by us</FONT>>,
-                                    color="#00000075",
-                                    fontcolor="#00000075",
-                                    group=Unfolded]
           }
 
           {
@@ -544,25 +498,18 @@ strict digraph Platform_services{
               mchsapp [label="apps.kontur.io/firebrigade/minsk/",group="firebrig"]
             }
 
-
             konturwebsite [label="kontur.io/",group=konturwebsite]
             hotlandingpage [label="apps.kontur.io/hot-activations-landing/",group="hot"]
             "HOT Slack" [group="hot"]
-            graphqlapi [label=<Insights GraphQL API<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Used for statistics in HOT's exports to HDX</FONT>>]
+            graphqlapi [label=<Insights GraphQL API<BR /><FONT POINT-SIZE="10">Used for statistics in HOT's exports to HDX</FONT>>]
             roadqualityapp [label=<Road quality mobile app<BR /><FONT POINT-SIZE="10">ask: Andrei Valasiuk</FONT>>,group="donkor"]
           }
         }
     }
 
-    Unfolded -> "Unfolded Data Catalog"[color="#00000075"] //updated 2021-10-08
-
-    Sunbim -> solarfarm
 
     DonkorLabs -> smartcity
     DonkorLabs -> roadqualityapp
-
-    PDC -> basemap_tileserver[color=red,weight=1000] // updated 2024-07-11
-
 
     subgraph apps_to_ingress {
       edge[color=red]
@@ -599,18 +546,9 @@ strict digraph Platform_services{
     Kontur -> atlasapp [weight=1000]
     Kontur -> oasisapp
 
-    "Unfolded Data Catalog" -> basemap_tileserver[color=red] //updated 2021-10-08
-
-    "13 months of Fires" [label=<13 months of Fires>,shape=rectangle,style=filled,fillcolor=lightskyblue]
-    cartocatalog -> "13 months of Fires"//updated 2021-10-08
-    cartocatalog -> geocint //updated 2021-10-08
-
     eventapiprod -> eventapi[color=deeppink]
     hotlandingpage -> kcapi //new
     CSTAPP [label=<City Split Tool app<BR /><FONT POINT-SIZE="10">ask: Tigran Grigoryan</FONT>>,style=filled,fillcolor=red]
-    mchs -> CSTAPP[color=purple]
-    DonerKing -> CSTAPP [color=purple]
-
     CSTAPP -> citysplit[color=red]
     isochroneapi[style=filled,fillcolor=red]
     citysplit -> isochroneapi[color=red]
@@ -693,14 +631,6 @@ strict digraph Platform_services{
     eventapi -> japantornado[color=blue]
     eventapi -> "layers-api"[color=red]
 
-
-    DonerKing -> donerkingapp
-    donerkingapp -> kcdonerkingfe [color=purple]
-    kcdonerkingfe -> kcdonerking [color=purple]
-    kcdonerking -> buildingsminsk[color=purple]
-    kcdonerking -> kcdataetl [color=purple]
-
-
     kcdataetl -> hotprojects [color=purple]
     kcdataetl -> hotactivationscsv [color=purple]
     kcdataetl -> osmcommunities [color=purple]
@@ -708,15 +638,6 @@ strict digraph Platform_services{
     kcdataetl -> k2etl [color=purple]
     kcdataetl -> osmboundaries [color=purple]
     kcdataetl -> firehydrants [color=purple]
-
-    mchs -> mchsapp
-    mchsapp -> kcfirebrigadefe [color=purple]
-    kcfirebrigadefe -> kcfirebrigade [color=purple]
-    kcfirebrigade -> kcdataetl [color=purple]
-
-    kcapi [color=purple]
-    kcdonerking -> kcapi [color=purple]
-    kcfirebrigade -> kcapi [color=purple]
 
     eventapi -> pdcsqs
     eventapi -> pdcmapservices
@@ -727,7 +648,6 @@ strict digraph Platform_services{
     k2layers -> "kcapi db" [color=purple]
     k2geocoder -> "kcapi db" [color=purple]
     "kcapi db" -> kcdataetl [color=purple]
-    // minskfiredemo <- is no more as of 2024/07/15, kept for reference, could be removed eventually
     k2routing [color=purple]
     kcapi -> k2routing [color=purple]
     k2routing -> osm [color=purple]
@@ -740,8 +660,6 @@ strict digraph Platform_services{
     kcapi -> k2geocoder [color=purple]
     k2geocoder -> osm [color=purple]
     k2geocoder -> kcdataetl [color=purple]
-    kcdonerkingfe -> k2frontend [color=purple]
-    kcfirebrigadefe -> k2frontend [color=purple]
     kccitysplitfe -> k2frontend [color=purple]
 
     subgraph cluster_PDC {
@@ -753,47 +671,10 @@ strict digraph Platform_services{
         node[color="#00000075",fontcolor="#00000075"]
         edge[color="#00000075"]
 
-        pdcsqs [label=<PDC SQS Feed<BR /><FONT POINT-SIZE="10">ask: Palina Krukovich<BR />Simple Queue Service</FONT>>]
-        pdcmapservices
-        pdcrvaeditorfe
-        pdceventbrieffe
-        pdchazardbrief
-        pdcdas
-        pdctrafficcams
-        DASv4
-        UserManagement
-        DisasterAware7
-        pdccmdp
-        OrgAPI
-        JWT
+        pdcsqs [label=<PDC SQS Feed>]
         pdcdisasters      [label="PDC Disaster feed"]
 
     }
-
-    {
-      edge[color="#00000075"]
-      PDC -> pdcrvaeditorfe
-      PDC -> pdceventbrieffe
-      PDC -> pdchazardbrief
-      PDC -> pdcdas
-      PDC -> pdctrafficcams
-      PDC -> UserManagement
-      PDC -> DisasterAware7 -> JWT -> OrgAPI
-      PDC -> DASv4
-      PDC -> pdccmdp -> pdctrafficcams
-      pdceventbrieffe -> pdctrafficcams
-      pdceventbrieffe -> pdcrvaeditorfe
-      pdchazardbrief -> pdcdas
-      UserManagement -> OrgAPI
-      UserManagement -> JWT
-    }
-
-    pdceventbrieffe -> pdcdisasters
-    pdchazardbrief -> pdcdisasters
-    pdcdas -> pdcdisasters
-    Tenefit -> OrgAPI
-    Tenefit -> DASv4
-    Kontur -> DASv4
 
     subgraph kontur_website_stack {
       wordpress [label=<Wordpress<BR /><FONT POINT-SIZE="10">ask: Aleksey Tarakanov</FONT>>,group=konturwebsite]
